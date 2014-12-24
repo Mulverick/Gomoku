@@ -19,6 +19,7 @@ void Game::run()
 		return;
 	while (_update())
 	{
+
 		_window.clear();
 		_draw();
 		_window.display();
@@ -77,6 +78,8 @@ bool Game::_initialize()
 	_white.loadFromFile("../Assets/white.png");
 	_black.loadFromFile("../Assets/black.png");
 	_playerColor = WHITE;
+	_players.push_back(new Human(WHITE));
+	_players.push_back(new Human(BLACK));
 	return true;
 }
 

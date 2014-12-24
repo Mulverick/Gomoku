@@ -2,11 +2,11 @@
 
 #include "IPlayer.hh"
 
-class Humain : IPlayer
+class Human : public IPlayer
 {
 public:
-	Humain();
-	~Humain();
+	Human(int color);
+	~Human();
 	bool onClickHandler();
 	bool asPlayed() const;
 	void changeTurn();
@@ -14,6 +14,7 @@ public:
 
 private:
 	int		_color;
+	bool	_turn;
 	bool	_played;
 };
 

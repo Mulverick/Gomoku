@@ -12,14 +12,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header Files\Game.hh" />
-    <ClInclude Include="..\Header Files\Humain.hh" />
+    <ClInclude Include="..\Header Files\Human.hh" />
     <ClInclude Include="..\Header Files\IPlayer.hh" />
     <ClInclude Include="..\Header Files\Sprite.hh" />
     <ClInclude Include="..\Header Files\Utils.hh" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source Files\Game.cpp" />
-    <ClCompile Include="..\Source Files\Humain.cpp" />
+    <ClCompile Include="..\Source Files\Human.cpp" />
     <ClCompile Include="..\Source Files\Main.cpp" />
     <ClCompile Include="..\Source Files\Sprite.cpp" />
     <ClCompile Include="..\Source Files\Utils.cpp" />

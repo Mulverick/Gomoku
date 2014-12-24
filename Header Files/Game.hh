@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <vector>
+#include "Human.hh"
 #include "Sprite.hh"
 
 class Game
@@ -21,6 +23,7 @@ private:
 	void _onClick();
 	bool _update();
 
+	std::vector<IPlayer*> _players;
 	sf::RenderWindow _window;
 	Sprite _goban;
 	Sprite _white;
