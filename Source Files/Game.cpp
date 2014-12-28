@@ -1,5 +1,5 @@
 #include <SFML/Window/Event.hpp>
-
+#include <iostream>
 #include "Game.hh"
 #include "Utils.hh"
 
@@ -19,7 +19,16 @@ void Game::run()
 		return;
 	while (_update())
 	{
-
+		if (_players[0]->hasPlayed() == true)
+		{
+			_players[0]->changeTurn();
+			_players[1]->changeTurn();
+		}
+		else if (_players[1]->hasPlayed() == true)
+		{
+			_players[0]->changeTurn();
+			_players[1]->changeTurn();
+		}
 		_window.clear();
 		_draw();
 		_window.display();
@@ -34,6 +43,8 @@ void Game::_close()
 
 void Game::_draw()
 {
+	Human *tmp;
+
 	_window.draw(_goban.getSprite());
 	_white.setColor(sf::Color(255, 255, 255, 255));
 	_black.setColor(sf::Color(255, 255, 255, 255));
@@ -53,7 +64,13 @@ void Game::_draw()
 			break;
 		}
 	}
-	_drawCursor((_playerColor == WHITE ? _white : _black));
+	if (dynamic_cast<Human*>(_players[0]) != 0 && dynamic_cast<Human*>(_players[1]) != 0)
+		_drawCursor((_playerColor == WHITE ? _white : _black));
+	else if (((tmp = dynamic_cast<Human*>(_players[0])) != 0 && dynamic_cast<Human*>(_players[1]) == 0)
+			|| (dynamic_cast<Human*>(_players[0]) == 0 && (tmp = dynamic_cast<Human*>(_players[1])) != 0))
+	{
+		_drawCursor((tmp->getColor() == WHITE ? _white : _black));
+	}
 }
 
 void Game::_drawCursor(Sprite &sprite)
@@ -86,9 +103,7 @@ bool Game::_initialize()
 void Game::_onClick()
 {
 	int cellPosition = (sf::Mouse::getPosition(_window).y / CELL_SIZE) * 19 + (sf::Mouse::getPosition(_window).x / CELL_SIZE);
-	if (_map[cellPosition])
-		return;
-	_map[cellPosition] = _playerColor;
+	_playerColor == WHITE ? _players[0]->onClickHandler(_map, cellPosition) : _players[1]->onClickHandler(_map, cellPosition);
 	_playerColor = (_playerColor == WHITE ? BLACK : WHITE);
 }
 
