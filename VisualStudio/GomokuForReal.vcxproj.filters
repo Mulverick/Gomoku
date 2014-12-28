@@ -30,6 +30,9 @@
     <ClInclude Include="..\Header Files\Human.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Arbitre.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source Files\Game.cpp">
@@ -45,6 +48,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Source Files\Human.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbitre.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
