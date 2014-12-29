@@ -30,7 +30,7 @@
     <ClInclude Include="..\Header Files\Human.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Arbitre.hh">
+    <ClInclude Include="..\Header Files\Arbitre.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,7 +50,7 @@
     <ClCompile Include="..\Source Files\Human.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Arbitre.cpp">
+    <ClCompile Include="..\Source Files\Arbitre.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

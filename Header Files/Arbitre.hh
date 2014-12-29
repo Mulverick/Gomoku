@@ -3,6 +3,7 @@
 #include <Vector>
 
 class DoubleThree{
+public:
 	DoubleThree(int, int ,int);
 	DoubleThree(DoubleThree const &);
 	~DoubleThree();

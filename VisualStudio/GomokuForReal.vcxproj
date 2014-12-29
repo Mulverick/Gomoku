@@ -11,20 +11,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Header Files\Arbitre.hh" />
     <ClInclude Include="..\Header Files\Game.hh" />
     <ClInclude Include="..\Header Files\Human.hh" />
     <ClInclude Include="..\Header Files\IPlayer.hh" />
     <ClInclude Include="..\Header Files\Sprite.hh" />
     <ClInclude Include="..\Header Files\Utils.hh" />
-    <ClInclude Include="Arbitre.hh" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Source Files\Arbitre.cpp" />
     <ClCompile Include="..\Source Files\Game.cpp" />
     <ClCompile Include="..\Source Files\Human.cpp" />
     <ClCompile Include="..\Source Files\Main.cpp" />
     <ClCompile Include="..\Source Files\Sprite.cpp" />
     <ClCompile Include="..\Source Files\Utils.cpp" />
-    <ClCompile Include="Arbitre.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{AF8DA8AA-E095-4FE9-999C-BECC78A1FE4A}</ProjectGuid>
