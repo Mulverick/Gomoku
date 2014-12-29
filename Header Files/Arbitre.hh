@@ -1,6 +1,9 @@
 #pragma once
 
-#include <Vector>
+#include <vector>
+#include <SFML/System/Vector2.hpp>
+#include "Utils.hh"
+#include <deque>
 
 class DoubleThree{
 public:
@@ -24,9 +27,10 @@ class Arbitre
 public:
 	Arbitre();
 	~Arbitre();
-	bool checkMove(int, char * const &);
+	bool checkMove(int, char * const &, int color);
 	bool checkDoubleThree();
 	bool checkWinner();
+	std::deque<sf::Vector2i> checkEat(int, char * const &, int color);
 	void updateRules(bool, bool);
 
 private:

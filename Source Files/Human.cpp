@@ -4,7 +4,7 @@
 
 Human::Human(int color)
 {
-	_played = false;
+	_played = -1;
 	_turn = (color == WHITE ? true : false);
 	_color = color;
 }
@@ -14,25 +14,27 @@ Human::~Human()
 {
 }
 
-bool Human::onClickHandler(char * const &map, int cellPosition){
-	if (map[cellPosition])
-		return _played;
-	map[cellPosition] = _color;
-	if (_played == false && _turn == true)
-		_played = true;
+int Human::onClickHandler(int cellPosition){
+	if (_played == -1 && _turn == true)
+		_played = cellPosition;
 	return _played;
 }
 
-void Human::wrongMove(){
-	_played = false;
+void Human::placeStone(char * const &map){
+	if (_played != -1)
+		map[_played] = _color;
 }
 
-bool Human::hasPlayed() const{
+void Human::wrongMove(){
+	_played = -1;
+}
+
+int Human::hasPlayed() const{
 	return (_played);
 }
 
 void Human::changeTurn(){
-	_played = false;
+	_played = -1;
 	_turn = (_turn == true ? false : true);
 }
 

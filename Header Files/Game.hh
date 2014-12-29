@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <vector>
+#include "Arbitre.hh"
 #include "Human.hh"
 #include "Sprite.hh"
 
@@ -25,6 +26,7 @@ private:
 
 	std::vector<IPlayer*> _players;
 	sf::RenderWindow _window;
+	Arbitre _arbitre;
 	Sprite _goban;
 	Sprite _white;
 	Sprite _black;

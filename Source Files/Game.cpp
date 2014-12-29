@@ -19,12 +19,12 @@ void Game::run()
 		return;
 	while (_update())
 	{
-		if (_players[0]->hasPlayed() == true)
+		if (_players[0]->hasPlayed() != -1)
 		{
 			_players[0]->changeTurn();
 			_players[1]->changeTurn();
 		}
-		else if (_players[1]->hasPlayed() == true)
+		else if (_players[1]->hasPlayed() != -1)
 		{
 			_players[0]->changeTurn();
 			_players[1]->changeTurn();
@@ -97,14 +97,21 @@ bool Game::_initialize()
 	_playerColor = WHITE;
 	_players.push_back(new Human(WHITE));
 	_players.push_back(new Human(BLACK));
+	_arbitre.updateRules(false, false);
 	return true;
 }
 
 void Game::_onClick()
 {
 	int cellPosition = (sf::Mouse::getPosition(_window).y / CELL_SIZE) * 19 + (sf::Mouse::getPosition(_window).x / CELL_SIZE);
-	_playerColor == WHITE ? _players[0]->onClickHandler(_map, cellPosition) : _players[1]->onClickHandler(_map, cellPosition);
-	_playerColor = (_playerColor == WHITE ? BLACK : WHITE);
+	if (_arbitre.checkMove((_playerColor == WHITE ? _players[0]->onClickHandler(cellPosition) : _players[1]->onClickHandler(cellPosition)), _map, _playerColor) == true)
+	{
+		_playerColor == WHITE ? _players[0]->placeStone(_map) : _players[1]->placeStone(_map);
+		_playerColor = (_playerColor == WHITE ? BLACK : WHITE);
+		
+	}
+	else
+		_playerColor == WHITE ? _players[0]->wrongMove() : _players[1]->wrongMove();
 }
 
 bool Game::_update()

@@ -7,14 +7,15 @@ class Human : public IPlayer
 public:
 	Human(int color);
 	~Human();
-	bool onClickHandler(char * const &map, int cellPosition);
-	bool hasPlayed() const;
+	int onClickHandler(int cellPosition);
+	void placeStone(char * const &map);
+	int hasPlayed() const;
 	void changeTurn();
 	void wrongMove();
 	int  getColor() const;
 private:
 	int		_color;
 	bool	_turn;
-	bool	_played;
+	int	_played;
 };
 
