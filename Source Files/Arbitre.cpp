@@ -57,8 +57,9 @@ bool Arbitre::checkMove(int cell, char *map, int color){
 			coord.pop_front();
 		}
 	}
-	/* if (checkWinner() == true)
-		return true; */
+	 if (checkWinner(cell, map, color) == true)
+		return true; 
+	return (true);
 }
 
 static void checkOnEat(int cell, int nb, int color, char const *map, std::deque<sf::Vector2i> &coords){
