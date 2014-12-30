@@ -27,10 +27,10 @@ class Arbitre
 public:
 	Arbitre();
 	~Arbitre();
-	bool checkMove(int, char * const &, int color);
+	bool checkMove(int, char *, int color);
 	bool checkDoubleThree();
-	bool checkWinner();
-	std::deque<sf::Vector2i> checkEat(int, char * const &, int color);
+	bool checkWinner(int pos, char const *map, int color);
+	std::deque<sf::Vector2i> checkEat(int, char const *, int color);
 	void updateRules(bool, bool);
 
 private:

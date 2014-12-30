@@ -38,7 +38,7 @@ Arbitre::~Arbitre()
 {
 }
 
-bool Arbitre::checkMove(int cell, char * const &map, int color){
+bool Arbitre::checkMove(int cell, char *map, int color){
 	if (cell == -1)
 		return false;
 	if (map[cell])
@@ -61,7 +61,7 @@ bool Arbitre::checkMove(int cell, char * const &map, int color){
 		return true; */
 }
 
-static void checkOnEat(int cell, int nb, int color, char * const &map, std::deque<sf::Vector2i> &coords){
+static void checkOnEat(int cell, int nb, int color, char const *map, std::deque<sf::Vector2i> &coords){
 	int tmpx, tmpy, tmpz;
 	int ocolor;
 
@@ -89,7 +89,7 @@ static void checkOnEat(int cell, int nb, int color, char * const &map, std::dequ
 	}
 }
 
-std::deque<sf::Vector2i> Arbitre::checkEat(int cell, char * const &map, int color){
+std::deque<sf::Vector2i> Arbitre::checkEat(int cell, char const *map, int color){
 	std::deque<sf::Vector2i> coords;
 
 	checkOnEat(cell, -19, color, map, coords);
@@ -103,10 +103,73 @@ std::deque<sf::Vector2i> Arbitre::checkEat(int cell, char * const &map, int colo
 	return coords;
 }
 bool Arbitre::checkDoubleThree(){
-
+	return (false);
 }
-bool Arbitre::checkWinner(){
+bool Arbitre::checkWinner(int pos, char const *map, int color){
+	int	nb;
+	int next;
 
+	nb = 1;
+	next = pos + 1;
+	while (next % 19 != 0 && map[next] == color)
+	{
+		++next;
+		++nb;
+	}
+	next = pos - 1;
+	while (next % 19 != 18 && map[next] == color)
+	{
+		--next;
+		++nb;
+	}
+	if (nb >= 5)
+		return (true);
+	nb = 1;
+	next = pos + 19;
+	while (next / 19 != 19 && map[next] == color)
+	{
+		next += 19;
+		++nb;
+	}
+	next = pos - 19;
+	while (next / 19 > 0 && map[next] == color)
+	{
+		next -= 19;
+		++nb;
+	}
+	if (nb >= 5)
+		return (true);
+	nb = 1;
+	next = pos + 20;
+	while (next % 19 != 0 && next / 19 != 19 && map[next] == color)
+	{
+		next += 20;
+		++nb;
+	}
+	next = pos - 20;
+	while (next % 19 != 18 && next / 19 > 0 && map[next] == color)
+	{
+		next -= 20;
+		++nb;
+	}
+	if (nb >= 5)
+		return (true);
+	nb = 1;
+	next = pos + 18;
+	while (next % 19 != 18 && next / 19 != 19 && map[next] == color)
+	{
+		next += 18;
+		++nb;
+	}
+	next = pos - 18;
+	while (next % 19 != 0 && next / 19 > 0 && map[next] == color)
+	{
+		next -= 18;
+		++nb;
+	}
+	if (nb >= 5)
+		return (true);
+	return (false);
 }
 void Arbitre::updateRules(bool r1, bool r2){
 	_ruleDoublethree = r1;
