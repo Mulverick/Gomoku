@@ -3,8 +3,8 @@
 
 #include <SFML/System/Vector2.hpp>
 
-#define AI_THINK 500;
-#define	MAP_SIZE 19*19
+#define AI_THINK 500
+#define	MAP_SIZE 361
 #define WIN_SIZE 798
 #define CELL_SIZE 42
 #define WHITE 1

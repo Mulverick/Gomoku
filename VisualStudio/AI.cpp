@@ -1,6 +1,9 @@
 #include "AI.hh"
 #include "Utils.hh"
 #include <iostream>
+#include <vector>
+#include <cstdlib> 
+#include <ctime>
 
 AI::AI(int color){
 	_thought = false;
@@ -9,11 +12,19 @@ AI::AI(int color){
 	_color = color;
 	_weightMap = new int[MAP_SIZE];
 	_thinkMap = new char[MAP_SIZE];
+	for (int i = 0; i < MAP_SIZE; ++i)
+	{
+		_thinkMap[i] = 0;
+		_weightMap[i] = 0;
+	}
+	srand(time(NULL));
 }
 
 AI::~AI(){
 	delete _weightMap;
 	delete _thinkMap;
+	if (_thread != NULL)
+		delete _thread;
 }
 
 int AI::onClickHandler(int cellPosition){
@@ -43,12 +54,41 @@ int AI::getColor() const{
 }
 
 void AI::think(){
-	for (int i = 0; i < MAP_SIZE; i++)
+	int	currColor = _color;
+	char*	map = new char[MAP_SIZE];
+	int	r;
+	bool win = false;
+
+	for (int c = 0; c < MAP_SIZE; ++c)
 	{
-		if (_thinkMap[i] != 0)
+		_weightMap[c] = 0;
+	}
+	for (int j = 0; j < MAP_SIZE; ++j)
+	{
+		for (int i = 0; i < AI_THINK; ++i)
 		{
-			//TODO thinking
+			strcpy(map, _thinkMap);
+			r = j;
+			while (!_arbitre.checkWinner(r, map, currColor))
+			{
+				if (map[r] == 0 && _arbitre.checkMove(r, map, currColor))
+				{
+					map[r] = currColor;
+					currColor = (currColor == WHITE ? BLACK : WHITE);
+				}
+				r = (rand() % MAP_SIZE);
+			}
+			_weightMap[j] += (_arbitre.checkWinner(r, map, _color) ? 1 : -1);
 		}
 	}
+	_thought = true;
 }
 
+int AI::onPlay(){
+	_thread->join();
+	delete _thread;
+
+	for (int i = 0; i < MAP_SIZE; i++)
+
+	return _played;
+}
