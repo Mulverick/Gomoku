@@ -73,7 +73,7 @@ static void checkOnEat(int cell, int nb, int color, char const *map, std::deque<
 	{
 		if (tmpz >= 0 && map[tmpx] == ocolor && map[tmpy] == ocolor && map[tmpz] == color)
 		{
-			if (nb != -20 && cell % 19 <= tmpz % 19)
+			if (((nb == -1 || nb == -20) && (cell % 19) < (tmpz % 19)) || ((nb == -18) && (cell % 19) > (tmpz % 19)))
 				return;
 			coords.push_back(sf::Vector2i(tmpx, tmpy));
 		}
@@ -82,7 +82,7 @@ static void checkOnEat(int cell, int nb, int color, char const *map, std::deque<
 	{
 		if (tmpz < 361 && map[tmpx] == ocolor && map[tmpy] == ocolor && map[tmpz] == color)
 		{
-			if (nb != 20 && cell % 19 >= tmpz % 19)
+			if (((nb == 1 || nb == 20) && (cell % 19) >(tmpz % 19)) || ((nb == 18) && (cell % 19) < (tmpz % 19)))
 				return;
 			coords.push_back(sf::Vector2i(tmpx, tmpy));
 		}
@@ -108,7 +108,8 @@ bool Arbitre::checkDoubleThree(){
 bool Arbitre::checkWinner(int pos, char const *map, int color){
 	int	nb;
 	int next;
-
+	if (((color == WHITE ? _prisoner[0] : _prisoner[1])) >= 10)
+		return true;
 	nb = 1;
 	next = pos + 1;
 	while (next % 19 != 0 && map[next] == color)
