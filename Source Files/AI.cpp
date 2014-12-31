@@ -18,7 +18,7 @@ int		AI::onClickHandler(int cellPosition)
 
 void	AI::easyPlay()
 {
-	/*for (int i = 0; i != SIZE_MAX && this->_played == -1; ++i)
+	/*for (int i = 0; i != MAP_SIZE && this->_played == -1; ++i)
 	{
 		if ((this->_arbitre.checkMove(i, this->_board, WHITE) && this->_arbitre.checkWinner(i, this->_board, WHITE))
 			|| (this->_arbitre.checkMove(i, this->_board, BLACK) && this->_arbitre.checkWinner(i, this->_board, BLACK)))
@@ -35,7 +35,7 @@ void	AI::placeStone(char * const &map)
 
 	this->easyPlay();
 
-	for (int i = 0; i != SIZE_MAX && this->_played == -1; ++i)
+	for (int i = 0; i != MAP_SIZE && this->_played == -1; ++i)
 	{
 		if (this->_board[i] != 0 && this->_arbitre.checkMove(i, this->_board, this->_color))
 		{

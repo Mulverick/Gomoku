@@ -13,7 +13,7 @@ int				Algorithm::EasyPlay(char * const &map)
 {
 	int			pos = -1;
 
-	for (int i = 0; i != SIZE_MAX && pos == -1; ++i)
+	for (int i = 0; i != MAP_SIZE && pos == -1; ++i)
 	{
 		if ((this->_arbitre.checkMove(i, map, WHITE) && this->_arbitre.checkWinner(i, map, WHITE))
 			|| (this->_arbitre.checkMove(i, map, BLACK) && this->_arbitre.checkWinner(i, map, BLACK)))
@@ -31,7 +31,7 @@ std::list<Node *>	Algorithm::CreateNodesList(char * const &map, int color, int d
 		for (r = (rand() % MAP_SIZE); !this->_arbitre.checkMove(r, map, color); r = (rand() % MAP_SIZE));
 		nodes.push_back(new Node(color, r, -1, map));
 	}
-	for (int i = 0; i != SIZE_MAX; ++i)
+	for (int i = 0; i != MAP_SIZE; ++i)
 	{
 		if (map[i] != 0 && this->_arbitre.checkMove(i, map, color))
 		{
