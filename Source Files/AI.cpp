@@ -45,7 +45,7 @@ void	AI::placeStone(char * const &map)
 
 			this->_nodes.push_back(newnode);
 			newnode->Expand();
-			newnode->Simulate();
+			//newnode->Simulate();
 			if (newnode->WinsRate() > wr)
 			{
 				wr = newnode->WinsRate();
