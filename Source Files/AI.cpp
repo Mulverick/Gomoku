@@ -3,7 +3,6 @@
 AI::AI(int color)
 {
 	this->_played = -1;
-	this->_first = true;
 	this->_turn = (color == WHITE ? true : false);
 	this->_color = color;
 	this->_board = new char[MAP_SIZE];
@@ -19,12 +18,12 @@ int		AI::onClickHandler(int cellPosition)
 
 void	AI::easyPlay()
 {
-	for (int i = 0; i != SIZE_MAX && this->_played == -1; ++i)
+	/*for (int i = 0; i != SIZE_MAX && this->_played == -1; ++i)
 	{
 		if ((this->_arbitre.checkMove(i, this->_board, WHITE) && this->_arbitre.checkWinner(i, this->_board, WHITE))
 			|| (this->_arbitre.checkMove(i, this->_board, BLACK) && this->_arbitre.checkWinner(i, this->_board, BLACK)))
 			this->_played = i;
-	}
+	}*/
 }
 
 void	AI::placeStone(char * const &map)
@@ -56,7 +55,7 @@ void	AI::placeStone(char * const &map)
 
 	this->_played = this->_algorithm.EasyPlay(map);
 	if (this->_played == -1)
-		this->_algorithm.CreateNodesList(map, this->_color);
+		this->_algorithm.CreateNodesList(map, this->_color, 0);
 	for (std::list<Node *>::iterator it = this->_nodes.begin(); it != this->_nodes.end() && this->_played == -1; ++it)
 	{
 		if ((*it)->WinsRate() > wr)
@@ -66,8 +65,6 @@ void	AI::placeStone(char * const &map)
 		}
 	}
 	map[this->_played] = this->_color;
-	if (this->_first == true)
-		this->_first = false;
 }
 
 void	AI::wrongMove()

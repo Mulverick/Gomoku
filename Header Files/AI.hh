@@ -18,13 +18,12 @@ public:
 	int					getColor() const;
 
 private:
-	bool				_first;
 	int					_color;
 	bool				_turn;
 	int					_played;
 	std::list<Node *>	_nodes;
 	char				*_board;
-	Arbitre				_arbitre;
+//	Arbitre				_arbitre;
 	Algorithm			_algorithm;
 
 	void				easyPlay();

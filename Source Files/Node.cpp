@@ -30,7 +30,7 @@ Node::~Node() {}
 
 void				Node::Expand(Algorithm algorithm)
 {
-	if (!this->_depth)
+	if (this->_depth == 0)
 	{
 		this->Simulate(algorithm);
 		if (this->_parent)
@@ -40,8 +40,10 @@ void				Node::Expand(Algorithm algorithm)
 		}
 
 	}
+	else if (this->_depth > 0)
+		this->_child = algorithm.CreateNodesList(this->_board, (this->_color == WHITE ? BLACK : WHITE), --this->_depth);
 	else
-		this->_child = algorithm.CreateNodesList(this->_board, (this->_color == WHITE ? BLACK : WHITE));
+		this->_wins = 1;
 }
 
 void				Node::Simulate(Algorithm algorithm)

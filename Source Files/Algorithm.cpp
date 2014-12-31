@@ -3,6 +3,7 @@
 
 Algorithm::Algorithm()
 {
+	this->_first = true;
 	srand(time(NULL));
 }
 
@@ -21,20 +22,26 @@ int				Algorithm::EasyPlay(char * const &map)
 	return pos;
 }
 
-std::list<Node *>	Algorithm::CreateNodesList(char * const &map, int color)
+std::list<Node *>	Algorithm::CreateNodesList(char * const &map, int color, int depth)
 {
 	std::list<Node *>	nodes;
-
+	if (this->_first)
+	{
+		int	r;
+		for (r = (rand() % MAP_SIZE); !this->_arbitre.checkMove(r, map, color); r = (rand() % MAP_SIZE));
+		nodes.push_back(new Node(color, r, -1, map));
+	}
 	for (int i = 0; i != SIZE_MAX; ++i)
 	{
 		if (map[i] != 0 && this->_arbitre.checkMove(i, map, color))
 		{
-			Node	*newnode = new Node(color, i, 0, map);
+			Node	*newnode = new Node(color, i, depth, map);
 
 			nodes.push_back(newnode);
 			newnode->Expand(*this);
 		}
 	}
+	this->_first = false;
 	return nodes;
 }
 

@@ -31,7 +31,7 @@ private:
 	std::list<Node *>	_child;
 	char *				_board;
 	Node				*_parent;
-	Arbitre				_arbitre;
+//	Arbitre				_arbitre;
 	int					_color;
 	int					_wins;
 	int					_loss;

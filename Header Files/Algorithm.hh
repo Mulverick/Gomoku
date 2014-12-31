@@ -17,11 +17,12 @@ public:
 	Algorithm();
 	~Algorithm();
 	int					EasyPlay(char * const &map);
-	std::list<Node *>	CreateNodesList(char * const &map, int color);
+	std::list<Node *>	CreateNodesList(char * const &map, int color, int depth);
 	void				MonteCarlo(Node *node, Node *parent, char * const &map);
 
 private:
-	Arbitre	_arbitre;
+	Arbitre		_arbitre;
+	bool		_first;
 };
 
 #endif
