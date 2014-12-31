@@ -10,7 +10,7 @@ public:
 	~AI();
 	int				onClickHandler(int cellPosition);
 	void			placeStone(char * const &map);
-	int				onPlay();
+	int				onPlay(char *const &map);
 	int				hasPlayed() const;
 	void			changeTurn();
 	void			wrongMove();

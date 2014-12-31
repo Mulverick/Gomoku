@@ -59,12 +59,9 @@ void AI::think(){
 	int	r;
 	bool win = false;
 
-	for (int c = 0; c < MAP_SIZE; ++c)
-	{
-		_weightMap[c] = 0;
-	}
 	for (int j = 0; j < MAP_SIZE; ++j)
 	{
+		_weightMap[j] = 0;
 		for (int i = 0; i < AI_THINK; ++i)
 		{
 			strcpy(map, _thinkMap);
@@ -84,11 +81,17 @@ void AI::think(){
 	_thought = true;
 }
 
-int AI::onPlay(){
+int AI::onPlay(char * const &map){
+	int		best = 0;
 	_thread->join();
 	delete _thread;
 
-	for (int i = 0; i < MAP_SIZE; i++)
-
+	for (int i = 0; i < MAP_SIZE; i++){
+		if (_weightMap[i] > best && _arbitre.checkMove(i, map, _color))
+		{
+			best = _weightMap[i];
+			_played = i;
+		}
+	}
 	return _played;
 }
