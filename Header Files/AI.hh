@@ -1,7 +1,9 @@
-#pragma once
+#ifndef AI_HH_
+# define	AI_HH_
 
-#include "IPlayer.hh"
-#include "Node.hh"
+# include "IPlayer.hh"
+# include "Algorithm.hh"
+//# include "Node.hh"
 
 class AI : public IPlayer
 {
@@ -16,12 +18,16 @@ public:
 	int					getColor() const;
 
 private:
+	bool				_first;
 	int					_color;
 	bool				_turn;
 	int					_played;
 	std::list<Node *>	_nodes;
 	char				*_board;
 	Arbitre				_arbitre;
+	Algorithm			_algorithm;
 
 	void				easyPlay();
 };
+
+#endif

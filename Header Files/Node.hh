@@ -1,9 +1,15 @@
-#pragma once
+#ifndef NODE_HH_
+# define	NODE_HH_
 
-#include "Arbitre.hh"
-#include <cstdlib> 
-#include <ctime>
-#include <list>
+/*# include "Algorithm.hh"*/
+# include "Arbitre.hh"
+# include "Utils.hh"
+# include <iostream>
+# include <cstdlib> 
+# include <ctime>
+# include <list>
+
+class Algorithm;
 
 class Node
 {
@@ -11,11 +17,14 @@ public:
 	Node(int color, int pos, int deth, char * const &board);
 	Node(Node *parent, int color, int pos, int deth, char * const &board);
 	~Node();
-	void				Expand();
-	void				Simulate();
+	void				Expand(Algorithm algorithm);
+	void				Simulate(Algorithm algorithm);
+	int					GetPos();
+	int					GetColor();
+	int					GetNbsimulation();
 	void				SetWins(int win);
 	void				SetLoss(int loss);
-	const int			WinsRate();
+	int					WinsRate();
 
 private:
 	const int			_nbsimulation = 100;
@@ -29,3 +38,5 @@ private:
 	int					_depth;
 	int					_pos;
 };
+
+#endif
