@@ -1,4 +1,11 @@
 #pragma once
+
+enum Type
+{
+	HUMAN,
+	OTHER
+};
+
 class IPlayer
 {
 public:
@@ -9,4 +16,5 @@ public:
 	virtual void changeTurn() = 0;
 	virtual void wrongMove() = 0;
 	virtual int getColor() const = 0;
+	virtual Type getType() const = 0;
 };

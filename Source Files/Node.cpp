@@ -4,11 +4,19 @@
 Node::Node(int color, int pos, int deth, char * const &board)
 {
 	this->_pos = pos;
+	this->_board = new char[MAP_SIZE];
+	std::cout << "Node::Node\n" << (char *)board << std::endl;
 	strcpy_s(this->_board, MAP_SIZE, board);
+	std::cout << "Node::Node\n" << (char *)this->_board << std::endl;
+	std::cout << "POS = " << pos << "COLOR = " << color << std::endl;
 	this->_board[pos] = color;
+	
+	std::cout << "Node::Node\n" << this->_board[pos] << std::endl;
+
 	this->_parent = NULL;
 	this->_depth = deth;
 	this->_color = color;
+	this->_nbsimulation = 10;
 	this->_wins = 0;
 	this->_loss = 0;
 }
@@ -16,23 +24,25 @@ Node::Node(int color, int pos, int deth, char * const &board)
 Node::Node(Node *parent, int color, int pos, int deth, char * const &board)
 {
 	this->_pos = pos;
+	this->_board = new char[MAP_SIZE];
 	strcpy_s(this->_board, MAP_SIZE, board);
-	srand(time(NULL));
 	this->_board[pos] = color;
 	this->_parent = parent;
 	this->_depth = deth;
 	this->_color = color;
+	this->_nbsimulation = 10;
 	this->_wins = 0;
 	this->_loss = 0;
 }
 
 Node::~Node() {}
 
-void				Node::Expand(Algorithm algorithm)
+void				Node::Expand(Algorithm algorithm, std::vector<int> freecase)
 {
-	if (this->_depth == 0)
+	std::cout << "Node::Expand : depth = " << this->_depth << std::endl;
+	if (!this->_depth)
 	{
-		this->Simulate(algorithm);
+		this->Simulate(algorithm, freecase);
 		if (this->_parent)
 		{
 			this->_parent->SetWins(this->_wins);
@@ -40,13 +50,11 @@ void				Node::Expand(Algorithm algorithm)
 		}
 
 	}
-	else if (this->_depth > 0)
-		this->_child = algorithm.CreateNodesList(this->_board, (this->_color == WHITE ? BLACK : WHITE), --this->_depth);
 	else
-		this->_wins = 1;
+		this->_child = algorithm.CreateNodesList(this->_board, (this->_color == WHITE ? BLACK : WHITE), --this->_depth);
 }
 
-void				Node::Simulate(Algorithm algorithm)
+void				Node::Simulate(Algorithm algorithm, std::vector<int> freecase)
 {
 	/*int				pos = (rand() % MAP_SIZE);
 	int				ccolor = (this->_color == WHITE ? BLACK : WHITE);
@@ -70,7 +78,9 @@ void				Node::Simulate(Algorithm algorithm)
 		else
 			this->_loss++;
 	}*/
-	algorithm.MonteCarlo(this, this->_parent, this->_board);
+	std::cout << "Node::Node\n" << (char *)this->_board << std::endl;
+
+	algorithm.MonteCarlo(this, this->_parent, this->_board, freecase);
 }
 
 void				Node::SetWins(int wins)
@@ -101,5 +111,6 @@ int					Node::GetNbsimulation()
 
 int					Node::WinsRate()
 {
+	std::cout << "Node::WinsRate : wins = " << this->_wins << " loss = " << this->_loss << std::endl;
 	return (this->_wins / (this->_loss + this->_wins));
 }

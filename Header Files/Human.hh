@@ -12,10 +12,12 @@ public:
 	int hasPlayed() const;
 	void changeTurn();
 	void wrongMove();
-	int  getColor() const;
+	int	 getColor() const;
+	Type getType() const;
 private:
 	int		_color;
 	bool	_turn;
-	int	_played;
+	int		_played;
+	Type	_type;
 };
 

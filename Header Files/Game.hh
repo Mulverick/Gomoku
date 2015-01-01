@@ -6,6 +6,7 @@
 #include <vector>
 #include "Arbitre.hh"
 #include "Human.hh"
+#include "AI.hh"
 #include "Sprite.hh"
 
 class Game
