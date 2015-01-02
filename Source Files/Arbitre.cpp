@@ -38,14 +38,19 @@ Arbitre::~Arbitre()
 {
 }
 
-bool Arbitre::checkMove(int cell, char *map, int color){
+bool Arbitre::checkMove(int cell, char *map, int color)
+{
 	if (cell == -1)
 		return false;
 	if (map[cell])
 		return false;
-	/* if (_ruleDoublethree == true)
+	map[cell] = color;
+	if (_ruleDoublethree == true && checkDoubleThree(cell, map, color) > 1)
 	{
-	}*/
+		map[cell] = 0;
+		return (false);
+	}
+	map[cell] = 0;
 	std::deque<sf::Vector2i> coord;
 	if ((coord = checkEat(cell, map, color)).empty() == false)
 	{
@@ -62,7 +67,184 @@ bool Arbitre::checkMove(int cell, char *map, int color){
 	return (true);
 }
 
-static void checkOnEat(int cell, int nb, int color, char const *map, std::deque<sf::Vector2i> &coords){
+int		Arbitre::checkDoubleThree(int pos, char const *map, int color, bool recursive)
+{
+	int	nb3 = 0;
+
+	if (!recursive && map[pos] != color)
+		return (0);
+
+	// horizontal
+
+#define R(p, c)	((pos + p) % 19 > pos % 19 && map[pos + p] == c)
+#define NR(p)	((pos + p) % 19 <= pos % 19 || map[pos + p] != color)
+#define PR(p)	(pos + p), map, color, false
+#define L(p, c)	((pos - p) % 19 < pos % 19 && map[pos - p] == c)
+#define NL(p)	((pos - p) % 19 >= pos % 19 || map[pos - p] != color)
+#define PL(p)	(pos - p), map, color, false
+
+	if (NL(1))
+	{
+		if (R(1, color) && R(2, color) && NR(3))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(2)) - 2 : 0);
+		if (R(1, 0) && R(2, color) && R(3, color) && NR(4))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(2)) + checkDoubleThree(PR(3)) - 2 : 0);
+		if (R(1, color) && R(2, 0) && R(3, color) && NR(4))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(3)) - 2 : 0);		
+	}
+	if (NR(1))
+	{
+		if (L(1, color) && L(2, color) && NL(3))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(2)) - 2 : 0);
+		if (L(1, 0) && L(2, color) && L(3, color) && NL(4))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PL(3)) - 2 : 0);
+		if (L(1, color) && L(2, 0) && L(3, color) && NL(4))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(3)) - 2 : 0);
+	}
+	if (NL(2) && NR(2) && L(1, color) && R(1, color))
+		nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PR(1)) - 2 : 0);
+	if (NL(2) && NR(3) && L(1, color) && R(1, 0) && R(2, color))
+		nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PR(2)) - 2 : 0);
+	if (NL(3) && NR(2) && L(2, color) && L(1, 0) && R(1, color))
+		nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PR(1)) - 2 : 0);
+
+#undef R
+#undef NR
+#undef PR
+#undef L
+#undef NL
+#undef PL
+
+	// vertical
+
+#define R(p, c)	((pos + (p * 19)) / 19 > pos / 19 && map[pos + (p * 19)] == c)
+#define NR(p)	((pos + (p * 19)) / 19 <= pos / 19 || map[pos + (p * 19)] != color)
+#define PR(p)	(pos + (p * 19)),  map, color, false
+#define L(p, c)	((pos - (p * 19)) / 19 < pos / 19 && map[pos - (p * 19)] == c)
+#define NL(p)	((pos - (p * 19)) / 19 >= pos / 19 || map[pos - (p * 19)] != color)
+#define PL(p)	(pos - (p * 19)),  map, color, false
+
+	if (NL(1))
+	{
+		if (R(1, color) && R(2, color) && NR(3))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(2)) - 2 : 0);
+		if (R(1, 0) && R(2, color) && R(3, color) && NR(4))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(2)) + checkDoubleThree(PR(3)) - 2 : 0);
+		if (R(1, color) && R(2, 0) && R(3, color) && NR(4))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(3)) - 2 : 0);
+	}
+	if (NR(1))
+	{
+		if (L(1, color) && L(2, color) && NL(3))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(2)) - 2 : 0);
+		if (L(1, 0) && L(2, color) && L(3, color) && NL(4))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PL(3)) - 2 : 0);
+		if (L(1, color) && L(2, 0) && L(3, color) && NL(4))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(3)) - 2 : 0);
+	}
+	if (NL(2) && NR(2) && L(1, color) && R(1, color))
+		nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PR(1)) - 2 : 0);
+	if (NL(2) && NR(3) && L(1, color) && R(1, 0) && R(2, color))
+		nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PR(2)) - 2 : 0);
+	if (NL(3) && NR(2) && L(2, color) && L(1, 0) && R(1, color))
+		nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PR(1)) - 2 : 0);
+
+#undef R
+#undef NR
+#undef PR
+#undef L
+#undef NL
+#undef PL
+
+
+	// Diago 1
+
+#define R(p, c)	((pos + p) % 19 > pos % 19 && (pos + (p * 19)) / 19 > pos / 19 && map[pos + (p * 20)] == c)
+#define NR(p)	((pos + p) % 19 <= pos % 19 && (pos + (p * 19)) / 19 <= pos / 19 || map[pos + (p * 20)] != color)
+#define PR(p)	(pos + (p * 20)),  map, color, false
+#define L(p, c)	((pos - p) % 19 < pos % 19 && (pos - (p * 19)) / 19 < pos / 19 && map[pos - (p * 20)] == c)
+#define NL(p)	((pos - p) % 19 >= pos % 19 && (pos - (p * 19)) / 19 >= pos / 19 || map[pos - (p * 20)] != color)
+#define PL(p)	(pos - (p * 20)),  map, color, false
+
+	if (NL(1))
+	{
+		if (R(1, color) && R(2, color) && NR(3))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(2)) - 2 : 0);
+		if (R(1, 0) && R(2, color) && R(3, color) && NR(4))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(2)) + checkDoubleThree(PR(3)) - 2 : 0);
+		if (R(1, color) && R(2, 0) && R(3, color) && NR(4))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(3)) - 2 : 0);
+	}
+	if (NR(1))
+	{
+		if (L(1, color) && L(2, color) && NL(3))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(2)) - 2 : 0);
+		if (L(1, 0) && L(2, color) && L(3, color) && NL(4))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PL(3)) - 2 : 0);
+		if (L(1, color) && L(2, 0) && L(3, color) && NL(4))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(3)) - 2 : 0);
+	}
+	if (NL(2) && NR(2) && L(1, color) && R(1, color))
+		nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PR(1)) - 2 : 0);
+	if (NL(2) && NR(3) && L(1, color) && R(1, 0) && R(2, color))
+		nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PR(2)) - 2 : 0);
+	if (NL(3) && NR(2) && L(2, color) && L(1, 0) && R(1, color))
+		nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PR(1)) - 2 : 0);
+
+#undef R
+#undef NR
+#undef PR
+#undef L
+#undef NL
+#undef PL
+
+
+	// Diago 1
+
+#define R(p, c)	((pos - p) % 19 < pos % 19 && (pos + (p * 19)) / 19 > pos / 19 && map[pos + (p * 18)] == c)
+#define NR(p)	((pos - p) % 19 >= pos % 19 && (pos + (p * 19)) / 19 <= pos / 19 || map[pos + (p * 18)] != color)
+#define PR(p)	(pos + (p * 18)),  map, color, false
+#define L(p, c)	((pos + p) % 19 > pos % 19 && (pos - (p * 19)) / 19 < pos / 19 && map[pos - (p * 18)] == c)
+#define NL(p)	((pos + p) % 19 <= pos % 19 && (pos - (p * 19)) / 19 >= pos / 19 || map[pos - (p * 18)] != color)
+#define PL(p)	(pos + (p * 18)),  map, color, false
+
+	if (NL(1))
+	{
+		if (R(1, color) && R(2, color) && NR(3))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(2)) - 2 : 0);
+		if (R(1, 0) && R(2, color) && R(3, color) && NR(4))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(2)) + checkDoubleThree(PR(3)) - 2 : 0);
+		if (R(1, color) && R(2, 0) && R(3, color) && NR(4))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(3)) - 2 : 0);
+	}
+	if (NR(1))
+	{
+		if (L(1, color) && L(2, color) && NL(3))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(2)) - 2 : 0);
+		if (L(1, 0) && L(2, color) && L(3, color) && NL(4))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PL(3)) - 2 : 0);
+		if (L(1, color) && L(2, 0) && L(3, color) && NL(4))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(3)) - 2 : 0);
+	}
+	if (NL(2) && NR(2) && L(1, color) && R(1, color))
+		nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PR(1)) - 2 : 0);
+	if (NL(2) && NR(3) && L(1, color) && R(1, 0) && R(2, color))
+		nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PR(2)) - 2 : 0);
+	if (NL(3) && NR(2) && L(2, color) && L(1, 0) && R(1, color))
+		nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PR(1)) - 2 : 0);
+
+#undef R
+#undef NR
+#undef PR
+#undef L
+#undef NL
+#undef PL
+
+	return (nb3);
+}
+
+void	Arbitre::checkOnEat(int cell, int nb, int color, char const *map, std::deque<sf::Vector2i> &coords)
+{
 	int tmpx, tmpy, tmpz;
 	int ocolor;
 
@@ -103,9 +285,7 @@ std::deque<sf::Vector2i> Arbitre::checkEat(int cell, char const *map, int color)
 	checkOnEat(cell, 18, color, map, coords);
 	return coords;
 }
-bool Arbitre::checkDoubleThree(){
-	return (false);
-}
+
 bool Arbitre::checkWinner(int pos, char const *map, int color){
 	int	nb;
 	int next;

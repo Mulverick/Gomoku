@@ -28,12 +28,15 @@ public:
 	Arbitre();
 	~Arbitre();
 	bool checkMove(int, char *, int color);
-	bool checkDoubleThree();
+	int checkDoubleThree(int pos, char const *map, int color, bool recursive = true);
 	bool checkWinner(int pos, char const *map, int color);
 	std::deque<sf::Vector2i> checkEat(int, char const *, int color);
 	void updateRules(bool, bool);
 
 private:
+	void checkOnEat(int cell, int nb, int color, char const *map, std::deque<sf::Vector2i> &coords);
+
+
 	bool _isWinner;
 	bool _ruleDoublethree;
 	bool _ruleOptionalEnd;
