@@ -97,7 +97,7 @@ bool Game::_initialize()
 	_playerColor = WHITE;
 	_players.push_back(new Human(WHITE));
 	_players.push_back(new Human(BLACK));
-	_arbitre.updateRules(true, false);
+	_arbitre.updateRules(true, true);
 	return true;
 }
 

@@ -3,6 +3,7 @@
 
 #include <SFML/System/Vector2.hpp>
 
+#define AI_THINK 500
 #define MAP_SIZE 161
 #define WIN_SIZE 798
 #define CELL_SIZE 42

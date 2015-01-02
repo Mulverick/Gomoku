@@ -7,6 +7,7 @@ Human::Human(int color)
 	_played = -1;
 	_turn = (color == WHITE ? true : false);
 	_color = color;
+	_type = HUMAN;
 }
 
 
@@ -40,4 +41,8 @@ void Human::changeTurn(){
 
 int Human::getColor() const{
 	return (_color);
-} 
+}
+
+Type Human::getType() const{
+	return (_type);
+}

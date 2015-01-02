@@ -7,6 +7,7 @@
 # include <iostream>
 # include <cstdlib> 
 # include <ctime>
+# include <vector>
 # include <list>
 
 class Algorithm;
@@ -17,8 +18,8 @@ public:
 	Node(int color, int pos, int deth, char * const &board);
 	Node(Node *parent, int color, int pos, int deth, char * const &board);
 	~Node();
-	void				Expand(Algorithm algorithm);
-	void				Simulate(Algorithm algorithm);
+	void				Expand(Algorithm algorithm, std::vector<int> freecase);
+	void				Simulate(Algorithm algorithm, std::vector<int> freecase);
 	int					GetPos();
 	int					GetColor();
 	int					GetNbsimulation();
@@ -27,9 +28,9 @@ public:
 	int					WinsRate();
 
 private:
-	const int			_nbsimulation = 100;
+	int					_nbsimulation;
 	std::list<Node *>	_child;
-	char *				_board;
+	char                *_board;
 	Node				*_parent;
 //	Arbitre				_arbitre;
 	int					_color;

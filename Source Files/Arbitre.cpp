@@ -62,9 +62,12 @@ bool Arbitre::checkMove(int cell, char *map, int color)
 			coord.pop_front();
 		}
 	}
-	 if (checkWinner(cell, map, color) == true)
-		return true; 
-	return (true);
+	if (checkWinner(cell, map, color) == true)
+	{
+		std::cout << color << " gagne !" << std::endl;
+		return true;
+	}
+	 return (true);
 }
 
 int		Arbitre::checkDoubleThree(int pos, char const *map, int color, bool recursive)
@@ -286,6 +289,80 @@ std::deque<sf::Vector2i> Arbitre::checkEat(int cell, char const *map, int color)
 	return coords;
 }
 
+static bool isEatable(int next, int dir, char const *map, int color){
+	int it1;
+	int it2;
+	int ocolor;
+
+	ocolor = (color == WHITE ? BLACK : WHITE);
+	if (dir != 1)
+	{
+		it1 = next + 1;
+		it2 = next - 1;
+		if (it1 % 19 != 0 && it2 % 19 != 18)
+			if ((map[it1] == ocolor && map[it2] == color) || (map[it1] == color && map[it2] == ocolor))
+				return (true);
+	}
+	if (dir != 18)
+	{ 
+		it1 = next + 18;
+		it2 = next - 18;
+		if (it1 % 19 != 18 && it1 / 19 != 19 && it2 % 19 != 0 && it2 / 19 > 0)
+			if ((map[it1] == ocolor && map[it2] == color) || (map[it1] == color && map[it2] == ocolor))
+				return (true);
+	}
+	if (dir != 19)
+	{ 
+		it1 = next + 19;
+		it2 = next - 19;
+		if (it1 / 19 != 19 && it2 / 19 > 0)
+			if ((map[it1] == ocolor && map[it2] == color) || (map[it1] == color && map[it2] == ocolor))
+				return (true);
+	}
+	if (dir != 20)
+	{
+		it1 = next + 20;
+		it2 = next - 20;
+		if (it1 % 19 != 0 && it1 / 19 != 19 && it2 % 19 != 18 && it2 / 19)
+			if ((map[it1] == ocolor && map[it2] == color) || (map[it1] == color && map[it2] == ocolor))
+				return (true);
+	}
+	return false;
+}
+
+static bool isBreakable(int pos, char const *map, int color, int nb, int dir){
+	int next;
+	int it;
+	int rt;
+
+	while (nb >= 5)
+	{
+		next = pos;
+		it = 0;
+		while (it < 5)
+		{
+			std::cout << it << std::endl;
+			if (isEatable(next, dir, map, color) == true)
+			{
+				rt = true;
+				break;
+			}
+			next += dir;
+			it++;
+		}
+		if (it == 5)
+			return (false);
+		if (rt == true)
+		{
+			nb -= (next % 19 - pos % 19);
+			pos = next;
+		}
+		pos += dir;
+		nb--;
+	}
+	return (rt);
+}
+
 bool Arbitre::checkWinner(int pos, char const *map, int color){
 	int	nb;
 	int next;
@@ -305,7 +382,12 @@ bool Arbitre::checkWinner(int pos, char const *map, int color){
 		++nb;
 	}
 	if (nb >= 5)
-		return (true);
+	{
+		if (_ruleOptionalEnd == false)
+			return (true);
+		else if (_ruleOptionalEnd == true && isBreakable(++next, map, color, nb, 1) == false)
+			return true;
+	}
 	nb = 1;
 	next = pos + 19;
 	while (next / 19 != 19 && map[next] == color)
@@ -320,7 +402,13 @@ bool Arbitre::checkWinner(int pos, char const *map, int color){
 		++nb;
 	}
 	if (nb >= 5)
-		return (true);
+	{
+		next += 19;
+		if (_ruleOptionalEnd == false)
+			return (true);
+		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, 19) == false)
+			return true;
+	}
 	nb = 1;
 	next = pos + 20;
 	while (next % 19 != 0 && next / 19 != 19 && map[next] == color)
@@ -335,7 +423,13 @@ bool Arbitre::checkWinner(int pos, char const *map, int color){
 		++nb;
 	}
 	if (nb >= 5)
-		return (true);
+	{
+		next += 20;
+		if (_ruleOptionalEnd == false)
+			return (true);
+		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, 20) == false)
+			return true;
+	}
 	nb = 1;
 	next = pos + 18;
 	while (next % 19 != 18 && next / 19 != 19 && map[next] == color)
@@ -350,7 +444,13 @@ bool Arbitre::checkWinner(int pos, char const *map, int color){
 		++nb;
 	}
 	if (nb >= 5)
-		return (true);
+	{
+		next += 18;
+		if (_ruleOptionalEnd == false)
+			return (true);
+		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, 18) == false)
+			return true;
+	}
 	return (false);
 }
 void Arbitre::updateRules(bool r1, bool r2){

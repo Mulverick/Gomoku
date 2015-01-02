@@ -6,6 +6,7 @@ AI::AI(int color)
 	this->_turn = (color == WHITE ? true : false);
 	this->_color = color;
 	this->_board = new char[MAP_SIZE];
+	this->_type = OTHER;
 }
 
 
@@ -31,6 +32,7 @@ void	AI::placeStone(char * const &map)
 	int		wr = 0;
 	int		pos = -1;
 
+	std::cout << "AI::placeStone" << std::endl;
 	/*strcpy_s(this->_board, MAP_SIZE, map);
 
 	this->easyPlay();
@@ -52,10 +54,9 @@ void	AI::placeStone(char * const &map)
 	}
 	if (this->_played == -1)
 		this->_played = pos;*/
-
 	this->_played = this->_algorithm.EasyPlay(map);
 	if (this->_played == -1)
-		this->_algorithm.CreateNodesList(map, this->_color, 0);
+		this->_nodes = this->_algorithm.CreateNodesList(map, this->_color, 0);
 	for (std::list<Node *>::iterator it = this->_nodes.begin(); it != this->_nodes.end() && this->_played == -1; ++it)
 	{
 		if ((*it)->WinsRate() > wr)
@@ -63,7 +64,9 @@ void	AI::placeStone(char * const &map)
 			wr = (*it)->WinsRate();
 			this->_played = (*it)->GetPos();
 		}
+		std::cout << "AI::placeStone : wr = " << wr << "pos = " << this->_played << std::endl;
 	}
+	std::cout << "pos = " << this->_played << std::endl;
 	map[this->_played] = this->_color;
 }
 
@@ -86,4 +89,9 @@ void	AI::changeTurn()
 int		AI::getColor() const
 {
 	return (this->_color);
+}
+
+Type	AI::getType() const
+{
+	return (this->_type);
 }
