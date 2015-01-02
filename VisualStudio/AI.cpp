@@ -18,13 +18,12 @@ AI::AI(int color){
 		_weightMap[i] = 0;
 	}
 	srand(time(NULL));
+	_thread = std::thread(&AI::think);
 }
 
 AI::~AI(){
 	delete _weightMap;
 	delete _thinkMap;
-	if (_thread != NULL)
-		delete _thread;
 }
 
 int AI::onClickHandler(int cellPosition){
@@ -68,14 +67,14 @@ void AI::think(){
 			r = j;
 			while (!_arbitre.checkWinner(r, map, currColor))
 			{
-				if (map[r] == 0 && _arbitre.checkMove(r, map, currColor))
+				if (_arbitre.checkMove(r, map, currColor))
 				{
 					map[r] = currColor;
 					currColor = (currColor == WHITE ? BLACK : WHITE);
 				}
 				r = (rand() % MAP_SIZE);
 			}
-			_weightMap[j] += (_arbitre.checkWinner(r, map, _color) ? 1 : -1);
+			_weightMap[j] += (_arbitre.checkWinner(r, map, _color) == true ? 1 : -1);
 		}
 	}
 	_thought = true;
@@ -83,8 +82,7 @@ void AI::think(){
 
 int AI::onPlay(char * const &map){
 	int		best = 0;
-	_thread->join();
-	delete _thread;
+	_thread.join();
 
 	for (int i = 0; i < MAP_SIZE; i++){
 		if (_weightMap[i] > best && _arbitre.checkMove(i, map, _color))
@@ -93,5 +91,7 @@ int AI::onPlay(char * const &map){
 			_played = i;
 		}
 	}
+	strcpy(_thinkMap, map);
+	_thread = std::thread(&AI::think);
 	return _played;
 }

@@ -18,7 +18,7 @@ public:
 	void			think();
 private:
 	Arbitre			_arbitre;
-	std::thread*	_thread;
+	std::thread		_thread;
 	int*			_weightMap;
 	char*			_thinkMap;
 	int				_color;
