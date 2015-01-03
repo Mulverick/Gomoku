@@ -26,7 +26,7 @@ private:
 	std::list<Node *>	_nodes;
 	char				*_board;
 //	Arbitre				_arbitre;
-	Algorithm			_algorithm;
+	Algorithm			*_algorithm;
 
 	void				easyPlay();
 };

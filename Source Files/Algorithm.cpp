@@ -1,10 +1,20 @@
 #include	"Algorithm.hh"
 #include	"Node.hh"
 
+void	mapdraw(char *map, char *fct)
+{
+	std::cout << fct << "[" << std::endl;
+	for (int i = 0; i != MAP_SIZE; std::cout << (int)map[i++])
+	{
+		if (!(i % 19))
+			std::cout << std::endl;
+	}
+	std::cout << "\n]" << std::endl;
+}
+
 Algorithm::Algorithm()
 {
 	this->_first = true;
-	srand(time(NULL));
 }
 
 Algorithm::~Algorithm() {}
@@ -24,8 +34,7 @@ int				Algorithm::EasyPlay(char * const &map)
 
 std::list<Node *>	Algorithm::CreateNodesList(char * const &map, int color, int depth)
 {
-	std::cout << "Algorithm::CreateNodesList" << std::endl;
-	std::list<Node *>	nodes;
+	std::list<Node *>		nodes;
 	std::vector<int>		freecase;
 
 	if (this->_first == true)
@@ -42,25 +51,24 @@ std::list<Node *>	Algorithm::CreateNodesList(char * const &map, int color, int d
 	{
 		for (int i = 0; i != MAP_SIZE; ++i)
 		{
-			if (map[i] != WHITE && map[i] != BLACK && this->_arbitre.checkMove(i, map, color))
-				freecase.push_back(i);
-		}
-		for (std::vector<int>::iterator it = freecase.begin(); it != freecase.end(); ++it)
-		{
-			Node	*newnode = new Node(color, (*it), depth, map);
+			if (this->_arbitre.checkMove(i, map, color))
+			{
+				Node	*newnode = new Node(color, i, depth, map);
 
-			nodes.push_back(newnode);
-			newnode->Expand(*this, freecase);
+				nodes.push_back(newnode);
+				newnode->Expand(*this, freecase);
+			}
 		}
 	}
 	this->_first = false;
 	return nodes;
 }
 
-void				Algorithm::MonteCarlo(Node *node, Node *parent, char * const &map, std::vector<int> freecase)
+void				Algorithm::MonteCarlo(Node *node, Node *parent, char *map, std::vector<int> freecase)
 {
 	std::vector<int>	cases;
 	std::vector<int>::iterator it;
+	char			*board = new char[MAP_SIZE];
 	int				pos;
 	int				color = node->GetColor();
 	int				ccolor = (color == WHITE ? BLACK : WHITE);
@@ -68,35 +76,32 @@ void				Algorithm::MonteCarlo(Node *node, Node *parent, char * const &map, std::
 	int				wins = 0;
 	int				loss = 0;
 
-	for (it = freecase.begin(); (*it) != node->GetPos() && it != freecase.end(); ++it);
-	if (it != freecase.end())
-		freecase.erase(it);
-	pos = freecase[(rand() % freecase.size())];
-	std::cout << pos << " " << map[pos] << std::endl;
-	std::cout << map << std::endl;
+	pos = rand() % MAP_SIZE;
 	for (int i = 0; i != nbsimulation; ++i)
 	{
 		cases = freecase;
-
-		while (!this->_arbitre.checkWinner(pos, map, ccolor) && !cases.empty())
+		memcpy(board, map, MAP_SIZE);
+		this->_arbitre._prisoner[0] = 0;
+		this->_arbitre._prisoner[1] = 0;
+		while (!this->_arbitre.checkWinner(pos, board, ccolor))
 		{
-			if (map[pos] != WHITE && map[pos] != BLACK && this->_arbitre.checkMove(pos, map, ccolor))
+			if (this->_arbitre.checkMove(pos, board, ccolor))
 			{
-				std::cout << "in if" << std::endl;
-				map[pos] = ccolor;
+				board[pos] = ccolor;
 				ccolor = (ccolor == WHITE ? BLACK : WHITE);
-				for (it = cases.begin(); (*it) != pos && it != cases.end(); ++it);
-				cases.erase(it);
 			}
-			pos = cases[(rand() % cases.size())];
+			pos = rand() % MAP_SIZE;
 		}
+		/*std::cout << std::endl;
+		mapdraw(board, "Algorithm::MonteCarlo");
+		std::cout << std::endl;*/
+
 		if (parent && ccolor == parent->GetColor())
 			wins++;
 		else if (!parent && ccolor == color)
 			wins++;
 		else
 			loss++;
-		std::cout << "nbwins = " << wins << " nbloss = " << loss << std::endl;
 	}
 	node->SetWins(wins);
 	node->SetLoss(loss);

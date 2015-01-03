@@ -30,7 +30,8 @@ public:
 private:
 	int					_nbsimulation;
 	std::list<Node *>	_child;
-	char                *_board;
+	char				*_board;
+	std::string			_map;
 	Node				*_parent;
 //	Arbitre				_arbitre;
 	int					_color;
