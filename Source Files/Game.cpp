@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Game.hh"
 #include "Utils.hh"
+#include "AxelAI.h"
 
 Game::Game()
 {
@@ -96,7 +97,7 @@ bool Game::_initialize()
 	_white.loadFromFile("../Assets/white.png");
 	_playerColor = BLACK;
 	_players.push_back(new Human(BLACK));
-	_players.push_back(new Human(WHITE));
+	_players.push_back(new AxelAI(WHITE, _map));
 	_arbitre.updateRules(false, false);
 	return true;
 }

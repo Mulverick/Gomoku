@@ -54,6 +54,9 @@
     <ClInclude Include="..\Header Files\Text.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\Header Files\AxelAI.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source Files\Game.cpp">
@@ -93,6 +96,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Source Files\Text.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source Files\AxelAI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

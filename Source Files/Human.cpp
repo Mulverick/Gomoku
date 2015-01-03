@@ -21,7 +21,7 @@ int Human::onClickHandler(int cellPosition){
 	return _played;
 }
 
-void Human::placeStone(char * const &map){
+void Human::placeStone(char *map){
 	if (_played != -1)
 		map[_played] = _color;
 }

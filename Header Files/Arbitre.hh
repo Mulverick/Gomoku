@@ -35,6 +35,8 @@ public:
 
 	char _prisoner[2];
 
+	bool	isWinner(void) const { return (_isWinner); }
+
 private:
 	void checkOnEat(int cell, int nb, int color, char const *map, std::deque<sf::Vector2i> &coords);
 

@@ -16,6 +16,7 @@
     <ClInclude Include="..\Header Files\AMenu.hh" />
     <ClInclude Include="..\Header Files\Arbitre.hh" />
     <ClInclude Include="..\Header Files\AWidget.hh" />
+    <ClInclude Include="..\Header Files\AxelAI.h" />
     <ClInclude Include="..\Header Files\Button.hh" />
     <ClInclude Include="..\Header Files\Game.hh" />
     <ClInclude Include="..\Header Files\Human.hh" />
@@ -31,6 +32,7 @@
     <ClCompile Include="..\Source Files\AMenu.cpp" />
     <ClCompile Include="..\Source Files\Arbitre.cpp" />
     <ClCompile Include="..\Source Files\AWidget.cpp" />
+    <ClCompile Include="..\Source Files\AxelAI.cpp" />
     <ClCompile Include="..\Source Files\Button.cpp" />
     <ClCompile Include="..\Source Files\Game.cpp" />
     <ClCompile Include="..\Source Files\Human.cpp" />
