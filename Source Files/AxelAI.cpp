@@ -3,9 +3,11 @@
 #include <future>
 #include <list>
 #include <random>
+#include <iostream>
 
 #include "utils.hh"
 #include "Arbitre.hh"
+#include <stdlib.h>
 
 AxelAI::AxelAI(int color, char const *map)
 	: _color(color),
@@ -21,48 +23,58 @@ void	AxelAI::placeStone(char *map)
 	std::list<std::pair<int, int>>	pos;
 	for (int it = 0; it < 19 * 19; ++it)
 	{
-		if (!map[it])
+		if (!map[it] && (((it + 1) % 19 > it % 19 && map[it + 1]) || ((it - 1) % 19 < it % 19 && map[it - 1])
+			|| (it + 19 < 19 * 19 && (it + 19) / 19 > it / 19 && map[it + 19]) || (it - 19 >= 0 && (it - 19) / 19 < it / 19 && map[it - 19])))
 		{
-			pos.emplace_back(it, 0);
-			results.emplace_back(std::async(std::bind([this] (int pos, int color) {
+			std::cout << it << std::endl;
+			auto toto =
+/*			pos.emplace_back(it, 0);
+			results.emplace_back(std::async(std::bind(*/[this](int pos, int color) {
 				char	map[19 * 19];
-				std::memcpy(map, _map, sizeof(map));
 				int res = 0;
 				int myColor = color;
+				int myPos = pos;
 
-				Arbitre	ar;
-				ar.updateRules(true, true);
-				if (!ar.checkMove(pos, map, color))
-					return (0);
-				map[pos] = color;
-				std::default_random_engine			generator;
-				std::uniform_int_distribution<int>	distribution(0, 19*19 - 1);
-				auto getNewPos = std::bind(distribution, generator);
-				while (!ar.isWinner())
+				for (int simu = 0; simu < 100; ++simu)
 				{
-					color = 2 - color;
-					do {
-						pos = getNewPos();
-					} while (map[pos] || !ar.checkMove(pos, map, color));
+					std::memcpy(map, _map, sizeof(map));
+					color = myColor;
+					pos = myPos;
+					Arbitre	ar;
+					if (!ar.checkMove(pos, map, color))
+						return (0);
 					map[pos] = color;
+					while (!ar.isWinner())
+					{
+						color = (color == WHITE ? BLACK : WHITE);
+						do {
+							pos = rand() % (19 * 19);
+						} while (map[pos] || !ar.checkMove(pos, map, color));
+						//pos = rand() % (19 * 19);
+						//while (map[pos] || !ar.checkMove(pos, map, color))
+						//	pos = rand() % (19 * 19);
+						map[pos] = color;
+					}
+
+					if (myColor == color)
+						res += 1;
 				}
-				
-				if (myColor == color)
-					res += 1;
 
 				return (res);
-			}, it, _color)));
-			break;
+			}/*, it, _color)))*/;
+			pos.emplace_back(it, toto(it, _color));
 		}
 	}
-	auto	itr = results.begin();
+	//auto	itr = results.begin();
 	auto	itp = pos.begin();
-	while (itp != pos.end())
-	{
-		itp->second = itr->get();
-		itr = results.erase(itr);
-		++itp;
-	}
+	//while (itp != pos.end())
+	//{
+	//	itp->second = itr->get();
+	//	if (itp->second)
+	//		std::cout << itp->first << "\t" << itp->second << std::endl;
+	//	itr = results.erase(itr);
+	//	++itp;
+	//}
 	auto	fina = pos.begin();
 	for (itp = pos.begin(); itp != pos.end(); ++itp)
 	{

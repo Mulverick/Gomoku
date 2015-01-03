@@ -98,7 +98,7 @@ bool Game::_initialize()
 	_playerColor = BLACK;
 	_players.push_back(new Human(BLACK));
 	_players.push_back(new AxelAI(WHITE, _map));
-	_arbitre.updateRules(false, false);
+	_arbitre.updateRules(true, true);
 	return true;
 }
 

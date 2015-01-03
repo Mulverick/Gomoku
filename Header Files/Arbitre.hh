@@ -26,7 +26,6 @@ private:
 
 
 	bool _isWinner;
-	bool _ruleDoublethree;
-	bool _ruleOptionalEnd;
-	std::vector<DoubleThree> _doubleThree;
+	static bool _ruleDoublethree;
+	static bool _ruleOptionalEnd;
 };
