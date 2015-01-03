@@ -180,5 +180,6 @@ bool Game::_update()
 		}
 		else
 			_playerColor == BLACK ? _players[0]->wrongMove() : _players[1]->wrongMove();
+	}
 	return true;
 }

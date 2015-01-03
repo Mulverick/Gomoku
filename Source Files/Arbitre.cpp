@@ -403,7 +403,7 @@ bool Arbitre::checkWinner(int pos, char const *map, int color){
 		++nb;
 	}
 	next = pos - 19;
-	while (next / 19 > 0 && map[next] == color)
+	while (next / 19 >= 0 && map[next] == color)
 	{
 		next -= 19;
 		++nb;
@@ -430,7 +430,7 @@ bool Arbitre::checkWinner(int pos, char const *map, int color){
 		++nb;
 	}
 	next = pos - 20;
-	while (next % 19 != 18 && next / 19 > 0 && map[next] == color)
+	while (next % 19 != 18 && next / 19 >= 0 && map[next] == color)
 	{
 		next -= 20;
 		++nb;
@@ -457,7 +457,7 @@ bool Arbitre::checkWinner(int pos, char const *map, int color){
 		++nb;
 	}
 	next = pos - 18;
-	while (next % 19 != 0 && next / 19 > 0 && map[next] == color)
+	while (next % 19 != 0 && next / 19 >= 0 && map[next] == color)
 	{
 		next -= 18;
 		++nb;
@@ -478,6 +478,243 @@ bool Arbitre::checkWinner(int pos, char const *map, int color){
 	}
 	return (false);
 }
+
+bool Arbitre::checkThree(int pos, char const *map, int color){
+	int	nb;
+	int next;
+	if (((color == BLACK ? _prisoner[0] : _prisoner[1])) >= 10)
+	{
+		_isWinner = true;
+		return true;
+	}
+	nb = 1;
+	next = pos + 1;
+	while (next % 19 != 0 && map[next] == color)
+	{
+		++next;
+		++nb;
+	}
+	next = pos - 1;
+	while (next % 19 != 18 && map[next] == color)
+	{
+		--next;
+		++nb;
+	}
+	if (nb >= 4)
+	{
+		if (_ruleOptionalEnd == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+		else if (_ruleOptionalEnd == true && isBreakable(++next, map, color, nb, 1) == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+	}
+	nb = 1;
+	next = pos + 19;
+	while (next / 19 != 19 && map[next] == color)
+	{
+		next += 19;
+		++nb;
+	}
+	next = pos - 19;
+	while (next / 19 >= 0 && map[next] == color)
+	{
+		next -= 19;
+		++nb;
+	}
+	if (nb >= 4)
+	{
+		next += 19;
+		if (_ruleOptionalEnd == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, 19) == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+	}
+	nb = 1;
+	next = pos + 20;
+	while (next % 19 != 0 && next / 19 != 19 && map[next] == color)
+	{
+		next += 20;
+		++nb;
+	}
+	next = pos - 20;
+	while (next % 19 != 18 && next / 19 >= 0 && map[next] == color)
+	{
+		next -= 20;
+		++nb;
+	}
+	if (nb >= 4)
+	{
+		next += 20;
+		if (_ruleOptionalEnd == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, 20) == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+	}
+	nb = 1;
+	next = pos + 18;
+	while (next % 19 != 18 && next / 19 != 19 && map[next] == color)
+	{
+		next += 18;
+		++nb;
+	}
+	next = pos - 18;
+	while (next % 19 != 0 && next / 19 >= 0 && map[next] == color)
+	{
+		next -= 18;
+		++nb;
+	}
+	if (nb >= 4)
+	{
+		next += 18;
+		if (_ruleOptionalEnd == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, 18) == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+	}
+	return (false);
+}
+
+bool Arbitre::checkTwo(int pos, char const *map, int color){
+	int	nb;
+	int next;
+	if (((color == BLACK ? _prisoner[0] : _prisoner[1])) >= 10)
+	{
+		_isWinner = true;
+		return true;
+	}
+	nb = 1;
+	next = pos + 1;
+	while (next % 19 != 0 && map[next] == color)
+	{
+		++next;
+		++nb;
+	}
+	next = pos - 1;
+	while (next % 19 != 18 && map[next] == color)
+	{
+		--next;
+		++nb;
+	}
+	if (nb >= 3)
+	{
+		if (_ruleOptionalEnd == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+		else if (_ruleOptionalEnd == true && isBreakable(++next, map, color, nb, 1) == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+	}
+	nb = 1;
+	next = pos + 19;
+	while (next / 19 != 19 && map[next] == color)
+	{
+		next += 19;
+		++nb;
+	}
+	next = pos - 19;
+	while (next / 19 >= 0 && map[next] == color)
+	{
+		next -= 19;
+		++nb;
+	}
+	if (nb >= 3)
+	{
+		next += 19;
+		if (_ruleOptionalEnd == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, 19) == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+	}
+	nb = 1;
+	next = pos + 20;
+	while (next % 19 != 0 && next / 19 != 19 && map[next] == color)
+	{
+		next += 20;
+		++nb;
+	}
+	next = pos - 20;
+	while (next % 19 != 18 && next / 19 >= 0 && map[next] == color)
+	{
+		next -= 20;
+		++nb;
+	}
+	if (nb >= 3)
+	{
+		next += 20;
+		if (_ruleOptionalEnd == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, 20) == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+	}
+	nb = 1;
+	next = pos + 18;
+	while (next % 19 != 18 && next / 19 != 19 && map[next] == color)
+	{
+		next += 18;
+		++nb;
+	}
+	next = pos - 18;
+	while (next % 19 != 0 && next / 19 >= 0 && map[next] == color)
+	{
+		next -= 18;
+		++nb;
+	}
+	if (nb >= 3)
+	{
+		next += 18;
+		if (_ruleOptionalEnd == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, 18) == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+	}
+	return (false);
+}
+
 void Arbitre::updateRules(bool r1, bool r2){
 	_ruleDoublethree = r1;
 	_ruleOptionalEnd = r2;

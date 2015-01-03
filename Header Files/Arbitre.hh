@@ -14,6 +14,8 @@ public:
 	bool checkMove(int, char *, int color);
 	int checkDoubleThree(int pos, char const *map, int color, bool recursive = true);
 	bool checkWinner(int pos, char const *map, int color);
+	bool checkThree(int pos, char const *map, int color);
+	bool checkTwo(int pos, char const *map, int color);
 	std::deque<sf::Vector2i> checkEat(int, char const *, int color);
 	void updateRules(bool, bool);
 	char _prisoner[2];
