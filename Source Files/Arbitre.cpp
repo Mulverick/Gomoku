@@ -1,36 +1,11 @@
 #include "Arbitre.hh"
 #include <iostream>
 
-DoubleThree::DoubleThree(int nb1, int nb2, int nb3) : _first(nb1), _second(nb2), _third(nb3) {}
-DoubleThree::DoubleThree(DoubleThree const &cpy) : _first(cpy._first), _second(cpy._second), _third(cpy._third) {}
-DoubleThree::~DoubleThree(){}
-DoubleThree &DoubleThree::operator=(DoubleThree const &cpy){
-	_first = cpy._first;
-	_second = cpy._second;
-	_third = cpy._third;
-	return (*this);
-}
-bool DoubleThree::operator==(DoubleThree const &a) const {
-	if (_first == a._first || _first == a._second || _first == a._third ||
-		_second == a._first || _second == a._second || _second == a._third ||
-		_third == a._first || _third == a._second || _third == a._third)
-		return true;
-	return false;
-}
-int DoubleThree::getFirst() const{
-	return _first;
-}
-int DoubleThree::getSecond() const{
-	return _second;
-}
-int DoubleThree::getThird() const{
-	return _third;
-}
-
 Arbitre::Arbitre()
 {
 	_prisoner[0] = 0;
 	_prisoner[1] = 0;
+	_isWinner = false;
 }
 
 
@@ -382,11 +357,18 @@ static bool isBreakable(int pos, char const *map, int color, int nb, int dir){
 	return (rt);
 }
 
+bool Arbitre::getIsWinner(){
+	return _isWinner;
+}
+
 bool Arbitre::checkWinner(int pos, char const *map, int color){
 	int	nb;
 	int next;
 	if (((color == WHITE ? _prisoner[0] : _prisoner[1])) >= 10)
+	{
+		_isWinner = true;
 		return true;
+	}
 	nb = 1;
 	next = pos + 1;
 	while (next % 19 != 0 && map[next] == color)
@@ -403,9 +385,15 @@ bool Arbitre::checkWinner(int pos, char const *map, int color){
 	if (nb >= 5)
 	{
 		if (_ruleOptionalEnd == false)
-			return (true);
-		else if (_ruleOptionalEnd == true && isBreakable(++next, map, color, nb, 1) == false)
+		{
+			_isWinner = true;
 			return true;
+		}
+		else if (_ruleOptionalEnd == true && isBreakable(++next, map, color, nb, 1) == false)
+		{
+			_isWinner = true;
+			return true;
+		}
 	}
 	nb = 1;
 	next = pos + 19;
@@ -424,9 +412,15 @@ bool Arbitre::checkWinner(int pos, char const *map, int color){
 	{
 		next += 19;
 		if (_ruleOptionalEnd == false)
-			return (true);
-		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, 19) == false)
+		{
+			_isWinner = true;
 			return true;
+		}
+		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, 19) == false)
+		{
+			_isWinner = true;
+			return true;
+		}
 	}
 	nb = 1;
 	next = pos + 20;
@@ -445,9 +439,15 @@ bool Arbitre::checkWinner(int pos, char const *map, int color){
 	{
 		next += 20;
 		if (_ruleOptionalEnd == false)
-			return (true);
-		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, 20) == false)
+		{
+			_isWinner = true;
 			return true;
+		}
+		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, 20) == false)
+		{
+			_isWinner = true;
+			return true;
+		}
 	}
 	nb = 1;
 	next = pos + 18;
@@ -466,9 +466,15 @@ bool Arbitre::checkWinner(int pos, char const *map, int color){
 	{
 		next += 18;
 		if (_ruleOptionalEnd == false)
-			return (true);
-		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, 18) == false)
+		{
+			_isWinner = true;
 			return true;
+		}
+		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, 18) == false)
+		{
+			_isWinner = true;
+			return true;
+		}
 	}
 	return (false);
 }

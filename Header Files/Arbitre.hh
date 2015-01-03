@@ -5,28 +5,12 @@
 #include "Utils.hh"
 #include <deque>
 
-class DoubleThree{
-public:
-	DoubleThree(int, int ,int);
-	DoubleThree(DoubleThree const &);
-	~DoubleThree();
-	DoubleThree &operator=(DoubleThree const &);
-	bool operator==(DoubleThree const &)const;
-	int getFirst() const;
-	int getSecond() const;
-	int getThird() const;
-
-private:
-	int _first;
-	int _second;
-	int _third;
-};
-
 class Arbitre
 {
 public:
 	Arbitre();
 	~Arbitre();
+	bool getIsWinner();
 	bool checkMove(int, char *, int color);
 	int checkDoubleThree(int pos, char const *map, int color, bool recursive = true);
 	bool checkWinner(int pos, char const *map, int color);
