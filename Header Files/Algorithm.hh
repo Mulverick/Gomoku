@@ -19,7 +19,7 @@ public:
 	~Algorithm();
 	int					EasyPlay(char * const &map);
 	std::list<Node *>	CreateNodesList(char * const &map, int color, int depth);
-	void				MonteCarlo(Node *node, Node *parent, char * const &map, std::vector<int> freecase);
+	void				MonteCarlo(Node *node, Node *parent, char *map, std::vector<int> freecase);
 
 private:
 	Arbitre		_arbitre;

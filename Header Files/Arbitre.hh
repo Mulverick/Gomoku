@@ -33,6 +33,8 @@ public:
 	std::deque<sf::Vector2i> checkEat(int, char const *, int color);
 	void updateRules(bool, bool);
 
+	char _prisoner[2];
+
 private:
 	void checkOnEat(int cell, int nb, int color, char const *map, std::deque<sf::Vector2i> &coords);
 
@@ -40,7 +42,5 @@ private:
 	bool _isWinner;
 	bool _ruleDoublethree;
 	bool _ruleOptionalEnd;
-	char _prisoner[2];
 	std::vector<DoubleThree> _doubleThree;
 };
-

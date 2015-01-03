@@ -92,9 +92,9 @@ bool Game::_initialize()
 	if (!_window.isOpen())
 		return false;
 	_goban.loadFromFile("../Assets/goban.png");
-	_white.loadFromFile("../Assets/white.png");
-	_black.loadFromFile("../Assets/black.png");
-	_playerColor = BLACK;
+	_black.loadFromFile("../Assets/white.png");
+	_white.loadFromFile("../Assets/black.png");
+	_playerColor = WHITE;
 	_players.push_back(new Human(WHITE));
 	_players.push_back(new Human(BLACK));
 	_arbitre.updateRules(true, true);
@@ -106,7 +106,10 @@ void Game::_onClick()
 	int cellPosition = (sf::Mouse::getPosition(_window).y / CELL_SIZE) * 19 + (sf::Mouse::getPosition(_window).x / CELL_SIZE);
 	if (_arbitre.checkMove((_playerColor == WHITE ? _players[0]->onClickHandler(cellPosition) : _players[1]->onClickHandler(cellPosition)), _map, _playerColor) == true)
 	{
-		_playerColor == WHITE ? _players[0]->placeStone(_map) : _players[1]->placeStone(_map);
+		if (_playerColor == WHITE)
+			_players[0]->placeStone(_map);
+		else
+			_players[1]->placeStone(_map);
 		_playerColor = (_playerColor == WHITE ? BLACK : WHITE);
 		
 	}
@@ -118,13 +121,23 @@ bool Game::_update()
 {
 	if (!_window.isOpen())
 		return false;
-	sf::Event e;
-	while (_window.pollEvent(e))
+	Type type = _playerColor == WHITE ? _players[0]->getType() : _players[1]->getType();
+
+	if (type == HUMAN)
 	{
-		if (e.type == sf::Event::Closed)
-			return false;
-		if (e.type == sf::Event::MouseButtonPressed)
-			_onClick();
+		sf::Event e;
+		while (_window.pollEvent(e))
+		{
+			if (e.type == sf::Event::Closed)
+				return false;
+			if (e.type == sf::Event::MouseButtonPressed)
+				_onClick();
+		}
+	}
+	else
+	{
+		_playerColor == WHITE ? _players[0]->placeStone(_map) : _players[1]->placeStone(_map);
+		_playerColor = (_playerColor == WHITE ? BLACK : WHITE);
 	}
 	return true;
 }
