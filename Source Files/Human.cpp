@@ -5,7 +5,7 @@
 Human::Human(int color)
 {
 	_played = -1;
-	_turn = (color == WHITE ? true : false);
+	_turn = (color == BLACK ? true : false);
 	_color = color;
 	_type = HUMAN;
 }

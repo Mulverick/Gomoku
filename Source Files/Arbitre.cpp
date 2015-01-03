@@ -361,7 +361,6 @@ static bool isBreakable(int pos, char const *map, int color, int nb, int dir){
 		it = 0;
 		while (it < 5)
 		{
-			std::cout << it << std::endl;
 			if (isEatable(next, dir, map, color) == true)
 			{
 				rt = true;
