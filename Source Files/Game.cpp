@@ -1,5 +1,6 @@
 #include <SFML/Window/Event.hpp>
 #include <iostream>
+#include <sstream>
 #include "Game.hh"
 #include "Utils.hh"
 #include "AxelAI.h"
@@ -45,6 +46,8 @@ void Game::_close()
 void Game::_draw()
 {
 	Human *tmp;
+	std::stringstream ss;
+	std::stringstream ss2;
 
 	_window.draw(_goban.getSprite());
 	_white.setColor(sf::Color(255, 255, 255, 255));
@@ -65,6 +68,34 @@ void Game::_draw()
 			break;
 		}
 	}
+	_sb.setPosition(0.0f, 798.0f);
+	_window.draw(_sb.getSprite());
+	_white.setPosition(30.0f, 825.0f);
+	_window.draw(_white.getSprite());
+	ss << (int)_arbitre._prisoner[0];
+	std::string str = ss.str();
+	_text.setString(" X " + str);
+	_text.setPosition(sf::Vector2f(70.0f, 830.0f));
+	_text.draw(_window);
+	ss2 << (int)_arbitre._prisoner[1];
+	str = ss2.str();
+	_text.setString(str + " X ");
+	_text.setPosition(sf::Vector2f(670.0f, 830.0f));
+	_text.draw(_window);
+	_black.setPosition(725.0f, 825.0f);
+	_window.draw(_black.getSprite());
+	if (_players[0]->getType() == HUMAN)
+		_text.setString("Player 1");
+	else
+		_text.setString("Ia 1");
+	_text.setPosition(sf::Vector2f(260.0f, 830.0f));
+	_text.draw(_window);
+	if (_players[1]->getType() == HUMAN)
+		_text.setString("Player 2");
+	else
+		_text.setString("Ia 2");
+	_text.setPosition(sf::Vector2f(430.0f, 830.0f));
+	_text.draw(_window);
 	if (dynamic_cast<Human*>(_players[0]) != 0 && dynamic_cast<Human*>(_players[1]) != 0)
 		_drawCursor((_playerColor == WHITE ? _white : _black));
 	else if (((tmp = dynamic_cast<Human*>(_players[0])) != 0 && dynamic_cast<Human*>(_players[1]) == 0)
@@ -89,12 +120,16 @@ void Game::_drawCursor(Sprite &sprite)
 
 bool Game::_initialize()
 {
-	_window.create(sf::VideoMode(WIN_SIZE, WIN_SIZE), "Gomoku", sf::Style::Titlebar | sf::Style::Close);
+	_window.create(sf::VideoMode(WIN_SIZE, WIN_SIZE + 100), "Gomoku", sf::Style::Titlebar | sf::Style::Close);
 	if (!_window.isOpen())
 		return false;
 	_goban.loadFromFile("../Assets/goban.png");
+	_sb.loadFromFile("../Assets/scoreBoard.png");
 	_black.loadFromFile("../Assets/black.png");
 	_white.loadFromFile("../Assets/white.png");
+	_text.setFont("../Assets/fontBambo.ttf");
+	_text.setColor(sf::Color::Black);
+	_text.setFontSize(30);
 	_playerColor = BLACK;
 	_players.push_back(new Human(BLACK));
 	_players.push_back(new AxelAI(WHITE, _map));

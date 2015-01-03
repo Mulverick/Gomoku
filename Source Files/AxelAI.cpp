@@ -24,7 +24,9 @@ void	AxelAI::placeStone(char *map)
 	for (int it = 0; it < 19 * 19; ++it)
 	{
 		if (!map[it] && (((it + 1) % 19 > it % 19 && map[it + 1]) || ((it - 1) % 19 < it % 19 && map[it - 1])
-			|| (it + 19 < 19 * 19 && (it + 19) / 19 > it / 19 && map[it + 19]) || (it - 19 >= 0 && (it - 19) / 19 < it / 19 && map[it - 19])))
+			|| (it + 19 < 19 * 19 && (it + 19) / 19 > it / 19 && map[it + 19]) || (it - 19 >= 0 && (it - 19) / 19 < it / 19 && map[it - 19])
+			|| (it + 18 < 19 * 19 && (it - 1) % 19 < it % 19 && (it + 19) / 19 > it / 19 && map[it + 18]) || (it - 18 >= 0 && (it + 1) % 19 > it % 19 && (it - 19) / 19 < it / 19 && map[it - 18])
+			|| (it + 20 < 19 * 19 && (it + 1) % 19 > it % 19 && (it + 19) / 19 > it / 19 && map[it + 20]) || (it - 20 >= 0 && (it - 1) % 19 < it % 19 && (it - 19) / 19 < it / 19 && map[it - 20])))
 		{
 			std::cout << it << std::endl;
 			auto toto =

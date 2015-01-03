@@ -7,6 +7,7 @@
 #include "Arbitre.hh"
 #include "Human.hh"
 #include "AI.hh"
+#include "Text.hh"
 #include "Sprite.hh"
 
 class Game
@@ -31,6 +32,8 @@ private:
 	Sprite _goban;
 	Sprite _white;
 	Sprite _black;
+	Sprite _sb;
+	Text _text;
 	int _playerColor;
 	char _map[361];
 };

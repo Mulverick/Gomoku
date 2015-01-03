@@ -25,7 +25,7 @@ sf::Vector2f Text::getSize() const
   return sf::Vector2f(tmp.width, tmp.height);
 }
 
-void Text::setColor(sf::Color &color)
+void Text::setColor(const sf::Color &color)
 {
   _text.setColor(color);
 }

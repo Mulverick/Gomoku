@@ -16,7 +16,6 @@ public:
 	bool checkWinner(int pos, char const *map, int color);
 	std::deque<sf::Vector2i> checkEat(int, char const *, int color);
 	void updateRules(bool, bool);
-
 	char _prisoner[2];
 
 	bool	isWinner(void) const { return (_isWinner); }
@@ -26,6 +25,7 @@ private:
 
 
 	bool _isWinner;
+
 	static bool _ruleDoublethree;
 	static bool _ruleOptionalEnd;
 };

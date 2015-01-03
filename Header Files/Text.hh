@@ -16,7 +16,7 @@ public:
   virtual void draw(sf::RenderWindow &window);
   std::size_t getFontSize() const;
   virtual sf::Vector2f getSize() const;
-  void setColor(sf::Color &color);
+  void setColor(const sf::Color &color);
   void setFont(const std::string &fontName);
   void setFontSize(size_t size);
   virtual void setPosition(const sf::Vector2f &position);
