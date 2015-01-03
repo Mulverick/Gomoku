@@ -118,13 +118,23 @@ bool Game::_update()
 {
 	if (!_window.isOpen())
 		return false;
-	sf::Event e;
-	while (_window.pollEvent(e))
+	Type type = _playerColor == WHITE ? _players[0]->getType() : _players[1]->getType();
+
+	if (type == HUMAN)
 	{
-		if (e.type == sf::Event::Closed)
-			return false;
-		if (e.type == sf::Event::MouseButtonPressed)
-			_onClick();
+		sf::Event e;
+		while (_window.pollEvent(e))
+		{
+			if (e.type == sf::Event::Closed)
+				return false;
+			if (e.type == sf::Event::MouseButtonPressed)
+				_onClick();
+		}
+	}
+	else
+	{
+		_playerColor == WHITE ? _players[0]->placeStone(_map) : _players[1]->placeStone(_map);
+		_playerColor = (_playerColor == WHITE ? BLACK : WHITE);
 	}
 	return true;
 }
