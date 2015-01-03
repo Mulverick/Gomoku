@@ -287,42 +287,56 @@ std::deque<sf::Vector2i> Arbitre::checkEat(int cell, char const *map, int color)
 static bool isEatable(int next, int dir, char const *map, int color){
 	int it1;
 	int it2;
+	int it3;
+	int it4;
 	int ocolor;
 
+	std::cout << dir << std::endl;
 	ocolor = (color == WHITE ? BLACK : WHITE);
 	if (dir != 1)
 	{
 		it1 = next + 1;
 		it2 = next - 1;
-		if (it1 % 19 != 0 && it2 % 19 != 18)
-			if ((map[it1] == ocolor && map[it2] == color) || (map[it1] == color && map[it2] == ocolor))
+		it4 = it2 - 1;
+		it3 = it1 + 1;
+		std::cout << "1 " << next << " " << it3 << " " << it4 << std::endl;
+		if (it3 % 19 > next % 19 && it4 % 19 < next % 19 && it3 < 361 && it4 >= 0)
+			if ((map[it1] == ocolor && map[it2] == color && map[it4] == 0) || (map[it1] == color && map[it2] == ocolor && map[it3] == 0) || (map[it1] == 0 && map[it4] == ocolor && map[it2] == color) || (map[it1] == color && map[it3] == ocolor && map[it2] == 0))
 				return (true);
 	}
 	if (dir != 18)
-	{ 
+	{
 		it1 = next + 18;
 		it2 = next - 18;
-		if (it1 % 19 != 18 && it1 / 19 != 19 && it2 % 19 != 0 && it2 / 19 > 0)
-			if ((map[it1] == ocolor && map[it2] == color) || (map[it1] == color && map[it2] == ocolor))
+		it4 = it2 - 18;
+		it3 = it1 + 18;
+		std::cout << "18 " << next << " " << it3 << " " << it4 << std::endl;
+		if (it3 % 19 > next % 19 && it4 % 19 < next % 19 && it3 < 361 && it4 >= 0)
+			if ((map[it1] == ocolor && map[it2] == color && map[it4] == 0) || (map[it1] == color && map[it2] == ocolor && map[it3] == 0) || (map[it1] == 0 && map[it4] == ocolor && map[it2] == color) || (map[it1] == color && map[it3] == ocolor && map[it2] == 0))
 				return (true);
 	}
 	if (dir != 19)
-	{ 
+	{
 		it1 = next + 19;
 		it2 = next - 19;
-		if (it1 / 19 != 19 && it2 / 19 > 0)
-			if ((map[it1] == ocolor && map[it2] == color) || (map[it1] == color && map[it2] == ocolor))
+		it4 = it2 - 19;
+		it3 = it1 + 19;
+		std::cout << "19 " << next << " " << it3 << " " << it4 << " " << it4 / 19 << std::endl;
+		if (it3 / 19 < 19 && it4 / 19 >= 0 && it3 < 361 && it4 >= 0)
+			if ((map[it1] == ocolor && map[it2] == color && map[it4] == 0) || (map[it1] == color && map[it2] == ocolor && map[it3] == 0) || (map[it1] == 0 && map[it4] == ocolor && map[it2] == color) || (map[it1] == color && map[it3] == ocolor && map[it2] == 0))
 				return (true);
 	}
 	if (dir != 20)
 	{
 		it1 = next + 20;
 		it2 = next - 20;
-		if (it1 % 19 != 0 && it1 / 19 != 19 && it2 % 19 != 18 && it2 / 19)
-			if ((map[it1] == ocolor && map[it2] == color) || (map[it1] == color && map[it2] == ocolor))
+		it4 = it2 - 20;
+		it3 = it1 + 20;
+		std::cout << "20 " << next << " " << it3 << " " << it4 << std::endl;
+		if (it3 % 19 > next % 19 && it4 % 19 < next % 19 && it3 < 361 && it4 >= 0)
+			if ((map[it1] == ocolor && map[it2] == color && map[it4] == 0) || (map[it1] == color && map[it2] == ocolor && map[it3] == 0) || (map[it1] == 0 && map[it4] == ocolor && map[it2] == color) || (map[it1] == color && map[it3] == ocolor && map[it2] == 0))
 				return (true);
 	}
-	return false;
 }
 
 static bool isBreakable(int pos, char const *map, int color, int nb, int dir){
