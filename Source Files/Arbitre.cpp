@@ -31,7 +31,7 @@ bool Arbitre::checkMove(int cell, char *map, int color)
 	{
 		while (coord.empty() == false)
 		{
-			color == WHITE ? _prisoner[0] += 2 : _prisoner[1] += 2;
+			color == BLACK ? _prisoner[0] += 2 : _prisoner[1] += 2;
 			map[coord.front().x] = 0;
 			map[coord.front().y] = 0;
 			coord.pop_front();
@@ -364,7 +364,7 @@ bool Arbitre::getIsWinner(){
 bool Arbitre::checkWinner(int pos, char const *map, int color){
 	int	nb;
 	int next;
-	if (((color == WHITE ? _prisoner[0] : _prisoner[1])) >= 10)
+	if (((color == BLACK ? _prisoner[0] : _prisoner[1])) >= 10)
 	{
 		_isWinner = true;
 		return true;
