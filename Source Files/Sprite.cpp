@@ -33,5 +33,5 @@ void Sprite::setPosition(float x, float y)
 
 void Sprite::setPosition(const sf::Vector2i &position)
 {
-	_sprite.setPosition(position.x, position.y);
+	_sprite.setPosition((float)position.x, (float)position.y);
 }

@@ -4,7 +4,7 @@
 Algorithm::Algorithm()
 {
 	this->_first = true;
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 }
 
 Algorithm::~Algorithm() {}

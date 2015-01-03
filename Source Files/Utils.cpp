@@ -7,5 +7,5 @@ sf::Vector2i Utils::toCellPosition(const sf::Vector2i &position)
 
 sf::Vector2f Utils::toVector2f(const sf::Vector2i &vector)
 {
-  return sf::Vector2f(vector.x, vector.y);
+	return (sf::Vector2f((float)vector.x, (float)vector.y));
 }

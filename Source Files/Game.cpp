@@ -53,11 +53,11 @@ void Game::_draw()
 		switch (_map[i])
 		{
 		case WHITE:
-			_white.setPosition((i % 19) * CELL_SIZE, (i / 19) * CELL_SIZE);
+			_white.setPosition((float)((i % 19) * CELL_SIZE), (float)((i / 19) * CELL_SIZE));
 			_window.draw(_white.getSprite());
 			break;
 		case BLACK:
-			_black.setPosition((i % 19) * CELL_SIZE, (i / 19) * CELL_SIZE);
+			_black.setPosition((float)((i % 19) * CELL_SIZE), (float)((i / 19) * CELL_SIZE));
 			_window.draw(_black.getSprite());
 			break;
 		default:
@@ -94,7 +94,7 @@ bool Game::_initialize()
 	_goban.loadFromFile("../Assets/goban.png");
 	_white.loadFromFile("../Assets/white.png");
 	_black.loadFromFile("../Assets/black.png");
-	_playerColor = WHITE;
+	_playerColor = BLACK;
 	_players.push_back(new Human(WHITE));
 	_players.push_back(new Human(BLACK));
 	_arbitre.updateRules(true, true);
