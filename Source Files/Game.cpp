@@ -7,8 +7,13 @@
 
 Game::Game()
 {
-	for (int i = 0; i < 361; ++i)
-		_map[i] = 0;
+	_map = new char*[19];
+	for (int y = 0; y < 19; ++y)
+	{
+		_map[y] = new char[19];
+		for (int i = 0; i < 19; ++i)
+			_map[y][i] = 0;
+	}
 }
 
 Game::~Game()
@@ -21,12 +26,12 @@ void Game::run()
 		return;
 	while (_update())
 	{
-		if (_players[0]->hasPlayed() != -1)
+		if (_players[0]->hasPlayed().x != -1)
 		{
 			_players[0]->changeTurn();
 			_players[1]->changeTurn();
 		}
-		else if (_players[1]->hasPlayed() != -1)
+		else if (_players[1]->hasPlayed().x != -1)
 		{
 			_players[0]->changeTurn();
 			_players[1]->changeTurn();
@@ -52,22 +57,23 @@ void Game::_draw()
 	_window.draw(_goban.getSprite());
 	_white.setColor(sf::Color(255, 255, 255, 255));
 	_black.setColor(sf::Color(255, 255, 255, 255));
-	for (int i = 0; i < 361; ++i)
-	{
-		switch (_map[i])
+	for (int y = 0; y < 19; ++y)
+		for (int i = 0; i < 19; ++i)
 		{
-		case WHITE:
-			_white.setPosition((float)((i % 19) * CELL_SIZE), (float)((i / 19) * CELL_SIZE));
-			_window.draw(_white.getSprite());
-			break;
-		case BLACK:
-			_black.setPosition((float)((i % 19) * CELL_SIZE), (float)((i / 19) * CELL_SIZE));
-			_window.draw(_black.getSprite());
-			break;
-		default:
-			break;
+			switch (_map[y][i])
+			{
+			case WHITE:
+				_white.setPosition((float)(i * CELL_SIZE), (float)(y * CELL_SIZE));
+				_window.draw(_white.getSprite());
+				break;
+			case BLACK:
+				_black.setPosition((float)(i * CELL_SIZE), (float)(y * CELL_SIZE));
+				_window.draw(_black.getSprite());
+				break;
+			default:
+				break;
+			}
 		}
-	}
 	_sb.setPosition(0.0f, 798.0f);
 	_window.draw(_sb.getSprite());
 	_white.setPosition(30.0f, 825.0f);
@@ -107,15 +113,21 @@ void Game::_draw()
 
 void Game::_drawCursor(Sprite &sprite)
 {
-	if (_map[(sf::Mouse::getPosition(_window).y / CELL_SIZE) * 19 + (sf::Mouse::getPosition(_window).x / CELL_SIZE)])
+	int x = (sf::Mouse::getPosition(_window).x / CELL_SIZE);
+	int y = (sf::Mouse::getPosition(_window).y / CELL_SIZE);
+	if (x >= 19) x = 18;
+	if (y >= 19) y = 18;
+	if (x < 0) x = 0;
+	if (y < 0) y = 0;
+	if (_map[y][x])
 		return;
-	sf::Vector2i mousePosition = sf::Mouse::getPosition(_window);
-	if (mousePosition.x >= 0 && mousePosition.x < WIN_SIZE && mousePosition.y >= 0 && mousePosition.y < WIN_SIZE)
-	{
-		sprite.setPosition(Utils::toCellPosition(mousePosition));
+	//sf::Vector2i mousePosition = sf::Mouse::getPosition(_window);
+	//if (mousePosition.x >= 0 && mousePosition.x < WIN_SIZE && mousePosition.y >= 0 && mousePosition.y < WIN_SIZE)
+	//{
+		sprite.setPosition(Utils::toCellPosition(sf::Vector2i(x * CELL_SIZE, y * CELL_SIZE)));
 		sprite.setColor(sf::Color(255, 255, 255, 128));
 		_window.draw(sprite.getSprite());
-	}
+	//}
 }
 
 bool Game::_initialize()
@@ -132,15 +144,17 @@ bool Game::_initialize()
 	_text.setFontSize(30);
 	_playerColor = BLACK;
 	_players.push_back(new Human(BLACK));
-	_players.push_back(new Human(WHITE));
-	_arbitre.updateRules(true, true);
+	_players.push_back(new AxelAI(WHITE, _map));
+	Arbitre::updateRules(true, true);
 	return true;
 }
 
 void Game::_onClick()
 {
 	bool ret;
-	int cellPosition = (sf::Mouse::getPosition(_window).y / CELL_SIZE) * 19 + (sf::Mouse::getPosition(_window).x / CELL_SIZE);
+	Vector<int>	cellPosition;
+	cellPosition.x = (sf::Mouse::getPosition(_window).x / CELL_SIZE);
+	cellPosition.y = (sf::Mouse::getPosition(_window).y / CELL_SIZE);
 	if ((ret = _arbitre.checkMove((_playerColor == BLACK ? _players[0]->onClickHandler(cellPosition) : _players[1]->onClickHandler(cellPosition)), _map, _playerColor)) == true)
 	{
 		if (_playerColor == BLACK)

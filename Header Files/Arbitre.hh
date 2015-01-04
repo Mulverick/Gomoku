@@ -11,13 +11,13 @@ public:
 	Arbitre();
 	~Arbitre();
 	bool getIsWinner();
-	bool checkMove(int, char *, int color);
-	int checkDoubleThree(int pos, char const *map, int color, bool recursive = true);
-	bool checkWinner(int pos, char const *map, int color);
-	bool checkThree(int pos, char const *map, int color);
-	bool checkTwo(int pos, char const *map, int color);
-	std::deque<sf::Vector2i> checkEat(int, char const *, int color);
-	void updateRules(bool, bool);
+	bool checkMove(Vector<int> const &, char * const *, int color);
+	int checkDoubleThree(Vector<int> const &pos, char const * const *map, int color, bool recursive = true);
+	bool checkWinner(Vector<int> const &pos, char const * const *map, int color);
+	bool checkThree(Vector<int> const &pos, char const * const *map, int color);
+	bool checkTwo(Vector<int> const &pos, char const * const *map, int color);
+	void checkEat(Vector<int> const &pos, char const * const *, int color, std::deque<Vector<Vector<int>>> &);
+	static void updateRules(bool, bool);
 
 	void clearArbitre();
 	bool	isWinner(void) const { return (_isWinner); }
@@ -25,7 +25,7 @@ public:
 	char _prisoner[2];
 
 private:
-	void checkOnEat(int cell, int nb, int color, char const *map, std::deque<sf::Vector2i> &coords);
+	void checkOnEat(Vector<int> const &, Vector<int> const &nb, int color, char const * const *map, std::deque<Vector<Vector<int>>> &);
 
 
 	bool _isWinner;

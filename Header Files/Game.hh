@@ -35,7 +35,8 @@ private:
 	Sprite _sb;
 	Text _text;
 	int _playerColor;
-	char _map[361];
+	//char _map[361];
+	char	**_map;
 };
 
 #endif // GAME_HH
