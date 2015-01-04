@@ -19,7 +19,7 @@ int		AI::onClickHandler(int cellPosition)
 	return (-1);
 }
 
-void	AI::placeStone(char * const &map)
+void	AI::placeStone(char *map)
 {
 	//std::cout << "AI::placeStone in" << std::endl;
 
@@ -34,16 +34,13 @@ void	AI::placeStone(char * const &map)
 	for (std::list<Node *>::iterator it = this->_nodes.begin(); it != this->_nodes.end(); ++it)
 	{
 		tmp = (*it)->WinsRate();
-		//std::cout << "CWinsRate = " << wr << " WinsRate = " << tmp << std::endl;
 		if (tmp > wr)
 		{
-			//std::cout << "in" << std::endl;
 			wr = tmp;
 			this->_played = (*it)->GetPos();
 		}
 	}
 	this->_nodes.clear();
-	//std::cout << "AI::placeStone : pos = " << this->_played << " in map[pos] = " << (int)map[this->_played] << std::endl;
 	map[this->_played] = this->_color;
 	//std::cout << "AI::placeStone out" << std::endl;
 }

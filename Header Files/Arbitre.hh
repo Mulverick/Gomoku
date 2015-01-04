@@ -18,9 +18,11 @@ public:
 	bool checkTwo(int pos, char const *map, int color);
 	std::deque<sf::Vector2i> checkEat(int, char const *, int color);
 	void updateRules(bool, bool);
-	char _prisoner[2];
 
+	void clearArbitre();
 	bool	isWinner(void) const { return (_isWinner); }
+
+	char _prisoner[2];
 
 private:
 	void checkOnEat(int cell, int nb, int color, char const *map, std::deque<sf::Vector2i> &coords);

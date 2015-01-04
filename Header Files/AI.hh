@@ -11,7 +11,7 @@ public:
 	AI(int color);
 	~AI();
 	int		onClickHandler(int cellPosition);
-	void	placeStone(char * const &map);
+	void	placeStone(char *map);
 	int		hasPlayed() const;
 	void	changeTurn();
 	void	wrongMove();

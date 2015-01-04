@@ -15,8 +15,8 @@ class Algorithm;
 class Node
 {
 public:
-	Node(int color, int pos, int deth, char * const &board);
-	Node(Node *parent, int color, int pos, int deth, char * const &board);
+	Node(int color, int pos, int deth, char *board);
+	Node(Node *parent, int color, int pos, int deth, char *board);
 	~Node();
 	void				Expand(Algorithm algorithm, std::vector<int> freecase);
 	void				Simulate(Algorithm algorithm, std::vector<int> freecase);

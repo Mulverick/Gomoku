@@ -1,7 +1,7 @@
 #include	"Node.hh"
 #include	"Algorithm.hh"
 
-Node::Node(int color, int pos, int deth, char * const &board)
+Node::Node(int color, int pos, int deth, char *board)
 {
 	this->_pos = pos;
 	this->_board = new char[MAP_SIZE];
@@ -17,7 +17,7 @@ Node::Node(int color, int pos, int deth, char * const &board)
 	this->_loss = 0;
 }
 
-Node::Node(Node *parent, int color, int pos, int deth, char * const &board)
+Node::Node(Node *parent, int color, int pos, int deth, char *board)
 {
 	this->_pos = pos;
 	this->_board = new char[MAP_SIZE];
@@ -57,6 +57,7 @@ void				Node::Simulate(Algorithm algorithm, std::vector<int> freecase)
 {
 //	std::cout << "Node::Simulate in" << std::endl;
 	algorithm.MonteCarlo(this, this->_parent, this->_board, freecase);
+
 //	std::cout << "Node::Simulate out" << std::endl;
 }
 

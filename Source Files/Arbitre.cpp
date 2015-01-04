@@ -39,7 +39,7 @@ bool Arbitre::checkMove(int cell, char *map, int color)
 	}
 	if (checkWinner(cell, map, color) == true)
 	{
-		std::cout << color << " gagne !" << std::endl;
+		//std::cout << color << " gagne !" << std::endl;
 		return true;
 	}
 	 return (true);
@@ -291,7 +291,7 @@ static bool isEatable(int next, int dir, char const *map, int color){
 	int it4;
 	int ocolor;
 
-	std::cout << dir << std::endl;
+	//std::cout << dir << std::endl;
 	ocolor = (color == WHITE ? BLACK : WHITE);
 	if (dir != 1)
 	{
@@ -299,7 +299,7 @@ static bool isEatable(int next, int dir, char const *map, int color){
 		it2 = next - 1;
 		it4 = it2 - 1;
 		it3 = it1 + 1;
-		std::cout << "1 " << next << " " << it3 << " " << it4 << std::endl;
+		//std::cout << "1 " << next << " " << it3 << " " << it4 << std::endl;
 		if (it3 % 19 > next % 19 && it4 % 19 < next % 19 && it3 < 361 && it4 >= 0)
 			if ((map[it1] == ocolor && map[it2] == color && map[it4] == 0) || (map[it1] == color && map[it2] == ocolor && map[it3] == 0) || (map[it1] == 0 && map[it4] == ocolor && map[it2] == color) || (map[it1] == color && map[it3] == ocolor && map[it2] == 0))
 				return (true);
@@ -310,7 +310,7 @@ static bool isEatable(int next, int dir, char const *map, int color){
 		it2 = next - 18;
 		it4 = it2 - 18;
 		it3 = it1 + 18;
-		std::cout << "18 " << next << " " << it3 << " " << it4 << std::endl;
+		//std::cout << "18 " << next << " " << it3 << " " << it4 << std::endl;
 		if (it3 % 19 > next % 19 && it4 % 19 < next % 19 && it3 < 361 && it4 >= 0)
 			if ((map[it1] == ocolor && map[it2] == color && map[it4] == 0) || (map[it1] == color && map[it2] == ocolor && map[it3] == 0) || (map[it1] == 0 && map[it4] == ocolor && map[it2] == color) || (map[it1] == color && map[it3] == ocolor && map[it2] == 0))
 				return (true);
@@ -321,7 +321,7 @@ static bool isEatable(int next, int dir, char const *map, int color){
 		it2 = next - 19;
 		it4 = it2 - 19;
 		it3 = it1 + 19;
-		std::cout << "19 " << next << " " << it3 << " " << it4 << " " << it4 / 19 << std::endl;
+		//std::cout << "19 " << next << " " << it3 << " " << it4 << " " << it4 / 19 << std::endl;
 		if (it3 / 19 < 19 && it4 / 19 >= 0 && it3 < 361 && it4 >= 0)
 			if ((map[it1] == ocolor && map[it2] == color && map[it4] == 0) || (map[it1] == color && map[it2] == ocolor && map[it3] == 0) || (map[it1] == 0 && map[it4] == ocolor && map[it2] == color) || (map[it1] == color && map[it3] == ocolor && map[it2] == 0))
 				return (true);
@@ -332,7 +332,7 @@ static bool isEatable(int next, int dir, char const *map, int color){
 		it2 = next - 20;
 		it4 = it2 - 20;
 		it3 = it1 + 20;
-		std::cout << "20 " << next << " " << it3 << " " << it4 << std::endl;
+		//std::cout << "20 " << next << " " << it3 << " " << it4 << std::endl;
 		if (it3 % 19 > next % 19 && it4 % 19 < next % 19 && it3 < 361 && it4 >= 0)
 			if ((map[it1] == ocolor && map[it2] == color && map[it4] == 0) || (map[it1] == color && map[it2] == ocolor && map[it3] == 0) || (map[it1] == 0 && map[it4] == ocolor && map[it2] == color) || (map[it1] == color && map[it3] == ocolor && map[it2] == 0))
 				return (true);
@@ -732,6 +732,13 @@ bool Arbitre::checkTwo(int pos, char const *map, int color){
 void Arbitre::updateRules(bool r1, bool r2){
 	_ruleDoublethree = r1;
 	_ruleOptionalEnd = r2;
+}
+
+void Arbitre::clearArbitre()
+{
+	_isWinner = false;
+	_prisoner[0] = 0;
+	_prisoner[1] = 0;
 }
 
 bool	Arbitre::_ruleDoublethree = true;

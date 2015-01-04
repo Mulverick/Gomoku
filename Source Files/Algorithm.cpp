@@ -88,15 +88,12 @@ bool			CheckPatern(int pos, char *map, int color)
 	return false;
 }
 
-int				Algorithm::EasyPlay(char * const &map)
+int				Algorithm::EasyPlay(char *map)
 {
 	int			pos = -1;
 
 	for (int i = 0; i < MAP_SIZE && pos == -1; i++)
 	{
-		/*if ((map[i] == 0 && this->_arbitre.checkWinner(i, map, WHITE))
-			|| (map[i] == 0 && this->_arbitre.checkWinner(i, map, BLACK)))
-			pos = i;*/
 		if ((map[i] == 0 && CheckPatern(i, map, WHITE))
 			|| (map[i] == 0 && CheckPatern(i, map, BLACK)))
 			pos = i;
@@ -104,7 +101,7 @@ int				Algorithm::EasyPlay(char * const &map)
 	return pos;
 }
 
-bool				NearPiece(int pos, char * const &map)
+bool				NearPiece(int pos, char *map)
 {
 	if (map[pos] != 0)
 		return false;
@@ -114,7 +111,7 @@ bool				NearPiece(int pos, char * const &map)
 		return false;
 }
 
-std::list<Node *>	Algorithm::CreateNodesList(char * const &map, int color, int depth)
+std::list<Node *>	Algorithm::CreateNodesList(char *map, int color, int depth)
 {
 //	std::cout << "Algorithm::CreateNodesList in" << std::endl;
 
@@ -144,7 +141,6 @@ std::list<Node *>	Algorithm::CreateNodesList(char * const &map, int color, int d
 			}
 		}
 	}
-//	std::cout << "Nodes Size : " << nodes.size() << std::endl;
 	this->_first = false;
 //	std::cout << "Algorithm::CreateNodesList out" << std::endl;
 	return nodes;
@@ -153,7 +149,6 @@ std::list<Node *>	Algorithm::CreateNodesList(char * const &map, int color, int d
 void				Algorithm::MonteCarlo(Node *node, Node *parent, char *map, std::vector<int> freecase)
 {
 	std::vector<int>	cases;
-	char			*board = new char[MAP_SIZE];
 	int				pos;
 	int				color = node->GetColor();
 	int				ccolor;
@@ -161,33 +156,26 @@ void				Algorithm::MonteCarlo(Node *node, Node *parent, char *map, std::vector<i
 	int				wins = 0;
 	int				loss = 0;
 	
-	memcpy(board, map, MAP_SIZE);
 	pos = rand() % MAP_SIZE;
 	for (int i = 0; i != nbsimulation; ++i)
 	{
 		while (!cases.empty())
 		{
-			board[cases.back()] = 0;
+			map[cases.back()] = 0;
 			cases.pop_back();
 		}
-		//memcpy(board, map, MAP_SIZE);
-		this->_arbitre._prisoner[0] = 0;
-		this->_arbitre._prisoner[1] = 0;
+		this->_arbitre.clearArbitre();
 		ccolor = (color == WHITE ? BLACK : WHITE);
-		//this->_arbitre._isWinner = false;
 		while (!this->_arbitre.checkWinner(i, map, ccolor))
 		{
-			if (this->_arbitre.checkMove(pos, board, ccolor))
+			if (this->_arbitre.checkMove(pos, map, ccolor))
 			{
-				board[pos] = ccolor;
+				map[pos] = ccolor;
 				cases.push_back(pos);
 				ccolor = (ccolor == WHITE ? BLACK : WHITE);
 			}
 			pos = rand() % MAP_SIZE;
 		}
-		/*std::cout << std::endl;
-		mapdraw(board, "Algorithm::MonteCarlo");
-		std::cout << std::endl;*/
 
 		if (parent && ccolor == parent->GetColor())
 			wins++;
@@ -196,7 +184,6 @@ void				Algorithm::MonteCarlo(Node *node, Node *parent, char *map, std::vector<i
 		else
 			loss++;
 	}
-
 	node->SetWins(wins);
 	node->SetLoss(loss);
 }
