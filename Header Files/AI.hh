@@ -3,30 +3,29 @@
 
 # include "IPlayer.hh"
 # include "Algorithm.hh"
-//# include "Node.hh"
+# include "Node.hh"
 
-//class AI : public IPlayer
-//{
-//public:
-//	AI(int color);
-//	~AI();
-//	int		onClickHandler(int cellPosition);
-//	void	placeStone(char *map);
-//	int		hasPlayed() const;
-//	void	changeTurn();
-//	void	wrongMove();
-//	int		getColor() const;
-//	Type	getType() const;
-//
-//private:
-//	int					_color;
-//	bool				_turn;
-//	int					_played;
-//	Type				_type;
-//	std::list<Node *>	_nodes;
-//	char				*_board;
-////	Arbitre				_arbitre;
-//	Algorithm			*_algorithm;
-//};
+class AI : public IPlayer
+{
+public:
+	AI(int color);
+	~AI();
+	Vector<int> const	&onClickHandler(Vector<int> const &cellPosition);
+	Vector<int> const	&hasPlayed() const;
+	void	placeStone(char * const *map);
+	void	changeTurn();
+	void	wrongMove();
+	int		getColor() const;
+	Type	getType() const;
+
+private:
+	int					_color;
+	bool				_turn;
+	Vector<int>			_played;
+	Type				_type;
+	std::list<Node *>	_nodes;
+	char				**_board;
+	Algorithm			*_algorithm;
+};
 
 #endif

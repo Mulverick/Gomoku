@@ -1,17 +1,6 @@
 #include	"Algorithm.hh"
 #include	"Node.hh"
 
-void	mapdraw(char *map, char *fct)
-{
-	std::cout << fct << "[" << std::endl;
-	for (int i = 0; i != MAP_SIZE; std::cout << (int)map[i++])
-	{
-		if (!(i % 19))
-			std::cout << std::endl;
-	}
-	std::cout << "\n]" << std::endl;
-}
-
 Algorithm::Algorithm()
 {
 	this->_first = true;
@@ -20,67 +9,77 @@ Algorithm::Algorithm()
 
 Algorithm::~Algorithm() {}
 
-bool			Algorithm::CheckPatern(int pos, char *map, int color, int nbp)
+bool			Algorithm::CheckPatern(Vector<int> const &pos, char * const *map, int color, int nbp)
 {
 	int			nb;
-	int			next;
+	Vector<int>	next;
 
 	nb = 1;
-	next = pos + 1;
-	while (next % 19 != 0 && map[next] == color)
+	next.x = pos.x + 1;
+	next.y = pos.y;
+	while (next.y < 19 && next.x >= 0 && next.y >= 0 && next.x < 19 && map[next.y][next.x] == color)
 	{
-		++next;
+		++next.x;
 		++nb;
 	}
-	next = pos - 1;
-	while (next % 19 != 18 && map[next] == color)
+	next.x = pos.x - 1;
+	while (next.y < 19 && next.x >= 0 && next.y >= 0 && next.x < 19 && map[next.y][next.x] == color)
 	{
-		--next;
-		++nb;
-	}
-	if (nb >= nbp)
-		return true;
-	nb = 1;
-	next = pos + 19;
-	while (next / 19 != 19 && map[next] == color)
-	{
-		next += 19;
-		++nb;
-	}
-	next = pos - 19;
-	while (next / 19 > 0 && map[next] == color)
-	{
-		next -= 19;
+		--next.x;
 		++nb;
 	}
 	if (nb >= nbp)
 		return true;
 	nb = 1;
-	next = pos + 20;
-	while (next % 19 != 0 && next / 19 != 19 && map[next] == color)
+	next.y = pos.y + 1;
+	next.x = pos.x;
+	while (next.y < 19 && next.x >= 0 && next.y >= 0 && next.x < 19 && map[next.y][next.x] == color)
 	{
-		next += 20;
+		++next.y;
 		++nb;
 	}
-	next = pos - 20;
-	while (next % 19 != 18 && next / 19 > 0 && map[next] == color)
+	next.y = pos.y - 1;
+	while (next.y < 19 && next.x >= 0 && next.y >= 0 && next.x < 19 && map[next.y][next.x] == color)
 	{
-		next -= 20;
+		--next.y;
 		++nb;
 	}
 	if (nb >= nbp)
 		return true;
 	nb = 1;
-	next = pos + 18;
-	while (next % 19 != 18 && next / 19 != 19 && map[next] == color)
+	next.y = pos.y + 1;
+	next.x = pos.x + 1;
+	while (next.y < 19 && next.x >= 0 && next.y >= 0 && next.x < 19 && map[next.y][next.x] == color)
 	{
-		next += 18;
+		++next.y;
+		++next.x;
 		++nb;
 	}
-	next = pos - 18;
-	while (next % 19 != 0 && next / 19 > 0 && map[next] == color)
+	next.y = pos.y - 1;
+	next.x = pos.x - 1;
+	while (next.y < 19 && next.x >= 0 && next.y >= 0 && next.x < 19 && map[next.y][next.x] == color)
 	{
-		next -= 18;
+		--next.y;
+		--next.x;
+		++nb;
+	}
+	if (nb >= nbp)
+		return true;
+	nb = 1;
+	next.y = pos.y + 1;
+	next.x = pos.x - 1;
+	while (next.y < 19 && next.x >= 0 && next.y >= 0 && next.x < 19 && map[next.y][next.x] == color)
+	{
+		++next.y;
+		--next.x;
+		++nb;
+	}
+	next.y = pos.y - 1;
+	next.x = pos.x + 1;
+	while (next.y < 19 && next.x >= 0 && next.y >= 0 && next.x < 19 && map[next.y][next.x] == color)
+	{
+		--next.y;
+		++next.x;
 		++nb;
 	}
 	if (nb >= nbp)
@@ -88,40 +87,51 @@ bool			Algorithm::CheckPatern(int pos, char *map, int color, int nbp)
 	return false;
 }
 
-int				Algorithm::EasyPlay(char *map)
+Vector<int> const	&Algorithm::EasyPlay(char * const *map)
 {
-	int			pos = -1;
+	Vector<int>		*ret = new Vector<int>(-1, -1);
+	Vector<int>		*tmp = new Vector<int>(-1, -1);
 
-	for (int i = 0; i < MAP_SIZE && pos == -1; i++)
+	for (int y = 0; y < 19; y++)
 	{
-		if ((map[i] == 0 && this->CheckPatern(i, map, WHITE, 4))
-			|| (map[i] == 0 && this->CheckPatern(i, map, BLACK, 4)))
-			pos = i;
+		for (int x = 0; x < 19; x++)
+		{
+			tmp->x = x;
+			tmp->y = y;
+			if ((map[y][x] == 0 && this->CheckPatern(*tmp, map, WHITE, 4))
+				|| (map[y][x] == 0 && this->CheckPatern(*tmp, map, BLACK, 4)))
+				return *tmp;
+		}
 	}
-	return pos;
+	return *ret;
 }
 
-bool				Algorithm::NearPiece(int pos, char *map)
+bool				Algorithm::NearPiece(Vector<int> const &pos, char **map)
 {
-	if (map[pos] != 0)
-		return false;
-	else if ((pos >= 19 && map[pos - 19] != 0) || (pos < MAP_SIZE - 20 && map[pos + 19] != 0) || (pos < MAP_SIZE && map[pos + 1] != 0) || (pos > 0 && map[pos - 1] != 0))
+	if ((pos.x < 18 && map[pos.y][pos.x + 1] != 0) || (pos.y < 18 && map[pos.y + 1][pos.x] != 0) || (pos.x > 0 && map[pos.y][pos.x - 1] != 0) || (pos.y > 0 && map[pos.y - 1][pos.x] != 0))
 		return true;
 	else
 		return false;
 }
 
-std::list<Node *>	Algorithm::CreateNodesList(char *map, int color, int depth)
+std::list<Node *>	Algorithm::CreateNodesList(char **map, int color, int depth)
 {
 //	std::cout << "Algorithm::CreateNodesList in" << std::endl;
 
-	std::list<Node *>		nodes;
+	std::list<Node *>	nodes;
+	Vector<int>			tmp;
 
 	if (this->_first == true)
 	{
-		int	r;
+		Vector<int>	r;
 
-		for (r = (rand() % MAP_SIZE); map[r] != 0; r = (rand() % MAP_SIZE));
+		r.x = (rand() % 19);
+		r.y = (rand() % 19);
+		while (map[r.y][r.x] != 0)
+		{
+			r.x = (rand() % 19);
+			r.y = (rand() % 19);
+		}
 		Node	*newnode = new Node(color, r, -1, map);
 
 		nodes.push_back(newnode);
@@ -129,38 +139,44 @@ std::list<Node *>	Algorithm::CreateNodesList(char *map, int color, int depth)
 	}
 	else
 	{
-		for (int i = 0; i != MAP_SIZE; i++)
+		for (int y = 0; y != 19; y++)
 		{
-			if (this->_arbitre.checkMove(i, map, color) && this->NearPiece(i, map))
+			for (int x = 0; x != 19; x++)
 			{
-				Node	*newnode = new Node(color, i, depth, map);
+				tmp.x = x;
+				tmp.y = y;
+				if (this->_arbitre.checkMove(tmp, map, color) && this->NearPiece(tmp, map))
+				{
+					Node	*newnode = new Node(color, tmp, depth, map);
 
-				nodes.push_back(newnode);
-				newnode->Expand(*this);
+					nodes.push_back(newnode);
+					newnode->Expand(*this);
+				}
 			}
 		}
 	}
 	this->_first = false;
-//	std::cout << "Algorithm::CreateNodesList out" << std::endl;
+//	std::cout << "Algorithm::CreateNodesList out nodes.size : " << nodes.size() << std::endl;
 	return nodes;
 }
 
-void				Algorithm::MonteCarlo(Node *node, Node *parent, char *map)
+void				Algorithm::MonteCarlo(Node *node, Node *parent, char **map)
 {
-	std::vector<int>	cases;
-	int				pos;
+	std::vector<Vector<int> >	cases;
+	Vector<int>		pos;
 	int				color = node->GetColor();
 	int				ccolor;
 	int				nbsimulation = node->GetNbsimulation();
 	int				wins = 0;
 	int				loss = 0;
 	
-	pos = rand() % MAP_SIZE;
+	pos.x = rand() % 19;
+	pos.y = rand() % 19;
 	for (int i = 0; i != nbsimulation; ++i)
 	{
 		while (!cases.empty())
 		{
-			map[cases.back()] = 0;
+			map[cases.back().y][cases.back().x] = 0;
 			cases.pop_back();
 		}
 		this->_arbitre.clearArbitre();
@@ -169,11 +185,12 @@ void				Algorithm::MonteCarlo(Node *node, Node *parent, char *map)
 		{
 			if (this->_arbitre.checkMove(pos, map, ccolor))
 			{
-				map[pos] = ccolor;
+				map[pos.y][pos.x] = ccolor;
 				cases.push_back(pos);
 				ccolor = (ccolor == WHITE ? BLACK : WHITE);
 			}
-			pos = rand() % MAP_SIZE;
+			pos.x = rand() % 19;
+			pos.y = rand() % 19;
 		}
 		if (ccolor == color)
 			wins++;

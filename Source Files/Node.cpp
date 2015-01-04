@@ -1,34 +1,42 @@
 #include	"Node.hh"
 #include	"Algorithm.hh"
 
-Node::Node(int color, int pos, int deth, char *board)
+Node::Node(int color, Vector<int> const &pos, int deth, char **board)
 {
 	this->_pos = pos;
-	this->_board = new char[MAP_SIZE];
-
-	memcpy(this->_board, board, MAP_SIZE);
-	this->_board[pos] = color;
+	this->_board = new char*[19];
+	for (int y = 0; y < 19; y++)
+	{
+		this->_board[y] = new char[19];
+		for (int x = 0; x < 19; x++)
+			this->_board[y][x] = board[y][x];
+	}
+	this->_board[pos.y][pos.x] = color;
 
 	this->_parent = NULL;
 	this->_depth = deth;
 	this->_color = color;
-	this->_nbsimulation = 1000;
+	this->_nbsimulation = 500;
 	this->_wins = 0;
 	this->_loss = 0;
 }
 
-Node::Node(Node *parent, int color, int pos, int deth, char *board)
+Node::Node(Node *parent, int color, Vector<int> const &pos, int deth, char **board)
 {
 	this->_pos = pos;
-	this->_board = new char[MAP_SIZE];
-
-	memcpy(this->_board, board, MAP_SIZE);
-	this->_board[pos] = color;
+	this->_board = new char*[19];
+	for (int y = 0; y < 19; y++)
+	{
+		this->_board[y] = new char[19];
+		for (int x = 0; x < 19; x++)
+			this->_board[y][x] = board[y][x];
+	}
+	this->_board[pos.y][pos.x] = color;
 
 	this->_parent = parent;
 	this->_depth = deth;
 	this->_color = color;
-	this->_nbsimulation = 1000;
+	this->_nbsimulation = 500;
 	this->_wins = 0;
 	this->_loss = 0;
 }
@@ -66,7 +74,7 @@ void				Node::SetLoss(int loss)
 		this->_parent->SetWins(this->_loss);
 }
 
-int					Node::GetPos()
+Vector<int> const	&Node::GetPos()
 {
 	return this->_pos;
 }
