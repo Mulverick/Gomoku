@@ -20,8 +20,8 @@ bool Arbitre::checkMove(Vector<int> const &pos, char * const *map, int color)
 	if (map[pos.y][pos.x])
 		return false;
 	map[pos.y][pos.x] = color;
-	checkWinner(pos, map, color);
-	if (_ruleDoublethree == true && checkDoubleThree(pos, map, color) > 1)
+	//checkWinner(pos, map, color);
+	if (_ruleDoublethree == true /*&& !_isWinner*/ && checkDoubleThree(pos, map, color) > 1)
 	{
 		map[pos.y][pos.x] = 0;
 		return (false);
@@ -39,11 +39,11 @@ bool Arbitre::checkMove(Vector<int> const &pos, char * const *map, int color)
 			coord.pop_front();
 		}
 	}
-	//if (checkWinner(pos, map, color) == false)
-	//{
-	//	std::cout << (color == BLACK ? "Black" : "White") << " gagne !" << std::endl;
-	//	return true;
-	//}
+	if (checkWinner(pos, map, color) == false)
+	{
+		std::cout << (color == BLACK ? "Black" : "White") << " gagne !" << std::endl;
+		return true;
+	}
 	 return (true);
 }
 
