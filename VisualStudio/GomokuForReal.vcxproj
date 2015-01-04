@@ -27,8 +27,14 @@
     <ClInclude Include="..\Header Files\Utils.hh" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Source Files\AI.cpp" />
-    <ClCompile Include="..\Source Files\Algorithm.cpp" />
+    <ClCompile Include="..\Source Files\AI.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\Source Files\Algorithm.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Source Files\AMenu.cpp" />
     <ClCompile Include="..\Source Files\Arbitre.cpp" />
     <ClCompile Include="..\Source Files\AWidget.cpp" />
@@ -37,7 +43,10 @@
     <ClCompile Include="..\Source Files\Game.cpp" />
     <ClCompile Include="..\Source Files\Human.cpp" />
     <ClCompile Include="..\Source Files\Main.cpp" />
-    <ClCompile Include="..\Source Files\Node.cpp" />
+    <ClCompile Include="..\Source Files\Node.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\Source Files\Sprite.cpp" />
     <ClCompile Include="..\Source Files\Text.cpp" />
     <ClCompile Include="..\Source Files\Utils.cpp" />
