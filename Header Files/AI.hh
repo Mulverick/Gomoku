@@ -10,6 +10,7 @@ class AI : public IPlayer
 {
 public:
 	AI(int color);
+	AI(int color, char **map);
 	~AI();
 	Vector<int> const	&onClickHandler(Vector<int> const &cellPosition);
 	Vector<int> const	&hasPlayed() const;

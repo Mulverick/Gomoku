@@ -5,10 +5,10 @@ Node::Node(int color, Vector<int> const &pos, int deth, char **board)
 {
 	this->_pos = pos;
 	this->_board = new char*[19];
-	for (int y = 0; y < 19; y++)
+	for (int y = 0; y < 19; ++y)
 	{
 		this->_board[y] = new char[19];
-		for (int x = 0; x < 19; x++)
+		for (int x = 0; x < 19; ++x)
 			this->_board[y][x] = board[y][x];
 	}
 	this->_board[pos.y][pos.x] = color;
@@ -25,10 +25,10 @@ Node::Node(Node *parent, int color, Vector<int> const &pos, int deth, char **boa
 {
 	this->_pos = pos;
 	this->_board = new char*[19];
-	for (int y = 0; y < 19; y++)
+	for (int y = 0; y < 19; ++y)
 	{
 		this->_board[y] = new char[19];
-		for (int x = 0; x < 19; x++)
+		for (int x = 0; x < 19; ++x)
 			this->_board[y][x] = board[y][x];
 	}
 	this->_board[pos.y][pos.x] = color;
@@ -92,6 +92,6 @@ int					Node::GetNbsimulation()
 
 int					Node::WinsRate()
 {
-	//std::cout << "Node::WinsRate : wins = " << this->_wins << " loss = " << this->_loss << std::endl;
-	return (this->_wins / (this->_loss + this->_wins));
+	int	wr = ((float)this->_wins / ((float)this->_loss + (float)this->_wins)) * 100;
+	return (wr);
 }
