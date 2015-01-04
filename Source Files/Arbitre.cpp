@@ -39,7 +39,7 @@ bool Arbitre::checkMove(Vector<int> const &pos, char * const *map, int color)
 			coord.pop_front();
 		}
 	}
-	if (checkWinner(pos, map, color) == false)
+	if (checkWinner(pos, map, color) == true)
 	{
 		std::cout << (color == BLACK ? "Black" : "White") << " gagne !" << std::endl;
 		return true;
