@@ -351,14 +351,12 @@ static bool isBreakable(Vector<int> const &pos, char const * const *map, int col
 	Vector<int> next;
 	Vector<int> npos = pos;
 	int it;
-	int count = 0;
 	bool rt = false;
 
 	while (nb >= 5)
 	{
 		next = npos;
 		it = 0;
-		std::cout << next.x << ", " << next.y << std::endl;
 		while (it < 5)
 		{
 			if (isEatable(next, dir, map, color) == true)
@@ -371,11 +369,9 @@ static bool isBreakable(Vector<int> const &pos, char const * const *map, int col
 		}
 		if (it == 5)
 			return (false);
-		count++;
 		if (rt == true)
 		{
-			std::cout << nb << " " << count << std::endl;
-			nb -= count;
+			nb -= it;
 			npos = next;
 		}
 		npos = npos + dir;
