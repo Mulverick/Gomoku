@@ -31,6 +31,7 @@ MainMenu::MainMenu(AWidget *parent) :
   _pvp->setFont("../Assets/fontBambo.ttf");
   _pvp->setFontSize(30);
   _pvp->setText("PVP");
+  _pvp->setActive(true);
   _pvp->setAction([this](){_pvp->setBackgroundTexture("../Assets/button_select.png"); _pve->setBackgroundTexture("../Assets/button_unselect.png");});
   _pve->setSize(sf::Vector2f(200, 50));
   _pve->setPosition(sf::Vector2f(275, 25));
