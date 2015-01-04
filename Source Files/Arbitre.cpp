@@ -20,6 +20,7 @@ bool Arbitre::checkMove(Vector<int> const &pos, char * const *map, int color)
 	if (map[pos.y][pos.x])
 		return false;
 	map[pos.y][pos.x] = color;
+	checkWinner(pos, map, color);
 	if (_ruleDoublethree == true && checkDoubleThree(pos, map, color) > 1)
 	{
 		map[pos.y][pos.x] = 0;
@@ -38,11 +39,11 @@ bool Arbitre::checkMove(Vector<int> const &pos, char * const *map, int color)
 			coord.pop_front();
 		}
 	}
-	if (checkWinner(pos, map, color) == true)
-	{
-		std::cout << (color == BLACK ? "Black" : "White") << " gagne !" << std::endl;
-		return true;
-	}
+	//if (checkWinner(pos, map, color) == false)
+	//{
+	//	std::cout << (color == BLACK ? "Black" : "White") << " gagne !" << std::endl;
+	//	return true;
+	//}
 	 return (true);
 }
 
@@ -532,7 +533,7 @@ bool Arbitre::checkThree(Vector<int> const &pos, char const * const *map, int co
 		--next.x;
 		++nb;
 	}
-	if (nb >= 3)
+	if (nb >= 4)
 		return true;
 	nb = 1;
 	next.x = pos.x;
@@ -548,7 +549,7 @@ bool Arbitre::checkThree(Vector<int> const &pos, char const * const *map, int co
 		--next.y;
 		++nb;
 	}
-	if (nb >= 3)
+	if (nb >= 4)
 		return true;
 	nb = 1;
 	next.x = pos.x + 1;
@@ -567,7 +568,7 @@ bool Arbitre::checkThree(Vector<int> const &pos, char const * const *map, int co
 		--next.y;
 		++nb;
 	}
-	if (nb >= 3)
+	if (nb >= 4)
 		return true;
 	nb = 1;
 	next.x = pos.x - 1;
@@ -586,7 +587,7 @@ bool Arbitre::checkThree(Vector<int> const &pos, char const * const *map, int co
 		--next.y;
 		++nb;
 	}
-	if (nb >= 3)
+	if (nb >= 4)
 		return true;
 	return (false);
 }
@@ -608,7 +609,7 @@ bool Arbitre::checkTwo(Vector<int> const &pos, char const * const *map, int colo
 		--next.x;
 		++nb;
 	}
-	if (nb >= 2)
+	if (nb >= 3)
 		return true;
 	nb = 1;
 	next.x = pos.x;
@@ -624,7 +625,7 @@ bool Arbitre::checkTwo(Vector<int> const &pos, char const * const *map, int colo
 		--next.y;
 		++nb;
 	}
-	if (nb >= 2)
+	if (nb >= 3)
 		return true;
 	nb = 1;
 	next.x = pos.x + 1;
@@ -643,7 +644,7 @@ bool Arbitre::checkTwo(Vector<int> const &pos, char const * const *map, int colo
 		--next.y;
 		++nb;
 	}
-	if (nb >= 2)
+	if (nb >= 3)
 		return true;
 	nb = 1;
 	next.x = pos.x - 1;
@@ -662,7 +663,7 @@ bool Arbitre::checkTwo(Vector<int> const &pos, char const * const *map, int colo
 		--next.y;
 		++nb;
 	}
-	if (nb >= 2)
+	if (nb >= 3)
 		return true;
 	return (false);
 }
