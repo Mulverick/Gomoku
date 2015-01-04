@@ -7,7 +7,7 @@
 
 #include "utils.hh"
 #include "Arbitre.hh"
-#include <stdlib.h>
+#include <cstring>
 
 AxelAI::AxelAI(int color, char const * const *map) : _color(color), _turn((color == BLACK)), _played(-1 ,-1), _map(map) {}
 AxelAI::~AxelAI(void) {}

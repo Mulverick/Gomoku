@@ -3,7 +3,6 @@
 #include <sstream>
 #include "Game.hh"
 #include "Utils.hh"
-#include "AxelAI.h"
 
 Game::Game()
 {
@@ -102,13 +101,14 @@ void Game::_draw()
 		_text.setString("Ia 2");
 	_text.setPosition(sf::Vector2f(430.0f, 830.0f));
 	_text.draw(_window);
-	if (dynamic_cast<Human*>(_players[0]) != 0 && dynamic_cast<Human*>(_players[1]) != 0)
+	if (!_mainMenu.isActive() && dynamic_cast<Human*>(_players[0]) != 0 && dynamic_cast<Human*>(_players[1]) != 0)
 		_drawCursor((_playerColor == WHITE ? _white : _black));
-	else if (((tmp = dynamic_cast<Human*>(_players[0])) != 0 && dynamic_cast<Human*>(_players[1]) == 0)
-			|| (dynamic_cast<Human*>(_players[0]) == 0 && (tmp = dynamic_cast<Human*>(_players[1])) != 0))
+	else if (!_mainMenu.isActive() && ((((tmp = dynamic_cast<Human*>(_players[0])) != 0 && dynamic_cast<Human*>(_players[1]) == 0)
+			|| (dynamic_cast<Human*>(_players[0]) == 0 && (tmp = dynamic_cast<Human*>(_players[1])) != 0))))
 	{
 		_drawCursor((tmp->getColor() == WHITE ? _white : _black));
 	}
+	_mainMenu.draw(_window);
 }
 
 void Game::_drawCursor(Sprite &sprite)
@@ -145,27 +145,32 @@ bool Game::_initialize()
 	_playerColor = BLACK;
 	_players.push_back(new Human(BLACK));
 	_players.push_back(new Human(WHITE));
-	Arbitre::updateRules(true, true);
+	_mainMenu.setGameInstance(this);
 	return true;
 }
 
 void Game::_onClick()
 {
-	bool ret;
-	Vector<int>	cellPosition;
-	cellPosition.x = (sf::Mouse::getPosition(_window).x / CELL_SIZE);
-	cellPosition.y = (sf::Mouse::getPosition(_window).y / CELL_SIZE);
-	if ((ret = _arbitre.checkMove((_playerColor == BLACK ? _players[0]->onClickHandler(cellPosition) : _players[1]->onClickHandler(cellPosition)), _map, _playerColor)) == true)
+	if (!_mainMenu.isActive())
 	{
-		if (_playerColor == BLACK)
-			_players[0]->placeStone(_map);
-		else
-			_players[1]->placeStone(_map);
-		_playerColor = (_playerColor == WHITE ? BLACK : WHITE);
+		bool ret;
+		Vector<int>	cellPosition;
+		cellPosition.x = (sf::Mouse::getPosition(_window).x / CELL_SIZE);
+		cellPosition.y = (sf::Mouse::getPosition(_window).y / CELL_SIZE);
+		if ((ret = _arbitre.checkMove((_playerColor == BLACK ? _players[0]->onClickHandler(cellPosition) : _players[1]->onClickHandler(cellPosition)), _map, _playerColor)) == true)
+		{
+			if (_playerColor == BLACK)
+				_players[0]->placeStone(_map);
+			else
+				_players[1]->placeStone(_map);
+			_playerColor = (_playerColor == WHITE ? BLACK : WHITE);
 		
+		}
+		else
+			_playerColor == BLACK ? _players[0]->wrongMove() : _players[1]->wrongMove();
 	}
 	else
-		_playerColor == BLACK ? _players[0]->wrongMove() : _players[1]->wrongMove();
+		_mainMenu.onClickHandler(Utils::toVector2f(sf::Mouse::getPosition(_window)));
 }
 
 bool Game::_update()

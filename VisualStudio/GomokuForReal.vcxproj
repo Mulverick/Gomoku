@@ -11,22 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Header Files\AI.hh" />
-    <ClInclude Include="..\Header Files\Algorithm.hh" />
-    <ClInclude Include="..\Header Files\AMenu.hh" />
-    <ClInclude Include="..\Header Files\Arbitre.hh" />
-    <ClInclude Include="..\Header Files\AWidget.hh" />
-    <ClInclude Include="..\Header Files\AxelAI.h" />
-    <ClInclude Include="..\Header Files\Button.hh" />
-    <ClInclude Include="..\Header Files\Game.hh" />
-    <ClInclude Include="..\Header Files\Human.hh" />
-    <ClInclude Include="..\Header Files\IPlayer.hh" />
-    <ClInclude Include="..\Header Files\Node.hh" />
-    <ClInclude Include="..\Header Files\Sprite.hh" />
-    <ClInclude Include="..\Header Files\Text.hh" />
-    <ClInclude Include="..\Header Files\Utils.hh" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\Source Files\AI.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -43,6 +27,7 @@
     <ClCompile Include="..\Source Files\Game.cpp" />
     <ClCompile Include="..\Source Files\Human.cpp" />
     <ClCompile Include="..\Source Files\Main.cpp" />
+    <ClCompile Include="..\Source Files\MainMenu.cpp" />
     <ClCompile Include="..\Source Files\Node.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -50,6 +35,23 @@
     <ClCompile Include="..\Source Files\Sprite.cpp" />
     <ClCompile Include="..\Source Files\Text.cpp" />
     <ClCompile Include="..\Source Files\Utils.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Header Files\AI.hh" />
+    <ClInclude Include="..\Header Files\Algorithm.hh" />
+    <ClInclude Include="..\Header Files\AMenu.hh" />
+    <ClInclude Include="..\Header Files\Arbitre.hh" />
+    <ClInclude Include="..\Header Files\AWidget.hh" />
+    <ClInclude Include="..\Header Files\AxelAI.h" />
+    <ClInclude Include="..\Header Files\Button.hh" />
+    <ClInclude Include="..\Header Files\Game.hh" />
+    <ClInclude Include="..\Header Files\Human.hh" />
+    <ClInclude Include="..\Header Files\IPlayer.hh" />
+    <ClInclude Include="..\Header Files\MainMenu.hh" />
+    <ClInclude Include="..\Header Files\Node.hh" />
+    <ClInclude Include="..\Header Files\Sprite.hh" />
+    <ClInclude Include="..\Header Files\Text.hh" />
+    <ClInclude Include="..\Header Files\Utils.hh" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{AF8DA8AA-E095-4FE9-999C-BECC78A1FE4A}</ProjectGuid>
