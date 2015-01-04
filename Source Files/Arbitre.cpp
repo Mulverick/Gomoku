@@ -13,6 +13,11 @@ Arbitre::~Arbitre()
 {
 }
 
+void Arbitre::resetWinner(){
+	if (_isWinner == true)
+		_isWinner = false;
+}
+
 bool Arbitre::checkMove(Vector<int> const &pos, char * const *map, int color)
 {
 	if (pos.x == -1 || pos.y == -1)

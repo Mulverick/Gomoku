@@ -11,6 +11,7 @@
 #include "Text.hh"
 #include "Sprite.hh"
 #include "MainMenu.hh"
+#include "WinnerMenu.hh"
 
 class Game
 {
@@ -18,6 +19,7 @@ public:
 	Game();
 	~Game();
 
+	void restart();
 	void	run();
 	template <typename Type> void	reset(void)
 	{
@@ -66,6 +68,7 @@ private:
 	Sprite _sb;
 	Text _text;
 	MainMenu _mainMenu;
+	WinnerMenu _winnerMenu;
 	int _playerColor;
 	//char _map[361];
 	char	**_map;

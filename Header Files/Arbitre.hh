@@ -22,7 +22,7 @@ public:
 
 	void clearArbitre();
 	bool	isWinner(void) const { return (_isWinner); }
-
+	void resetWinner();
 	char _prisoner[2];
 
 private:

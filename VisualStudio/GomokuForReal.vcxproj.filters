@@ -60,6 +60,9 @@
     <ClCompile Include="..\Source Files\Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Source Files\WinnerMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header Files\AI.hh">
@@ -105,6 +108,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Header Files\Utils.hh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Header Files\WinnerMenu.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

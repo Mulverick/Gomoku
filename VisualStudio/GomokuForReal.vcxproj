@@ -35,6 +35,7 @@
     <ClCompile Include="..\Source Files\Sprite.cpp" />
     <ClCompile Include="..\Source Files\Text.cpp" />
     <ClCompile Include="..\Source Files\Utils.cpp" />
+    <ClCompile Include="..\Source Files\WinnerMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Header Files\AI.hh" />
@@ -52,6 +53,7 @@
     <ClInclude Include="..\Header Files\Sprite.hh" />
     <ClInclude Include="..\Header Files\Text.hh" />
     <ClInclude Include="..\Header Files\Utils.hh" />
+    <ClInclude Include="..\Header Files\WinnerMenu.hh" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{AF8DA8AA-E095-4FE9-999C-BECC78A1FE4A}</ProjectGuid>
