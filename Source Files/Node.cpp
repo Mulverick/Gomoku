@@ -16,7 +16,7 @@ Node::Node(int color, Vector<int> const &pos, int deth, char **board)
 	this->_parent = NULL;
 	this->_depth = deth;
 	this->_color = color;
-	this->_nbsimulation = 500;
+	this->_nbsimulation = 250;
 	this->_wins = 0;
 	this->_loss = 0;
 }
@@ -36,7 +36,7 @@ Node::Node(Node *parent, int color, Vector<int> const &pos, int deth, char **boa
 	this->_parent = parent;
 	this->_depth = deth;
 	this->_color = color;
-	this->_nbsimulation = 500;
+	this->_nbsimulation = 250;
 	this->_wins = 0;
 	this->_loss = 0;
 }

@@ -120,13 +120,46 @@ bool				Algorithm::NearPiece(Vector<int> const &pos, char **map)
 
 std::list<Node *>	Algorithm::CreateNodesList(char **map, int color, int depth, Node *parent)
 {
-//	std::cout << "Algorithm::CreateNodesList in" << std::endl;
 	std::list<Node *>	nodes;
 	std::list<Node *>	maxone;
 	std::list<Node *>	maxtwo;
 	Vector<int>			tmp;
 
-	if (this->_first == true)
+	for (int y = 0; y != 19; ++y)
+	{
+		for (int x = 0; x != 19; ++x)
+		{
+			tmp.x = x;
+			tmp.y = y;
+			if (map[y][x] == 0 && this->_arbitre.checkMove(tmp, map, color) && this->NearPiece(tmp, map))
+			{
+				Node *newnode;
+				if (parent)
+					newnode = new Node(parent, color, tmp, depth, map);
+				else
+					newnode = new Node(color, tmp, depth, map);
+
+				if (this->CheckPatern(tmp, map, WHITE, 4) || this->CheckPatern(tmp, map, BLACK, 4) /*|| this->CheckPatern(tmp, map, color, 3)*/)
+					maxone.push_back(newnode);
+				else if (this->CheckPatern(tmp, map, WHITE, 3) || this->CheckPatern(tmp, map, BLACK, 3) /*|| this->CheckPatern(tmp, map, color, 2)*/)
+					maxtwo.push_back(newnode);
+				else
+					nodes.push_back(newnode);
+			}
+		}
+	}
+	if (!maxone.empty())
+		for (std::list<Node *>::iterator it = maxone.begin(); it != maxone.end(); (*it++)->Expand(*this));
+	else if (!maxtwo.empty())
+		for (std::list<Node *>::iterator it = maxtwo.begin(); it != maxtwo.end(); (*it++)->Expand(*this));
+	else if (!nodes.empty())
+		for (std::list<Node *>::iterator it = nodes.begin(); it != nodes.end(); (*it++)->Expand(*this));
+
+	if (!maxone.empty())
+		return maxone;
+	else if (!maxtwo.empty())
+		return maxtwo;
+	else if (nodes.empty())
 	{
 		Vector<int>	r;
 
@@ -142,45 +175,6 @@ std::list<Node *>	Algorithm::CreateNodesList(char **map, int color, int depth, N
 		nodes.push_back(newnode);
 		newnode->SetWins(1);
 	}
-	else
-	{
-		for (int y = 0; y != 19; ++y)
-		{
-			for (int x = 0; x != 19; ++x)
-			{
-				tmp.x = x;
-				tmp.y = y;
-				if (this->_arbitre.checkMove(tmp, map, color) && this->NearPiece(tmp, map))
-				{
-					Node *newnode;
-					if (parent)
-						newnode = new Node(parent, color, tmp, depth, map);
-					else
-						newnode = new Node(color, tmp, depth, map);
-
-					if (this->CheckPatern(tmp, map, WHITE, 4) || this->CheckPatern(tmp, map, BLACK, 4))
-						maxone.push_back(newnode);
-					else if (this->CheckPatern(tmp, map, WHITE, 3) || this->CheckPatern(tmp, map, BLACK, 3))
-						maxtwo.push_back(newnode);
-					else
-						nodes.push_back(newnode);
-					//newnode->Expand(*this);
-				}
-			}
-		}
-		if (!maxone.empty())
-			for (std::list<Node *>::iterator it = maxone.begin(); it != maxone.end(); (*it++)->Expand(*this));
-		else if (!maxtwo.empty())
-			for (std::list<Node *>::iterator it = maxtwo.begin(); it != maxtwo.end(); (*it++)->Expand(*this));
-		else
-			for (std::list<Node *>::iterator it = nodes.begin(); it != nodes.end(); (*it++)->Expand(*this));
-	}
-	this->_first = false;
-	//std::cout << "Algorithm::CreateNodesList out nodes.size : " << nodes.size() << std::endl;
-	if (!maxone.empty())
-		return maxone;
-	else if (!maxtwo.empty())
-		return maxtwo;
 	return nodes;
 }
 

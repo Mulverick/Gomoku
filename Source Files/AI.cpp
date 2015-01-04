@@ -43,7 +43,7 @@ void	AI::placeStone(char * const *map)
 	int		tmp;
 	int		pos = -1;
 
-	this->_played = this->_algorithm->EasyPlay(map);
+	//this->_played = this->_algorithm->EasyPlay(map);
 	for (int y = 0; y < 19; ++y)
 		for (int x = 0; x < 19; ++x)
 			this->_board[y][x] = map[y][x];
