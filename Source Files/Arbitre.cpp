@@ -290,32 +290,27 @@ static bool isEatable(Vector<int> const &next, Vector<int> const &dir, char cons
 
 
 	ocolor = (color == WHITE ? BLACK : WHITE);
-	std::cout << dir.x << ", " << dir.y << std::endl;
 	if (dir.x != 1 || dir.y != 0)
 	{
-		std::cout << "1" << std::endl;
 		it1 = next + Vector<int>(1, 0);
 		it2 = it1 + Vector<int>(1, 0);
 		it3 = next + Vector<int>(-1, 0);
 		it4 = it3 + Vector<int>(-1, 0);
-		std::cout << it1.x << ", " << it1.y << " | " << it2.x << ", " << it2.y << " | " << it3.x << ", " << it3.y << " | " << it4.x << ", " << it4.y << std::endl;
 		if ((isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true && map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor && map[it3.y][it3.x] == 0)
 			|| (isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true && map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it3.y][it3.x] == ocolor && map[it2.y][it2.x] == 0)
 			|| (isCoord(it1) == true && isCoord(it3) == true && isCoord(it4) == true && map[next.y][next.x] == color && map[it3.y][it3.x] == color && map[it4.y][it4.x] == ocolor && map[it1.y][it1.x] == 0)
 			|| (isCoord(it1) == true && isCoord(it3) == true && isCoord(it4) == true && map[next.y][next.x] == color && map[it3.y][it3.x] == color && map[it1.y][it1.x] == ocolor && map[it4.y][it4.x] == 0))
 		{
-			std::cout << "cassable grosse pute de merde" << std::endl;
 			return (true);
 		}
 	}
 	if (dir.y != 1 || dir.x != -1)
 	{ 
-		std::cout << "2" << std::endl;
 		it1 = next + Vector<int>(1, -1);
 		it2 = it1 + Vector<int>(1, -1);
 		it3 = next + Vector<int>(-1, 1);
 		it4 = it3 + Vector<int>(-1, 1);
-		std::cout << it1.x << ", " << it1.y << " | " << it2.x << ", " << it2.y << " | " << it3.x << ", " << it3.y << " | " << it4.x << ", " << it4.y << std::endl;
+
 		if ((isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true && map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor && map[it3.y][it3.x] == 0)
 			|| (isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true && map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it3.y][it3.x] == ocolor && map[it2.y][it2.x] == 0)
 			|| (isCoord(it1) == true && isCoord(it3) == true && isCoord(it4) == true && map[next.y][next.x] == color && map[it3.y][it3.x] == color && map[it4.y][it4.x] == ocolor && map[it1.y][it1.x] == 0)
@@ -325,12 +320,10 @@ static bool isEatable(Vector<int> const &next, Vector<int> const &dir, char cons
 	}
 	if (dir.y != 1)
 	{ 
-		std::cout << "3" << std::endl;
 		it1 = next + Vector<int>(0, 1);
 		it2 = it1 + Vector<int>(0, 1);
 		it3 = next + Vector<int>(0, -1);
 		it4 = it3 + Vector<int>(0, -1);
-		std::cout << it1.x << ", " << it1.y << " | " << it2.x << ", " << it2.y << " | " << it3.x << ", " << it3.y << " | " << it4.x << ", " << it4.y << std::endl;
 		if ((isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true && map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor && map[it3.y][it3.x] == 0)
 			|| (isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true && map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it3.y][it3.x] == ocolor && map[it2.y][it2.x] == 0)
 			|| (isCoord(it1) == true && isCoord(it3) == true && isCoord(it4) == true && map[next.y][next.x] == color && map[it3.y][it3.x] == color && map[it4.y][it4.x] == ocolor && map[it1.y][it1.x] == 0)
@@ -340,12 +333,10 @@ static bool isEatable(Vector<int> const &next, Vector<int> const &dir, char cons
 	}
 	if (dir.y != 1 || dir.x != 1)
 	{
-		std::cout << "4" << std::endl;
 		it1 = next + Vector<int>(1, 1);
 		it2 = it1 + Vector<int>(1, 1);
 		it3 = next + Vector<int>(-1, -1);
 		it4 = it3 + Vector<int>(-1, -1);
-		std::cout << it1.x << ", " << it1.y << " | " << it2.x << ", " << it2.y << " | " << it3.x << ", " << it3.y << " | " << it4.x << ", " << it4.y << std::endl;
 		if ((isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true && map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor && map[it3.y][it3.x] == 0)
 			|| (isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true && map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it3.y][it3.x] == ocolor && map[it2.y][it2.x] == 0)
 			|| (isCoord(it1) == true && isCoord(it3) == true && isCoord(it4) == true && map[next.y][next.x] == color && map[it3.y][it3.x] == color && map[it4.y][it4.x] == ocolor && map[it1.y][it1.x] == 0)
@@ -360,13 +351,14 @@ static bool isBreakable(Vector<int> const &pos, char const * const *map, int col
 	Vector<int> next;
 	Vector<int> npos = pos;
 	int it;
-	int count = 1;
+	int count = 0;
 	bool rt = false;
 
 	while (nb >= 5)
 	{
 		next = npos;
 		it = 0;
+		std::cout << next.x << ", " << next.y << std::endl;
 		while (it < 5)
 		{
 			if (isEatable(next, dir, map, color) == true)
@@ -379,14 +371,15 @@ static bool isBreakable(Vector<int> const &pos, char const * const *map, int col
 		}
 		if (it == 5)
 			return (false);
+		count++;
 		if (rt == true)
 		{
+			std::cout << nb << " " << count << std::endl;
 			nb -= count;
 			npos = next;
 		}
 		npos = npos + dir;
 		nb--;
-		count++;
 	}
 	return (rt);
 }
