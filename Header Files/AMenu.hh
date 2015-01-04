@@ -3,6 +3,8 @@
 
 #include "AWidget.hh"
 
+class Game;
+
 class AMenu : public AWidget
 {
 public:
@@ -11,6 +13,10 @@ public:
 
   virtual void draw(sf::RenderWindow &window);
   virtual void setActive(bool state);
+  void setGameInstance(Game *game);
+
+protected:
+  Game *_gameInstance;
 };
 
 #endif // AMENU_HH

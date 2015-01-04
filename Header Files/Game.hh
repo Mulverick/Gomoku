@@ -9,6 +9,7 @@
 #include "AI.hh"
 #include "Text.hh"
 #include "Sprite.hh"
+#include "MainMenu.hh"
 
 class Game
 {
@@ -34,6 +35,7 @@ private:
 	Sprite _black;
 	Sprite _sb;
 	Text _text;
+	MainMenu _mainMenu;
 	int _playerColor;
 	char _map[361];
 };

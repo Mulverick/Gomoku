@@ -17,7 +17,7 @@ public:
 	bool checkThree(int pos, char const *map, int color);
 	bool checkTwo(int pos, char const *map, int color);
 	std::deque<sf::Vector2i> checkEat(int, char const *, int color);
-	void updateRules(bool, bool);
+	static void updateRules(bool, bool);
 	char _prisoner[2];
 
 	bool	isWinner(void) const { return (_isWinner); }

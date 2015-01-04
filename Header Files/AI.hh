@@ -27,6 +27,8 @@ private:
 	char				*_board;
 //	Arbitre				_arbitre;
 	Algorithm			*_algorithm;
+
+	void				easyPlay();
 };
 
 #endif
