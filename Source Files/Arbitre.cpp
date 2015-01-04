@@ -299,10 +299,10 @@ static bool isEatable(Vector<int> const &next, Vector<int> const &dir, char cons
 		it3 = next + Vector<int>(-1, 0);
 		it4 = it3 + Vector<int>(-1, 0);
 		std::cout << it1.x << ", " << it1.y << " | " << it2.x << ", " << it2.y << " | " << it3.x << ", " << it3.y << " | " << it4.x << ", " << it4.y << std::endl;
-		if ((map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor && map[it3.y][it3.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true)
-			|| (map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it3.y][it3.x] == ocolor && map[it2.y][it2.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true)
-			|| (map[next.y][next.x] == color && map[it2.y][it2.x] == color && map[it4.y][it4.x] == ocolor && map[it1.y][it1.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it4) == true)
-			|| (map[next.y][next.x] == color && map[it2.y][it2.x] == color && map[it1.y][it1.x] == ocolor && map[it4.y][it4.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it4) == true))
+		if ((isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true && map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor && map[it3.y][it3.x] == 0)
+			|| (isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true && map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it3.y][it3.x] == ocolor && map[it2.y][it2.x] == 0)
+			|| (isCoord(it1) == true && isCoord(it3) == true && isCoord(it4) == true && map[next.y][next.x] == color && map[it3.y][it3.x] == color && map[it4.y][it4.x] == ocolor && map[it1.y][it1.x] == 0)
+			|| (isCoord(it1) == true && isCoord(it3) == true && isCoord(it4) == true && map[next.y][next.x] == color && map[it3.y][it3.x] == color && map[it1.y][it1.x] == ocolor && map[it4.y][it4.x] == 0))
 		{
 			std::cout << "cassable grosse pute de merde" << std::endl;
 			return (true);
@@ -316,10 +316,10 @@ static bool isEatable(Vector<int> const &next, Vector<int> const &dir, char cons
 		it3 = next + Vector<int>(-1, 1);
 		it4 = it3 + Vector<int>(-1, 1);
 		std::cout << it1.x << ", " << it1.y << " | " << it2.x << ", " << it2.y << " | " << it3.x << ", " << it3.y << " | " << it4.x << ", " << it4.y << std::endl;
-		if ((map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor && map[it3.y][it3.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true)
-			|| (map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it3.y][it3.x] == ocolor && map[it2.y][it2.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true)
-			|| (map[next.y][next.x] == color && map[it2.y][it2.x] == color && map[it4.y][it4.x] == ocolor && map[it1.y][it1.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it4) == true) || (map[next.y][next.x] == color && map[it2.y][it2.x] == color && map[it1.y][it1.x] == ocolor && map[it4.y][it4.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it4) == true))
-		{
+		if ((isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true && map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor && map[it3.y][it3.x] == 0)
+			|| (isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true && map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it3.y][it3.x] == ocolor && map[it2.y][it2.x] == 0)
+			|| (isCoord(it1) == true && isCoord(it3) == true && isCoord(it4) == true && map[next.y][next.x] == color && map[it3.y][it3.x] == color && map[it4.y][it4.x] == ocolor && map[it1.y][it1.x] == 0)
+			|| (isCoord(it1) == true && isCoord(it3) == true && isCoord(it4) == true && map[next.y][next.x] == color && map[it3.y][it3.x] == color && map[it1.y][it1.x] == ocolor && map[it4.y][it4.x] == 0))		{
 			return (true);
 		}
 	}
@@ -331,10 +331,10 @@ static bool isEatable(Vector<int> const &next, Vector<int> const &dir, char cons
 		it3 = next + Vector<int>(0, -1);
 		it4 = it3 + Vector<int>(0, -1);
 		std::cout << it1.x << ", " << it1.y << " | " << it2.x << ", " << it2.y << " | " << it3.x << ", " << it3.y << " | " << it4.x << ", " << it4.y << std::endl;
-		if ((map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor && map[it3.y][it3.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true)
-			|| (map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it3.y][it3.x] == ocolor && map[it2.y][it2.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true)
-			|| (map[next.y][next.x] == color && map[it2.y][it2.x] == color && map[it4.y][it4.x] == ocolor && map[it1.y][it1.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it4) == true) || (map[next.y][next.x] == color && map[it2.y][it2.x] == color && map[it1.y][it1.x] == ocolor && map[it4.y][it4.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it4) == true))
-		{
+		if ((isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true && map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor && map[it3.y][it3.x] == 0)
+			|| (isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true && map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it3.y][it3.x] == ocolor && map[it2.y][it2.x] == 0)
+			|| (isCoord(it1) == true && isCoord(it3) == true && isCoord(it4) == true && map[next.y][next.x] == color && map[it3.y][it3.x] == color && map[it4.y][it4.x] == ocolor && map[it1.y][it1.x] == 0)
+			|| (isCoord(it1) == true && isCoord(it3) == true && isCoord(it4) == true && map[next.y][next.x] == color && map[it3.y][it3.x] == color && map[it1.y][it1.x] == ocolor && map[it4.y][it4.x] == 0))		{
 			return (true);
 		}
 	}
@@ -346,10 +346,10 @@ static bool isEatable(Vector<int> const &next, Vector<int> const &dir, char cons
 		it3 = next + Vector<int>(-1, -1);
 		it4 = it3 + Vector<int>(-1, -1);
 		std::cout << it1.x << ", " << it1.y << " | " << it2.x << ", " << it2.y << " | " << it3.x << ", " << it3.y << " | " << it4.x << ", " << it4.y << std::endl;
-		if ((map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor && map[it3.y][it3.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true)
-			|| (map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it3.y][it3.x] == ocolor && map[it2.y][it2.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true)
-			|| (map[next.y][next.x] == color && map[it2.y][it2.x] == color && map[it4.y][it4.x] == ocolor && map[it1.y][it1.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it4) == true) || (map[next.y][next.x] == color && map[it2.y][it2.x] == color && map[it1.y][it1.x] == ocolor && map[it4.y][it4.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it4) == true))
-		{
+		if ((isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true && map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor && map[it3.y][it3.x] == 0)
+			|| (isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true && map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it3.y][it3.x] == ocolor && map[it2.y][it2.x] == 0)
+			|| (isCoord(it1) == true && isCoord(it3) == true && isCoord(it4) == true && map[next.y][next.x] == color && map[it3.y][it3.x] == color && map[it4.y][it4.x] == ocolor && map[it1.y][it1.x] == 0)
+			|| (isCoord(it1) == true && isCoord(it3) == true && isCoord(it4) == true && map[next.y][next.x] == color && map[it3.y][it3.x] == color && map[it1.y][it1.x] == ocolor && map[it4.y][it4.x] == 0))		{
 			return (true);
 		}
 	}
