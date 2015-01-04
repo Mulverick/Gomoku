@@ -19,32 +19,33 @@ int		AI::onClickHandler(int cellPosition)
 	return (-1);
 }
 
-void	AI::easyPlay()
-{
-}
-
 void	AI::placeStone(char * const &map)
 {
+	//std::cout << "AI::placeStone in" << std::endl;
+
 	int		wr = 0;
 	int		tmp;
 	int		pos = -1;
 
+	memcpy(this->_board, map, MAP_SIZE);
 	this->_played = this->_algorithm->EasyPlay(map);
 	if (this->_played == -1)
-		this->_nodes = this->_algorithm->CreateNodesList(map, this->_color, 0);
+		this->_nodes = this->_algorithm->CreateNodesList(this->_board, this->_color, 0);
 	for (std::list<Node *>::iterator it = this->_nodes.begin(); it != this->_nodes.end(); ++it)
 	{
 		tmp = (*it)->WinsRate();
+		//std::cout << "CWinsRate = " << wr << " WinsRate = " << tmp << std::endl;
 		if (tmp > wr)
 		{
+			//std::cout << "in" << std::endl;
 			wr = tmp;
 			this->_played = (*it)->GetPos();
 		}
 	}
-
-	//std::cout << "AI::placeStone : final pos = " << this->_played << " nodes size = " << this->_nodes.size() << std::endl;
 	this->_nodes.clear();
+	//std::cout << "AI::placeStone : pos = " << this->_played << " in map[pos] = " << (int)map[this->_played] << std::endl;
 	map[this->_played] = this->_color;
+	//std::cout << "AI::placeStone out" << std::endl;
 }
 
 void	AI::wrongMove()
