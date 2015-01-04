@@ -69,5 +69,5 @@ void Button::_setTextPosition()
 {
   sf::Vector2f textSize(_text->getSize());
 
-  _text->setPosition(sf::Vector2f((_size.x / 2) - (textSize.x / 2), (_size.y / 2) - (textSize.y / 2) - (_text->getFontSize() / 2)));
+  _text->setPosition(sf::Vector2f((_size.x / 2) - (textSize.x / 2), (_size.y / 2) - (textSize.y / 2)));
 }

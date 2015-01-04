@@ -3,7 +3,6 @@
 #include <sstream>
 #include "Game.hh"
 #include "Utils.hh"
-#include "AxelAI.h"
 
 Game::Game()
 {
@@ -18,6 +17,24 @@ Game::Game()
 
 Game::~Game()
 {
+}
+
+void Game::restart(){
+	int i, j;
+	_mainMenu.setActive(true);
+	_winnerMenu.setActive(false);
+	i = 0;
+	while (i < 19)
+	{
+		j = 0;
+		while (j < 19)
+			_map[i][j++] = 0;
+		i++; 
+	}
+	_arbitre._prisoner[0] = 0;
+	_arbitre._prisoner[1] = 0;
+	_arbitre.resetWinner();
+	_playerColor = BLACK;
 }
 
 void Game::run()
@@ -102,13 +119,15 @@ void Game::_draw()
 		_text.setString("Ia 2");
 	_text.setPosition(sf::Vector2f(430.0f, 830.0f));
 	_text.draw(_window);
-	if (dynamic_cast<Human*>(_players[0]) != 0 && dynamic_cast<Human*>(_players[1]) != 0)
+	if (!_mainMenu.isActive() && !_winnerMenu.isActive() && dynamic_cast<Human*>(_players[0]) != 0 && dynamic_cast<Human*>(_players[1]) != 0)
 		_drawCursor((_playerColor == WHITE ? _white : _black));
-	else if (((tmp = dynamic_cast<Human*>(_players[0])) != 0 && dynamic_cast<Human*>(_players[1]) == 0)
-			|| (dynamic_cast<Human*>(_players[0]) == 0 && (tmp = dynamic_cast<Human*>(_players[1])) != 0))
+	else if (!_mainMenu.isActive() && !_winnerMenu.isActive() && ((((tmp = dynamic_cast<Human*>(_players[0])) != 0 && dynamic_cast<Human*>(_players[1]) == 0)
+			|| (dynamic_cast<Human*>(_players[0]) == 0 && (tmp = dynamic_cast<Human*>(_players[1])) != 0))))
 	{
 		_drawCursor((tmp->getColor() == WHITE ? _white : _black));
 	}
+	_winnerMenu.draw(_window);
+	_mainMenu.draw(_window);
 }
 
 void Game::_drawCursor(Sprite &sprite)
@@ -144,28 +163,41 @@ bool Game::_initialize()
 	_text.setFontSize(30);
 	_playerColor = BLACK;
 	_players.push_back(new Human(BLACK));
-	_players.push_back(new AxelAI(WHITE, _map));
-	Arbitre::updateRules(true, true);
+	_players.push_back(new Human(WHITE));
+	_mainMenu.setGameInstance(this);
+	_winnerMenu.setGameInstance(this);
+	_winnerMenu.setActive(false);
 	return true;
 }
 
 void Game::_onClick()
 {
-	bool ret;
-	Vector<int>	cellPosition;
-	cellPosition.x = (sf::Mouse::getPosition(_window).x / CELL_SIZE);
-	cellPosition.y = (sf::Mouse::getPosition(_window).y / CELL_SIZE);
-	if ((ret = _arbitre.checkMove((_playerColor == BLACK ? _players[0]->onClickHandler(cellPosition) : _players[1]->onClickHandler(cellPosition)), _map, _playerColor)) == true)
+	if (!_mainMenu.isActive() && !_winnerMenu.isActive())
 	{
-		if (_playerColor == BLACK)
-			_players[0]->placeStone(_map);
-		else
-			_players[1]->placeStone(_map);
-		_playerColor = (_playerColor == WHITE ? BLACK : WHITE);
+		bool ret;
+		Vector<int>	cellPosition;
+		cellPosition.x = (sf::Mouse::getPosition(_window).x / CELL_SIZE);
+		cellPosition.y = (sf::Mouse::getPosition(_window).y / CELL_SIZE);
+		if ((ret = _arbitre.checkMove((_playerColor == BLACK ? _players[0]->onClickHandler(cellPosition) : _players[1]->onClickHandler(cellPosition)), _map, _playerColor)) == true)
+		{
+			if (_playerColor == BLACK)
+				_players[0]->placeStone(_map);
+			else
+				_players[1]->placeStone(_map);
+			if (_arbitre.isWinner() == true){
+				_winnerMenu.setWinner(_playerColor == WHITE ? "White" : "Black");
+				_winnerMenu.setActive(true); 
+			}
+			_playerColor = (_playerColor == WHITE ? BLACK : WHITE);
 		
+		}
+		else
+			_playerColor == BLACK ? _players[0]->wrongMove() : _players[1]->wrongMove();
 	}
+	else if (_mainMenu.isActive())
+		_mainMenu.onClickHandler(Utils::toVector2f(sf::Mouse::getPosition(_window)));
 	else
-		_playerColor == BLACK ? _players[0]->wrongMove() : _players[1]->wrongMove();
+		_winnerMenu.onClickHandler(Utils::toVector2f(sf::Mouse::getPosition(_window)));
 }
 
 bool Game::_update()
@@ -179,7 +211,7 @@ bool Game::_update()
 	{
 		if (e.type == sf::Event::Closed)
 			return false;
-		if (type == HUMAN && e.type == sf::Event::MouseButtonPressed)
+		if ((type == HUMAN || _arbitre.isWinner()) && e.type == sf::Event::MouseButtonPressed)
 			_onClick();
 	}
 	if (type == OTHER)
@@ -187,6 +219,10 @@ bool Game::_update()
 		if (_arbitre.checkMove((_playerColor == BLACK ? _players[0]->hasPlayed() : _players[1]->hasPlayed()), _map, _playerColor) == true)
 		{
 			_playerColor == BLACK ? _players[0]->placeStone(_map) : _players[1]->placeStone(_map);
+			if (_arbitre.isWinner() == true){
+				_winnerMenu.setWinner(_playerColor == WHITE ? "White" : "Black");
+				_winnerMenu.setActive(true);
+			}
 			_playerColor = (_playerColor == WHITE ? BLACK : WHITE);
 		}
 		else

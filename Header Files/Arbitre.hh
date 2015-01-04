@@ -10,6 +10,7 @@ class Arbitre
 public:
 	Arbitre();
 	~Arbitre();
+
 	bool getIsWinner();
 	bool checkMove(Vector<int> const &, char * const *, int color);
 	int checkDoubleThree(Vector<int> const &pos, char const * const *map, int color, bool recursive = true);
@@ -21,7 +22,7 @@ public:
 
 	void clearArbitre();
 	bool	isWinner(void) const { return (_isWinner); }
-
+	void resetWinner();
 	char _prisoner[2];
 
 private:

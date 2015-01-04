@@ -4,7 +4,6 @@
 Algorithm::Algorithm()
 {
 	this->_first = true;
-	this->_arbitre.updateRules(true, true);
 }
 
 Algorithm::~Algorithm() {}
@@ -117,7 +116,6 @@ bool				Algorithm::NearPiece(Vector<int> const &pos, char **map)
 std::list<Node *>	Algorithm::CreateNodesList(char **map, int color, int depth)
 {
 //	std::cout << "Algorithm::CreateNodesList in" << std::endl;
-
 	std::list<Node *>	nodes;
 	Vector<int>			tmp;
 
@@ -156,7 +154,6 @@ std::list<Node *>	Algorithm::CreateNodesList(char **map, int color, int depth)
 		}
 	}
 	this->_first = false;
-//	std::cout << "Algorithm::CreateNodesList out nodes.size : " << nodes.size() << std::endl;
 	return nodes;
 }
 
@@ -165,11 +162,11 @@ void				Algorithm::MonteCarlo(Node *node, Node *parent, char **map)
 	std::vector<Vector<int> >	cases;
 	Vector<int>		pos;
 	int				color = node->GetColor();
-	int				ccolor;
+	int				ccolor = (color == WHITE ? BLACK : WHITE);
 	int				nbsimulation = node->GetNbsimulation();
 	int				wins = 0;
 	int				loss = 0;
-	
+
 	pos.x = rand() % 19;
 	pos.y = rand() % 19;
 	for (int i = 0; i != nbsimulation; ++i)

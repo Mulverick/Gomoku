@@ -26,21 +26,10 @@ Vector<int> const &AI::onClickHandler(Vector<int> const &cellPosition)
 void	AI::placeStone(char * const *map)
 {
 //	std::cout << "AI::placeStone in played[" << this->_played.y << "][" << this->_played.x << "]" << std::endl;
-
 	int		wr = 0;
 	int		tmp;
 	int		pos = -1;
 
-	for (int y = 0; y < 19; y++)
-		for (int x = 0; x < 19; x++)
-			this->_board[y][x] = map[y][x];
-
-	/*for (int y = 0; y < 19; y++)
-	{
-		for (int x = 0; x < 19; x++)
-			std::cout << (int)this->_board[y][x];
-		std::cout << std::endl;
-	}*/
 
 	this->_played = this->_algorithm->EasyPlay(map);
 	if (this->_played.x == -1)
@@ -56,7 +45,6 @@ void	AI::placeStone(char * const *map)
 	}
 	this->_nodes.clear();
 	map[this->_played.y][this->_played.x] = this->_color;
-//	std::cout << "AI::placeStone out played[" << this->_played.y << "][" << this->_played.x << "]" << std::endl;
 }
 
 void	AI::wrongMove()

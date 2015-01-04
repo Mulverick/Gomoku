@@ -55,9 +55,9 @@ void				Node::Expand(Algorithm algorithm)
 
 void				Node::Simulate(Algorithm algorithm)
 {
-//	std::cout << "Node::Simulate in" << std::endl;
+	//	std::cout << "Node::Simulate in" << std::endl;
 	algorithm.MonteCarlo(this, this->_parent, this->_board);
-//	std::cout << "Node::Simulate out" << std::endl;
+	//	std::cout << "Node::Simulate out" << std::endl;
 }
 
 void				Node::SetWins(int wins)
@@ -92,8 +92,6 @@ int					Node::GetNbsimulation()
 
 int					Node::WinsRate()
 {
-	int				nbplay = (this->_loss + this->_wins);
-	float			wr = ((float)this->_wins / (float)nbplay) * 100;
-//	std::cout << "Node::WinsRate : wins = " << this->_wins << " loss = " << this->_loss << " winsrate = " << wr << " nb play = " << nbplay << std::endl;
-	return ((int)wr);
+	//std::cout << "Node::WinsRate : wins = " << this->_wins << " loss = " << this->_loss << std::endl;
+	return (this->_wins / (this->_loss + this->_wins));
 }

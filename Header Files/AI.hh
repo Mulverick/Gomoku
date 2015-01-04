@@ -5,6 +5,7 @@
 # include "Algorithm.hh"
 # include "Node.hh"
 
+
 class AI : public IPlayer
 {
 public:
@@ -26,6 +27,8 @@ private:
 	std::list<Node *>	_nodes;
 	char				**_board;
 	Algorithm			*_algorithm;
+
+	void				easyPlay();
 };
 
 #endif

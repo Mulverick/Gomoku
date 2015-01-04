@@ -7,7 +7,7 @@ AWidget::AWidget(AWidget *parent)
   if (parent)
     parent->addComponent(this);
   _parent = parent;
-  _backgroundColor.setFillColor(sf::Color(255, 255, 255, 0));
+  _backgroundColor.setFillColor(sf::Color(255, 255, 255, 255));
   _backgroundColor.setSize(_size);
   _isActive = false;
 }
@@ -52,6 +52,12 @@ void AWidget::setActive(bool state)
 void AWidget::setBackgroundColor(const sf::Color &color)
 {
   _backgroundColor.setFillColor(color);
+}
+
+void AWidget::setBackgroundTexture(const std::string &textName)
+{
+  _backgroundTexture.loadFromFile(textName);
+  _backgroundColor.setTexture(&_backgroundTexture);
 }
 
 void AWidget::setPosition(const sf::Vector2f &position)
