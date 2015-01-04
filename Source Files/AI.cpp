@@ -32,8 +32,8 @@ AI::~AI() {}
 
 Vector<int> const &AI::onClickHandler(Vector<int> const &cellPosition)
 {
-	Vector<int> returned(-1, -1);
-	return (returned);
+	Vector<int> *returned = new Vector<int>(-1, -1);
+	return (*returned);
 }
 
 void	AI::placeStone(char * const *map)
@@ -48,7 +48,7 @@ void	AI::placeStone(char * const *map)
 		for (int x = 0; x < 19; ++x)
 			this->_board[y][x] = map[y][x];
 	if (this->_played.x == -1)
-		this->_nodes = this->_algorithm->CreateNodesList(this->_board, this->_color, 0);
+		this->_nodes = this->_algorithm->CreateNodesList(this->_board, this->_color, 1, NULL);
 	for (std::list<Node *>::iterator it = this->_nodes.begin(); it != this->_nodes.end(); ++it)
 	{
 		tmp = (*it)->WinsRate();
@@ -58,7 +58,7 @@ void	AI::placeStone(char * const *map)
 			this->_played = (*it)->GetPos();
 		}
 	}
-//	std::cout << "AI::placeStone out winsrate : " << wr << " played[" << this->_played.y << "][" << this->_played.x << "]" << std::endl;
+	//std::cout << "AI::placeStone out played[" << this->_played.y << "][" << this->_played.x << "]" << std::endl;
 	this->_nodes.clear();
 	map[this->_played.y][this->_played.x] = this->_color;
 }

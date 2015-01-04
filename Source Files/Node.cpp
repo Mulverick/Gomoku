@@ -49,7 +49,7 @@ void				Node::Expand(Algorithm algorithm)
 	if (!this->_depth)
 		this->Simulate(algorithm);
 	else
-		this->_child = algorithm.CreateNodesList(this->_board, (this->_color == WHITE ? BLACK : WHITE), --this->_depth);
+		this->_child = algorithm.CreateNodesList(this->_board, (this->_color == WHITE ? BLACK : WHITE), (this->_depth - 1), this);
 	//std::cout << "Node::Expand out" << std::endl;
 }
 
@@ -93,5 +93,6 @@ int					Node::GetNbsimulation()
 int					Node::WinsRate()
 {
 	int	wr = ((float)this->_wins / ((float)this->_loss + (float)this->_wins)) * 100;
+	//std::cout << "Node::WinsRate ret : " << wr << " wins : " << this->_wins << " loss : " << this->_loss << std::endl;
 	return (wr);
 }
