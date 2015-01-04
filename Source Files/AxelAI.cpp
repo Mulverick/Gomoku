@@ -114,24 +114,42 @@ void	AxelAI::changeTurn(void)
 
 			if (pos.empty())
 			{
-				for (p.y = 0; p.y < 19; ++p.y)
-					for (p.x = 0; p.x < 19; ++p.x)
-						if (!_map[p.y][p.x] && ((p.x + 1 < 19 && _map[p.y][p.x + 1] == _color) || (p.x - 1 >= 0 && _map[p.y][p.x - 1] == _color)
-							|| (p.y + 1 < 19 && _map[p.y + 1][p.x] == _color) || (p.y - 1 >= 0 && _map[p.y - 1][p.x] == _color)
-							|| (p.x + 1 < 19 && p.y + 1 < 19 && _map[p.y + 1][p.x + 1] == _color) || (p.x - 1 >= 0 && p.y - 1 >= 0 && _map[p.y - 1][p.x - 1] == _color)
-							|| (p.x - 1 >= 0 && p.y + 1 < 19 && _map[p.y + 1][p.x - 1] == _color) || (p.x + 1 < 19 && p.y - 1 >= 0 && _map[p.y - 1][p.x + 1] == _color)))
-							pos.emplace_back(p, 0);
+				{
+					Arbitre	ar;
+					for (p.y = 0; p.y < 19; ++p.y)
+						for (p.x = 0; p.x < 19; ++p.x)
+							if (!_map[p.y][p.x] && ((p.x + 1 < 19 && _map[p.y][p.x + 1] == _color) || (p.x - 1 >= 0 && _map[p.y][p.x - 1] == _color)
+								|| (p.y + 1 < 19 && _map[p.y + 1][p.x] == _color) || (p.y - 1 >= 0 && _map[p.y - 1][p.x] == _color)
+								|| (p.x + 1 < 19 && p.y + 1 < 19 && _map[p.y + 1][p.x + 1] == _color) || (p.x - 1 >= 0 && p.y - 1 >= 0 && _map[p.y - 1][p.x - 1] == _color)
+								|| (p.x - 1 >= 0 && p.y + 1 < 19 && _map[p.y + 1][p.x - 1] == _color) || (p.x + 1 < 19 && p.y - 1 >= 0 && _map[p.y - 1][p.x + 1] == _color)))
+							{
+								for (int y = 0; y < 19; ++y)
+									for (int x = 0; x < 19; ++x)
+										test[y][x] = _map[y][x];
+								if (ar.checkMove(p, test, _color))
+									pos.emplace_back(p, 0);
+							}
+				}
 			}
 
 			if (pos.empty())
 			{
-				for (p.y = 0; p.y < 19; ++p.y)
-					for (p.x = 0; p.x < 19; ++p.x)
-						if (!_map[p.y][p.x] && ((p.x + 1 < 19 && _map[p.y][p.x + 1]) || (p.x - 1 >= 0 && _map[p.y][p.x - 1])
-							|| (p.y + 1 < 19 && _map[p.y + 1][p.x]) || (p.y - 1 >= 0 && _map[p.y - 1][p.x])
-							|| (p.x + 1 < 19 && p.y + 1 < 19 && _map[p.y + 1][p.x + 1]) || (p.x - 1 >= 0 && p.y - 1 >= 0 && _map[p.y - 1][p.x - 1])
-							|| (p.x - 1 >= 0 && p.y + 1 < 19 && _map[p.y + 1][p.x - 1]) || (p.x + 1 < 19 && p.y - 1 >= 0 && _map[p.y - 1][p.x + 1])))
-							pos.emplace_back(p, 0);
+				{
+					Arbitre	ar;
+					for (p.y = 0; p.y < 19; ++p.y)
+						for (p.x = 0; p.x < 19; ++p.x)
+							if (!_map[p.y][p.x] && ((p.x + 1 < 19 && _map[p.y][p.x + 1]) || (p.x - 1 >= 0 && _map[p.y][p.x - 1])
+								|| (p.y + 1 < 19 && _map[p.y + 1][p.x]) || (p.y - 1 >= 0 && _map[p.y - 1][p.x])
+								|| (p.x + 1 < 19 && p.y + 1 < 19 && _map[p.y + 1][p.x + 1]) || (p.x - 1 >= 0 && p.y - 1 >= 0 && _map[p.y - 1][p.x - 1])
+								|| (p.x - 1 >= 0 && p.y + 1 < 19 && _map[p.y + 1][p.x - 1]) || (p.x + 1 < 19 && p.y - 1 >= 0 && _map[p.y - 1][p.x + 1])))
+							{
+								for (int y = 0; y < 19; ++y)
+									for (int x = 0; x < 19; ++x)
+										test[y][x] = _map[y][x];
+								if (ar.checkMove(p, test, _color))
+									pos.emplace_back(p, 0);
+							}
+				}
 			}
 
 			for (auto it = pos.begin(); it != pos.end(); ++it)
