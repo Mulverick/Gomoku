@@ -39,7 +39,7 @@ bool Arbitre::checkMove(int cell, char *map, int color)
 	}
 	if (checkWinner(cell, map, color) == true)
 	{
-		//std::cout << color << " gagne !" << std::endl;
+		std::cout << color << " gagne !" << std::endl;
 		return true;
 	}
 	 return (true);

@@ -132,7 +132,7 @@ bool Game::_initialize()
 	_text.setFontSize(30);
 	_playerColor = BLACK;
 	_players.push_back(new Human(BLACK));
-	_players.push_back(new AxelAI(WHITE, _map));
+	_players.push_back(new Human(WHITE));
 	_arbitre.updateRules(true, true);
 	return true;
 }
@@ -160,18 +160,15 @@ bool Game::_update()
 		return false;
 	Type type = _playerColor == BLACK ? _players[0]->getType() : _players[1]->getType();
 
-	if (type == HUMAN)
+	sf::Event e;
+	while (_window.pollEvent(e))
 	{
-		sf::Event e;
-		while (_window.pollEvent(e))
-		{
-			if (e.type == sf::Event::Closed)
-				return false;
-			if (e.type == sf::Event::MouseButtonPressed)
-				_onClick();
-		}
+		if (e.type == sf::Event::Closed)
+			return false;
+		if (type == HUMAN && e.type == sf::Event::MouseButtonPressed)
+			_onClick();
 	}
-	else
+	if (type == OTHER)
 	{
 		if (_arbitre.checkMove((_playerColor == BLACK ? _players[0]->hasPlayed() : _players[1]->hasPlayed()), _map, _playerColor) == true)
 		{
