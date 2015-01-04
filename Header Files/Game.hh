@@ -2,11 +2,12 @@
 #define GAME_HH
 
 #include <SFML/Graphics.hpp>
+#include <utility>
 
 #include <vector>
 #include "Arbitre.hh"
 #include "Human.hh"
-#include "AI.hh"
+#include "AxelAI.h"
 #include "Text.hh"
 #include "Sprite.hh"
 #include "MainMenu.hh"
@@ -17,7 +18,36 @@ public:
 	Game();
 	~Game();
 
-	void run();
+	void	run();
+	template <typename Type> void	reset(void)
+	{
+		IPlayer	*player[2];
+		int		it = rand() % 2;
+		player[0] = new Human(BLACK);
+		player[1] = new Type(WHITE, _map);
+
+		delete _players.back();
+		_players.pop_back();
+		delete _players.back();
+		_players.pop_back();
+		_players.push_back(player[0]);
+		_players.push_back(player[1]);
+	}
+	template <> void	reset<Human>(void)
+	{
+		IPlayer	*player[2];
+		int		it = rand() % 2;
+		player[0] = new Human(BLACK);
+		player[1] = new Human(WHITE);
+
+		delete _players.back();
+		_players.pop_back();
+		delete _players.back();
+		_players.pop_back();
+		_players.push_back(player[0]);
+		_players.push_back(player[1]);
+	}
+
 
 private:
 	void _close();

@@ -14,6 +14,8 @@ public:
   virtual void draw(sf::RenderWindow &window);
   virtual void setActive(bool state);
   void setGameInstance(Game *game);
+  Game			*getGameInstance(void);
+  Game const	*getGameInstance(void) const;
 
 protected:
   Game *_gameInstance;

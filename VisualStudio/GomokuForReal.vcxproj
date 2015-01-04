@@ -21,6 +21,7 @@
     <ClInclude Include="..\Header Files\Game.hh" />
     <ClInclude Include="..\Header Files\Human.hh" />
     <ClInclude Include="..\Header Files\IPlayer.hh" />
+    <ClInclude Include="..\Header Files\MainMenu.hh" />
     <ClInclude Include="..\Header Files\Node.hh" />
     <ClInclude Include="..\Header Files\Sprite.hh" />
     <ClInclude Include="..\Header Files\Text.hh" />
@@ -37,6 +38,7 @@
     <ClCompile Include="..\Source Files\Game.cpp" />
     <ClCompile Include="..\Source Files\Human.cpp" />
     <ClCompile Include="..\Source Files\Main.cpp" />
+    <ClCompile Include="..\Source Files\MainMenu.cpp" />
     <ClCompile Include="..\Source Files\Node.cpp" />
     <ClCompile Include="..\Source Files\Sprite.cpp" />
     <ClCompile Include="..\Source Files\Text.cpp" />

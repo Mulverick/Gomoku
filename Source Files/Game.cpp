@@ -3,7 +3,6 @@
 #include <sstream>
 #include "Game.hh"
 #include "Utils.hh"
-#include "AxelAI.h"
 
 Game::Game()
 {
@@ -134,7 +133,6 @@ bool Game::_initialize()
 	_playerColor = BLACK;
 	_players.push_back(new Human(BLACK));
 	_players.push_back(new Human(WHITE));
-	_arbitre.updateRules(true, true);
 	_mainMenu.setGameInstance(this);
 	return true;
 }

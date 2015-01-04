@@ -1,3 +1,4 @@
+#include "Game.hh"
 #include "MainMenu.hh"
 #include "Arbitre.hh"
 
@@ -16,7 +17,14 @@ MainMenu::MainMenu(AWidget *parent) :
   _start->setFont("../Assets/fontBambo.ttf");
   _start->setFontSize(30);
   _start->setText("START");
-  _start->setAction([this](){setActive(false); Arbitre::updateRules(_doubleThree->isActive(), _5breakable->isActive());});
+  _start->setAction([this] {
+	  if (_pvp->isActive())
+		  getGameInstance()->reset<Human>();
+	  else
+		  getGameInstance()->reset<AxelAI>();
+	  setActive(false);
+	  Arbitre::updateRules(_doubleThree->isActive(), _5breakable->isActive());
+  });
   _pvp->setSize(sf::Vector2f(200, 50));
   _pvp->setPosition(sf::Vector2f(25, 25));
   _pvp->setBackgroundTexture("../Assets/button_select.png");

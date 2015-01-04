@@ -337,6 +337,7 @@ static bool isEatable(int next, int dir, char const *map, int color){
 			if ((map[it1] == ocolor && map[it2] == color && map[it4] == 0) || (map[it1] == color && map[it2] == ocolor && map[it3] == 0) || (map[it1] == 0 && map[it4] == ocolor && map[it2] == color) || (map[it1] == color && map[it3] == ocolor && map[it2] == 0))
 				return (true);
 	}
+	return (false);
 }
 
 static bool isBreakable(int pos, char const *map, int color, int nb, int dir){

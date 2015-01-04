@@ -31,3 +31,6 @@ void AMenu::setGameInstance(Game *game)
 {
   _gameInstance = game;
 }
+
+Game		*AMenu::getGameInstance(void) { return (_gameInstance); }
+Game const	*AMenu::getGameInstance(void) const { return (_gameInstance); }
