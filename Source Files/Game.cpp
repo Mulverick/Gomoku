@@ -144,8 +144,8 @@ bool Game::_initialize()
 	_text.setFontSize(30);
 	_playerColor = BLACK;
 	_players.push_back(new Human(BLACK));
-	_players.push_back(new AxelAI(WHITE, _map));
-	_arbitre.updateRules(true, true);
+	_players.push_back(new Human(WHITE));
+	_arbitre.updateRules(false, true);
 	return true;
 }
 

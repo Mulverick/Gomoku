@@ -40,7 +40,7 @@ bool Arbitre::checkMove(Vector<int> const &pos, char * const *map, int color)
 	}
 	if (checkWinner(pos, map, color) == true)
 	{
-		//std::cout << color << " gagne !" << std::endl;
+		std::cout << (color == BLACK ? "Black" : "White") << " gagne !" << std::endl;
 		return true;
 	}
 	 return (true);
@@ -257,8 +257,8 @@ void	Arbitre::checkOnEat(Vector<int> const &pos, Vector<int> const &nb, int colo
 		&& tmpx.y < 19 && tmpy.y < 19 && tmpz.y < 19
 		&& map[tmpx.y][tmpx.x] == ocolor
 		&& map[tmpy.y][tmpy.x] == ocolor
-		&& map[tmpz.y][tmpx.x] == color)
-		coords.emplace_back(tmpz, tmpy);
+		&& map[tmpz.y][tmpz.x] == color)
+		coords.emplace_back(tmpx, tmpy);
 }
 
 void	Arbitre::checkEat(Vector<int> const &cell, char const * const *map, int color, std::deque<Vector<Vector<int>>> &coords)
@@ -273,44 +273,85 @@ void	Arbitre::checkEat(Vector<int> const &cell, char const * const *map, int col
 	checkOnEat(cell, Vector<int>(-1, 1), color, map, coords);
 }
 
+static bool isCoord(Vector<int> it)
+{
+	if (it.x >= 0 && it.x < 19 && it.y >= 0 && it.y < 19)
+		return true;
+	return false;
+}
+
 static bool isEatable(Vector<int> const &next, Vector<int> const &dir, char const * const *map, int color)
 {
 	Vector<int> it1;
 	Vector<int> it2;
+	Vector<int> it3;
+	Vector<int> it4;
 	int ocolor;
 
+
 	ocolor = (color == WHITE ? BLACK : WHITE);
+	std::cout << dir.x << ", " << dir.y << std::endl;
 	if (dir.x != 1 || dir.y != 0)
 	{
+		std::cout << "1" << std::endl;
 		it1 = next + Vector<int>(1, 0);
-		it2 = next + Vector<int>(-1, 0);
-		if (it1.x < 19 && it2.x >= 0)
-			if ((map[it1.y][it1.x] == ocolor && map[it2.y][it2.x] == color) || (map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor))
-				return (true);
+		it2 = it1 + Vector<int>(1, 0);
+		it3 = next + Vector<int>(-1, 0);
+		it4 = it3 + Vector<int>(-1, 0);
+		std::cout << it1.x << ", " << it1.y << " | " << it2.x << ", " << it2.y << " | " << it3.x << ", " << it3.y << " | " << it4.x << ", " << it4.y << std::endl;
+		if ((map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor && map[it3.y][it3.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true)
+			|| (map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it3.y][it3.x] == ocolor && map[it2.y][it2.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true)
+			|| (map[next.y][next.x] == color && map[it2.y][it2.x] == color && map[it4.y][it4.x] == ocolor && map[it1.y][it1.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it4) == true)
+			|| (map[next.y][next.x] == color && map[it2.y][it2.x] == color && map[it1.y][it1.x] == ocolor && map[it4.y][it4.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it4) == true))
+		{
+			std::cout << "cassable grosse pute de merde" << std::endl;
+			return (true);
+		}
 	}
 	if (dir.y != 1 || dir.x != -1)
 	{ 
-		it1 = next + Vector<int>(-1, 1);
-		it2 = next + Vector<int>(1, -1);
-		if (it1.x >= 0 && it1.y < 19 && it2.x < 19 && it2.y >= 0)
-			if ((map[it1.y][it1.x] == ocolor && map[it2.y][it2.x] == color) || (map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor))
-				return (true);
+		std::cout << "2" << std::endl;
+		it1 = next + Vector<int>(1, -1);
+		it2 = it1 + Vector<int>(1, -1);
+		it3 = next + Vector<int>(-1, 1);
+		it4 = it3 + Vector<int>(-1, 1);
+		std::cout << it1.x << ", " << it1.y << " | " << it2.x << ", " << it2.y << " | " << it3.x << ", " << it3.y << " | " << it4.x << ", " << it4.y << std::endl;
+		if ((map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor && map[it3.y][it3.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true)
+			|| (map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it3.y][it3.x] == ocolor && map[it2.y][it2.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true)
+			|| (map[next.y][next.x] == color && map[it2.y][it2.x] == color && map[it4.y][it4.x] == ocolor && map[it1.y][it1.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it4) == true) || (map[next.y][next.x] == color && map[it2.y][it2.x] == color && map[it1.y][it1.x] == ocolor && map[it4.y][it4.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it4) == true))
+		{
+			return (true);
+		}
 	}
 	if (dir.y != 1)
 	{ 
+		std::cout << "3" << std::endl;
 		it1 = next + Vector<int>(0, 1);
-		it2 = next + Vector<int>(0, -1);
-		if (it1.y < 19 && it2.y >= 0)
-			if ((map[it1.y][it1.x] == ocolor && map[it2.y][it2.x] == color) || (map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor))
-				return (true);
+		it2 = it1 + Vector<int>(0, 1);
+		it3 = next + Vector<int>(0, -1);
+		it4 = it3 + Vector<int>(0, -1);
+		std::cout << it1.x << ", " << it1.y << " | " << it2.x << ", " << it2.y << " | " << it3.x << ", " << it3.y << " | " << it4.x << ", " << it4.y << std::endl;
+		if ((map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor && map[it3.y][it3.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true)
+			|| (map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it3.y][it3.x] == ocolor && map[it2.y][it2.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true)
+			|| (map[next.y][next.x] == color && map[it2.y][it2.x] == color && map[it4.y][it4.x] == ocolor && map[it1.y][it1.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it4) == true) || (map[next.y][next.x] == color && map[it2.y][it2.x] == color && map[it1.y][it1.x] == ocolor && map[it4.y][it4.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it4) == true))
+		{
+			return (true);
+		}
 	}
 	if (dir.y != 1 || dir.x != 1)
 	{
+		std::cout << "4" << std::endl;
 		it1 = next + Vector<int>(1, 1);
-		it2 = next + Vector<int>(-1, -1);
-		if (it1.x < 19 && it1.y < 19 && it2.x >= 0 && it2.y >= 0)
-			if ((map[it1.y][it1.x] == ocolor && map[it2.y][it2.x] == color) || (map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor))
-				return (true);
+		it2 = it1 + Vector<int>(1, 1);
+		it3 = next + Vector<int>(-1, -1);
+		it4 = it3 + Vector<int>(-1, -1);
+		std::cout << it1.x << ", " << it1.y << " | " << it2.x << ", " << it2.y << " | " << it3.x << ", " << it3.y << " | " << it4.x << ", " << it4.y << std::endl;
+		if ((map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it2.y][it2.x] == ocolor && map[it3.y][it3.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true)
+			|| (map[next.y][next.x] == color && map[it1.y][it1.x] == color && map[it3.y][it3.x] == ocolor && map[it2.y][it2.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it3) == true)
+			|| (map[next.y][next.x] == color && map[it2.y][it2.x] == color && map[it4.y][it4.x] == ocolor && map[it1.y][it1.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it4) == true) || (map[next.y][next.x] == color && map[it2.y][it2.x] == color && map[it1.y][it1.x] == ocolor && map[it4.y][it4.x] == 0 && isCoord(it1) == true && isCoord(it2) == true && isCoord(it4) == true))
+		{
+			return (true);
+		}
 	}
 	return false;
 }
@@ -319,6 +360,7 @@ static bool isBreakable(Vector<int> const &pos, char const * const *map, int col
 	Vector<int> next;
 	Vector<int> npos = pos;
 	int it;
+	int count = 1;
 	bool rt = false;
 
 	while (nb >= 5)
@@ -339,11 +381,12 @@ static bool isBreakable(Vector<int> const &pos, char const * const *map, int col
 			return (false);
 		if (rt == true)
 		{
-			nb -= (next.x - npos.x);
+			nb -= count;
 			npos = next;
 		}
 		npos = npos + dir;
 		nb--;
+		count++;
 	}
 	return (rt);
 }
@@ -376,18 +419,17 @@ bool Arbitre::checkWinner(Vector<int> const &pos, char const * const *map, int c
 	}
 	if (nb >= 5)
 	{
-		//++next.x;
-		//if (_ruleOptionalEnd == false)
-		//{
-		//	_isWinner = true;
-		//	return true;
-		//}
-		//else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, Vector<int>(1, 0)) == false)
-		//{
-		//	_isWinner = true;
-		//	return true;
-		//}
-		return (true);
+		++next.x;
+		if (_ruleOptionalEnd == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, Vector<int>(1, 0)) == false)
+		{
+			_isWinner = true;
+			return true;
+		}
 	}
 	nb = 1;
 	next.x = pos.x;
@@ -405,18 +447,17 @@ bool Arbitre::checkWinner(Vector<int> const &pos, char const * const *map, int c
 	}
 	if (nb >= 5)
 	{
-		//++next.y;
-		//if (_ruleOptionalEnd == false)
-		//{
-		//	_isWinner = true;
-		//	return true;
-		//}
-		//else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, Vector<int>(0, 1)) == false)
-		//{
-		//	_isWinner = true;
-		//	return true;
-		//}
-		return (true);
+		++next.y;
+		if (_ruleOptionalEnd == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, Vector<int>(0, 1)) == false)
+		{
+			_isWinner = true;
+			return true;
+		}
 	}
 	nb = 1;
 	next.x = pos.x + 1;
@@ -437,19 +478,18 @@ bool Arbitre::checkWinner(Vector<int> const &pos, char const * const *map, int c
 	}
 	if (nb >= 5)
 	{
-		//++next.x;
-		//++next.y;
-		//if (_ruleOptionalEnd == false)
-		//{
-		//	_isWinner = true;
-		//	return true;
-		//}
-		//else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, Vector<int>(1, 1)) == false)
-		//{
-		//	_isWinner = true;
-		//	return true;
-		//}
-		return (true);
+		++next.x;
+		++next.y;
+		if (_ruleOptionalEnd == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, Vector<int>(1, 1)) == false)
+		{
+			_isWinner = true;
+			return true;
+		}
 	}
 	nb = 1;
 	next.x = pos.x - 1;
@@ -470,19 +510,18 @@ bool Arbitre::checkWinner(Vector<int> const &pos, char const * const *map, int c
 	}
 	if (nb >= 5)
 	{
-		//--next.x;
-		//++next.y;
-		//if (_ruleOptionalEnd == false)
-		//{
-		//	_isWinner = true;
-		//	return true;
-		//}
-		//else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, Vector<int>(-1, 1)) == false)
-		//{
-		//	_isWinner = true;
-		//	return true;
-		//}
-		return (true);
+		--next.x;
+		++next.y;
+		if (_ruleOptionalEnd == false)
+		{
+			_isWinner = true;
+			return true;
+		}
+		else if (_ruleOptionalEnd == true && isBreakable(next, map, color, nb, Vector<int>(-1, 1)) == false)
+		{
+			_isWinner = true;
+			return true;
+		}
 	}
 	return (false);
 }
