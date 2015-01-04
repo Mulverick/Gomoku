@@ -12,7 +12,7 @@ Node::Node(int color, int pos, int deth, char *board)
 	this->_parent = NULL;
 	this->_depth = deth;
 	this->_color = color;
-	this->_nbsimulation = 100;
+	this->_nbsimulation = 1000;
 	this->_wins = 0;
 	this->_loss = 0;
 }
@@ -28,47 +28,42 @@ Node::Node(Node *parent, int color, int pos, int deth, char *board)
 	this->_parent = parent;
 	this->_depth = deth;
 	this->_color = color;
-	this->_nbsimulation = 100;
+	this->_nbsimulation = 1000;
 	this->_wins = 0;
 	this->_loss = 0;
 }
 
 Node::~Node() {}
 
-void				Node::Expand(Algorithm algorithm, std::vector<int> freecase)
+void				Node::Expand(Algorithm algorithm)
 {
-//	std::cout << "Node::Expand in" << std::endl;
+	//std::cout << "Node::Expand in depht : " << this->_depth << std::endl;
 	if (!this->_depth)
-	{
-		this->Simulate(algorithm, freecase);
-		if (this->_parent)
-		{
-			this->_parent->SetWins(this->_wins);
-			this->_parent->SetLoss(this->_loss);
-		}
-
-	}
+		this->Simulate(algorithm);
 	else
 		this->_child = algorithm.CreateNodesList(this->_board, (this->_color == WHITE ? BLACK : WHITE), --this->_depth);
-//	std::cout << "Node::Expand out" << std::endl;
+	//std::cout << "Node::Expand out" << std::endl;
 }
 
-void				Node::Simulate(Algorithm algorithm, std::vector<int> freecase)
+void				Node::Simulate(Algorithm algorithm)
 {
 //	std::cout << "Node::Simulate in" << std::endl;
-	algorithm.MonteCarlo(this, this->_parent, this->_board, freecase);
-
+	algorithm.MonteCarlo(this, this->_parent, this->_board);
 //	std::cout << "Node::Simulate out" << std::endl;
 }
 
 void				Node::SetWins(int wins)
 {
 	this->_wins += wins;
+	if (this->_parent)
+		this->_parent->SetLoss(this->_wins);
 }
 
 void				Node::SetLoss(int loss)
 {
 	this->_loss += loss;
+	if (this->_parent)
+		this->_parent->SetWins(this->_loss);
 }
 
 int					Node::GetPos()

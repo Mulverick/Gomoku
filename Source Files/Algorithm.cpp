@@ -20,7 +20,7 @@ Algorithm::Algorithm()
 
 Algorithm::~Algorithm() {}
 
-bool			CheckPatern(int pos, char *map, int color)
+bool			Algorithm::CheckPatern(int pos, char *map, int color, int nbp)
 {
 	int			nb;
 	int			next;
@@ -38,7 +38,7 @@ bool			CheckPatern(int pos, char *map, int color)
 		--next;
 		++nb;
 	}
-	if (nb >= 4)
+	if (nb >= nbp)
 		return true;
 	nb = 1;
 	next = pos + 19;
@@ -53,7 +53,7 @@ bool			CheckPatern(int pos, char *map, int color)
 		next -= 19;
 		++nb;
 	}
-	if (nb >= 4)
+	if (nb >= nbp)
 		return true;
 	nb = 1;
 	next = pos + 20;
@@ -68,7 +68,7 @@ bool			CheckPatern(int pos, char *map, int color)
 		next -= 20;
 		++nb;
 	}
-	if (nb >= 4)
+	if (nb >= nbp)
 		return true;
 	nb = 1;
 	next = pos + 18;
@@ -83,7 +83,7 @@ bool			CheckPatern(int pos, char *map, int color)
 		next -= 18;
 		++nb;
 	}
-	if (nb >= 4)
+	if (nb >= nbp)
 		return true;
 	return false;
 }
@@ -94,14 +94,14 @@ int				Algorithm::EasyPlay(char *map)
 
 	for (int i = 0; i < MAP_SIZE && pos == -1; i++)
 	{
-		if ((map[i] == 0 && CheckPatern(i, map, WHITE))
-			|| (map[i] == 0 && CheckPatern(i, map, BLACK)))
+		if ((map[i] == 0 && this->CheckPatern(i, map, WHITE, 4))
+			|| (map[i] == 0 && this->CheckPatern(i, map, BLACK, 4)))
 			pos = i;
 	}
 	return pos;
 }
 
-bool				NearPiece(int pos, char *map)
+bool				Algorithm::NearPiece(int pos, char *map)
 {
 	if (map[pos] != 0)
 		return false;
@@ -116,13 +116,12 @@ std::list<Node *>	Algorithm::CreateNodesList(char *map, int color, int depth)
 //	std::cout << "Algorithm::CreateNodesList in" << std::endl;
 
 	std::list<Node *>		nodes;
-	std::vector<int>		freecase;
 
 	if (this->_first == true)
 	{
 		int	r;
 
-		for (r = (rand() % MAP_SIZE); !this->_arbitre.checkMove(r, map, color); r = (rand() % MAP_SIZE));
+		for (r = (rand() % MAP_SIZE); map[r] != 0; r = (rand() % MAP_SIZE));
 		Node	*newnode = new Node(color, r, -1, map);
 
 		nodes.push_back(newnode);
@@ -132,12 +131,12 @@ std::list<Node *>	Algorithm::CreateNodesList(char *map, int color, int depth)
 	{
 		for (int i = 0; i != MAP_SIZE; i++)
 		{
-			if (this->_arbitre.checkMove(i, map, color) && NearPiece(i, map))
+			if (this->_arbitre.checkMove(i, map, color) && this->NearPiece(i, map))
 			{
 				Node	*newnode = new Node(color, i, depth, map);
 
 				nodes.push_back(newnode);
-				newnode->Expand(*this, freecase);
+				newnode->Expand(*this);
 			}
 		}
 	}
@@ -146,7 +145,7 @@ std::list<Node *>	Algorithm::CreateNodesList(char *map, int color, int depth)
 	return nodes;
 }
 
-void				Algorithm::MonteCarlo(Node *node, Node *parent, char *map, std::vector<int> freecase)
+void				Algorithm::MonteCarlo(Node *node, Node *parent, char *map)
 {
 	std::vector<int>	cases;
 	int				pos;
@@ -166,7 +165,7 @@ void				Algorithm::MonteCarlo(Node *node, Node *parent, char *map, std::vector<i
 		}
 		this->_arbitre.clearArbitre();
 		ccolor = (color == WHITE ? BLACK : WHITE);
-		while (!this->_arbitre.checkWinner(i, map, ccolor))
+		while (!this->_arbitre.getIsWinner())
 		{
 			if (this->_arbitre.checkMove(pos, map, ccolor))
 			{
@@ -176,10 +175,7 @@ void				Algorithm::MonteCarlo(Node *node, Node *parent, char *map, std::vector<i
 			}
 			pos = rand() % MAP_SIZE;
 		}
-
-		if (parent && ccolor == parent->GetColor())
-			wins++;
-		else if (!parent && ccolor == color)
+		if (ccolor == color)
 			wins++;
 		else
 			loss++;

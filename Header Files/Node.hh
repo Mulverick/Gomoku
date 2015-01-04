@@ -18,8 +18,8 @@ public:
 	Node(int color, int pos, int deth, char *board);
 	Node(Node *parent, int color, int pos, int deth, char *board);
 	~Node();
-	void				Expand(Algorithm algorithm, std::vector<int> freecase);
-	void				Simulate(Algorithm algorithm, std::vector<int> freecase);
+	void				Expand(Algorithm algorithm);
+	void				Simulate(Algorithm algorithm);
 	int					GetPos();
 	int					GetColor();
 	int					GetNbsimulation();
