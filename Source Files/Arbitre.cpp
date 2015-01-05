@@ -46,7 +46,7 @@ bool Arbitre::checkMove(Vector<int> const &pos, char * const *map, int color)
 	}
 	if (checkWinner(pos, map, color) == true)
 	{
-		std::cout << (color == BLACK ? "Black" : "White") << " gagne !" << std::endl;
+		//std::cout << (color == BLACK ? "Black" : "White") << " gagne !" << std::endl;
 		return true;
 	}
 	 return (true);

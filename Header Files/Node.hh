@@ -15,12 +15,12 @@ class Algorithm;
 class Node
 {
 public:
-	Node(int color, int pos, int deth, char *board);
-	Node(Node *parent, int color, int pos, int deth, char *board);
+	Node(int color, Vector<int> const &pos, int deth, char **board);
+	Node(Node *parent, int color, Vector<int> const &pos, int deth, char **board);
 	~Node();
-	void				Expand(Algorithm algorithm, std::vector<int> freecase);
-	void				Simulate(Algorithm algorithm, std::vector<int> freecase);
-	int					GetPos();
+	void				Expand(Algorithm algorithm);
+	void				Simulate(Algorithm algorithm);
+	Vector<int> const	&GetPos();
 	int					GetColor();
 	int					GetNbsimulation();
 	void				SetWins(int win);
@@ -30,15 +30,14 @@ public:
 private:
 	int					_nbsimulation;
 	std::list<Node *>	_child;
-	char				*_board;
+	char				**_board;
 	std::string			_map;
 	Node				*_parent;
-//	Arbitre				_arbitre;
 	int					_color;
 	int					_wins;
 	int					_loss;
 	int					_depth;
-	int					_pos;
+	Vector<int>			_pos;
 };
 
 #endif

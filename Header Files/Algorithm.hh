@@ -9,6 +9,7 @@
 # include <ctime>
 # include <vector>
 # include <list>
+# include "utils.hh"
 
 //class Node;
 
@@ -17,9 +18,11 @@ class Algorithm
 public:
 	Algorithm();
 	~Algorithm();
-	int					EasyPlay(char *map);
-	std::list<Node *>	CreateNodesList(char *map, int color, int depth);
-	void				MonteCarlo(Node *node, Node *parent, char *map, std::vector<int> freecase);
+	Vector<int>	const	&EasyPlay(char * const *map);
+	bool				NearPiece(Vector<int> const &pos, char **map);
+	bool				CheckPatern(Vector<int> const &pos, char * const *map, int color, int nbp);
+	std::list<Node *>	CreateNodesList(char **map, int color, int depth, Node *parent);
+	void				MonteCarlo(Node *node, Node *parent, char **map);
 
 private:
 	Arbitre		_arbitre;

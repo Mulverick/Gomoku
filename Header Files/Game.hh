@@ -8,6 +8,7 @@
 #include "Arbitre.hh"
 #include "Human.hh"
 #include "AxelAI.h"
+#include "AI.hh"
 #include "Text.hh"
 #include "Sprite.hh"
 #include "MainMenu.hh"
