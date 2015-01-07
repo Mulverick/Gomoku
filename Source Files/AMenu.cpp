@@ -23,8 +23,6 @@ void AMenu::draw(sf::RenderWindow &window)
 void AMenu::setActive(bool state)
 {
   _isActive = state;
-  for (std::vector<AWidget *>::iterator it = _components.begin(); it != _components.end(); ++it)
-    (*it)->setActive(state);
 }
 
 void AMenu::setGameInstance(Game *game)
