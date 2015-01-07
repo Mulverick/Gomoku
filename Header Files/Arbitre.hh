@@ -14,7 +14,7 @@ public:
 	bool getIsWinner();
 	bool checkMove(Vector<int> const &, char * const *, int color);
 	int checkDoubleThree(Vector<int> const &pos, char const * const *map, int color, bool recursive = true);
-	bool checkWinner(Vector<int> const &pos, char const * const *map, int color);
+	bool checkWinner(Vector<int> const &pos, char const * const *map, int color, bool recusive = true);
 	bool checkThree(Vector<int> const &pos, char const * const *map, int color);
 	bool checkTwo(Vector<int> const &pos, char const * const *map, int color);
 	void checkEat(Vector<int> const &pos, char const * const *, int color, std::deque<Vector<Vector<int>>> &);

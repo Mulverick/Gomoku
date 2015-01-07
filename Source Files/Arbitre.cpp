@@ -32,7 +32,6 @@ bool Arbitre::checkMove(Vector<int> const &pos, char * const *map, int color)
 		map[pos.y][pos.x] = 0;
 		return (false);
 	}
-	map[pos.y][pos.x] = 0;
 	std::deque<Vector<Vector<int>>> coord;
 	checkEat(pos, map, color, coord);
 	if (coord.empty() == false)
@@ -47,12 +46,14 @@ bool Arbitre::checkMove(Vector<int> const &pos, char * const *map, int color)
 	}
 	if (checkWinner(pos, map, color) == true)
 	{
+		map[pos.y][pos.x] = 0;
 		if (_winner == 0)
 			_winner = color;
 		//std::cout << (color == BLACK ? "Black" : "White") << " gagne !" << std::endl;
 		return true;
 	}
-	 return (true);
+	map[pos.y][pos.x] = 0;
+	return (true);
 }
 
 int		Arbitre::checkDoubleThree(Vector<int> const &pos, char const * const *map, int color, bool recursive)
@@ -393,7 +394,7 @@ bool Arbitre::getIsWinner(){
 	return _isWinner;
 }
 
-bool Arbitre::checkWinner(Vector<int> const &pos, char const * const *map, int color)
+bool Arbitre::checkWinner(Vector<int> const &pos, char const * const *map, int color, bool recusive)
 {
 	int	nb;
 	Vector<int> next = pos;
@@ -407,12 +408,14 @@ bool Arbitre::checkWinner(Vector<int> const &pos, char const * const *map, int c
 	++next.x;
 	while (next.x < 19 && map[next.y][next.x] == color)
 	{
+		if (recusive) checkWinner(next, map, color, false);
 		++next.x;
 		++nb;
 	}
 	next.x = pos.x - 1;
 	while (next.x >= 0 && map[next.y][next.x] == color)
 	{
+		if (recusive) checkWinner(next, map, color, false);
 		--next.x;
 		++nb;
 	}
@@ -435,12 +438,14 @@ bool Arbitre::checkWinner(Vector<int> const &pos, char const * const *map, int c
 	next.y = pos.y + 1;
 	while (next.y < 19 && map[next.y][next.x] == color)
 	{
+		if (recusive) checkWinner(next, map, color, false);
 		++next.y;
 		++nb;
 	}
 	next.y = pos.y - 1;
 	while (next.y >= 0 && map[next.y][next.x] == color)
 	{
+		if (recusive) checkWinner(next, map, color, false);
 		--next.y;
 		++nb;
 	}
@@ -463,6 +468,7 @@ bool Arbitre::checkWinner(Vector<int> const &pos, char const * const *map, int c
 	next.y = pos.y + 1;
 	while (next.x < 19 && next.y < 19 && map[next.y][next.x] == color)
 	{
+		if (recusive) checkWinner(next, map, color, false);
 		++next.x;
 		++next.y;
 		++nb;
@@ -471,6 +477,7 @@ bool Arbitre::checkWinner(Vector<int> const &pos, char const * const *map, int c
 	next.y = pos.y - 1;
 	while (next.x >= 0 && next.y >= 0 && map[next.y][next.x] == color)
 	{
+		if (recusive) checkWinner(next, map, color, false);
 		--next.x;
 		--next.y;
 		++nb;
@@ -495,6 +502,7 @@ bool Arbitre::checkWinner(Vector<int> const &pos, char const * const *map, int c
 	next.y = pos.y + 1;
 	while (next.x >= 0 && next.y < 19 && map[next.y][next.x] == color)
 	{
+		if (recusive) checkWinner(next, map, color, false);
 		--next.x;
 		++next.y;
 		++nb;
@@ -503,6 +511,7 @@ bool Arbitre::checkWinner(Vector<int> const &pos, char const * const *map, int c
 	next.y = pos.y - 1;
 	while (next.x < 19 && next.y >= 0 && map[next.y][next.x] == color)
 	{
+		if (recusive) checkWinner(next, map, color, false);
 		++next.x;
 		--next.y;
 		++nb;
