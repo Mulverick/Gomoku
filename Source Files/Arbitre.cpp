@@ -33,6 +33,7 @@ bool Arbitre::checkMove(Vector<int> const &pos, char * const *map, int color)
 		return (false);
 	}
 	std::deque<Vector<Vector<int>>> coord;
+	std::deque<Vector<int>> toCheck;
 	checkEat(pos, map, color, coord);
 	if (coord.empty() == false)
 	{
@@ -43,14 +44,26 @@ bool Arbitre::checkMove(Vector<int> const &pos, char * const *map, int color)
 			map[coord.front().y.y][coord.front().y.x] = 0;
 			coord.pop_front();
 		}
+		toCheck.push_back(pos + Vector<int>(0,	3));
+		toCheck.push_back(pos + Vector<int>(0,	-3));
+		toCheck.push_back(pos + Vector<int>(3,	0));
+		toCheck.push_back(pos + Vector<int>(-3,	0));
+		toCheck.push_back(pos + Vector<int>(3, 3));
+		toCheck.push_back(pos + Vector<int>(3, -3));
+		toCheck.push_back(pos + Vector<int>(-3, 3));
+		toCheck.push_back(pos + Vector<int>(-3, -3));
 	}
-	if (checkWinner(pos, map, color) == true)
+	toCheck.push_back(pos);
+	while (toCheck.size())
 	{
-		map[pos.y][pos.x] = 0;
-		if (_winner == 0)
-			_winner = color;
-		//std::cout << (color == BLACK ? "Black" : "White") << " gagne !" << std::endl;
-		return true;
+		if (checkWinner(toCheck.front(), map, color) == true)
+		{
+			map[pos.y][pos.x] = 0;
+			if (_winner == 0)
+				_winner = color;
+			return true;
+		}
+		toCheck.pop_front();
 	}
 	map[pos.y][pos.x] = 0;
 	return (true);
