@@ -21,7 +21,8 @@ public:
 	static void updateRules(bool, bool);
 
 	void clearArbitre();
-	bool	isWinner(void) const { return (_isWinner); }
+	bool	isWinner(void) const;
+	int		getWinner(void) const;
 	void resetWinner();
 	char _prisoner[2];
 
@@ -29,7 +30,8 @@ private:
 	void checkOnEat(Vector<int> const &, Vector<int> const &nb, int color, char const * const *map, std::deque<Vector<Vector<int>>> &);
 
 
-	bool _isWinner;
+	bool	_isWinner;
+	int		_winner;
 
 	static bool _ruleDoublethree;
 	static bool _ruleOptionalEnd;

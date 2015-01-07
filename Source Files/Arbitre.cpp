@@ -6,6 +6,7 @@ Arbitre::Arbitre()
 	_prisoner[0] = 0;
 	_prisoner[1] = 0;
 	_isWinner = false;
+	_winner = 0;
 }
 
 
@@ -46,6 +47,8 @@ bool Arbitre::checkMove(Vector<int> const &pos, char * const *map, int color)
 	}
 	if (checkWinner(pos, map, color) == true)
 	{
+		if (_winner == 0)
+			_winner = color;
 		//std::cout << (color == BLACK ? "Black" : "White") << " gagne !" << std::endl;
 		return true;
 	}
@@ -397,6 +400,7 @@ bool Arbitre::checkWinner(Vector<int> const &pos, char const * const *map, int c
 	if (((color == BLACK ? _prisoner[0] : _prisoner[1])) >= 10)
 	{
 		_isWinner = true;
+		_winner = color;
 		return true;
 	}
 	nb = 1;
@@ -687,3 +691,6 @@ void Arbitre::clearArbitre()
 
 bool	Arbitre::_ruleDoublethree = true;
 bool	Arbitre::_ruleOptionalEnd = true;
+
+bool	Arbitre::isWinner(void) const { return (_isWinner); }
+int		Arbitre::getWinner(void) const { return (_winner); }

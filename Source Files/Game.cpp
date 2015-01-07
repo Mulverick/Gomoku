@@ -185,7 +185,7 @@ void Game::_onClick()
 			else
 				_players[1]->placeStone(_map);
 			if (_arbitre.isWinner() == true){
-				_winnerMenu.setWinner(_playerColor == WHITE ? "White" : "Black");
+				_winnerMenu.setWinner(_arbitre.getWinner() == WHITE ? "White" : "Black");
 				_winnerMenu.setActive(true); 
 			}
 			_playerColor = (_playerColor == WHITE ? BLACK : WHITE);
@@ -220,7 +220,7 @@ bool Game::_update()
 		{
 			_playerColor == BLACK ? _players[0]->placeStone(_map) : _players[1]->placeStone(_map);
 			if (_arbitre.isWinner() == true){
-				_winnerMenu.setWinner(_playerColor == WHITE ? "White" : "Black");
+				_winnerMenu.setWinner(_arbitre.getWinner() == WHITE ? "White" : "Black");
 				_winnerMenu.setActive(true);
 			}
 			_playerColor = (_playerColor == WHITE ? BLACK : WHITE);
