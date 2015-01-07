@@ -184,6 +184,8 @@ void	AxelAI::changeTurn(void)
 				}
 			}
 
+			int nbSimu = (100 / pos.size()) + 1;
+
 			for (auto it = pos.begin(); it != pos.end(); ++it)
 			{
 					Vector<int> cell = it->first;
@@ -192,7 +194,7 @@ void	AxelAI::changeTurn(void)
 					int			myColor = color;
 					Vector<int> myPos = cell;
 					
-					for (int simu = 0; simu < (pos.size() > 5 ? 10 : 50); ++simu)
+					for (int simu = 0; simu < nbSimu; ++simu)
 					{
 						for (int y = 0; y < 19; ++y)
 							for (int x = 0; x < 19; ++x)
