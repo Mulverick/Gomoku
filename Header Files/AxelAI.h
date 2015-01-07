@@ -24,4 +24,5 @@ private:
 	Vector<int>			_played;
 
 	char const * const	*_map;
+	char				_mapNear[19][19][3];
 };
