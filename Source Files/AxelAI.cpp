@@ -9,7 +9,16 @@
 #include "Arbitre.hh"
 #include <cstring>
 
-AxelAI::AxelAI(int color, char const * const *map) : _color(color), _turn((color == BLACK)), _played(-1 ,-1), _map(map) {}
+AxelAI::AxelAI(int color, char const * const *map) : _color(color), _turn((color == BLACK)), _played(-1 ,-1), _map(map)
+{
+	for (int y = 0; y < 19; ++y)
+		for (int x = 0; x < 19; ++x)
+		{
+			_mapNear[y][x][0] = 0;
+			_mapNear[y][x][1] = 0;
+			_mapNear[y][x][2] = 0;
+		}
+}
 AxelAI::~AxelAI(void) {}
 
 Vector<int> const &AxelAI::onClickHandler(Vector<int> const &cellPosition) { return (_played); }
@@ -26,6 +35,35 @@ void	AxelAI::changeTurn(void)
 	if (_turn)
 	{
 		/*std::async([this]*/ {
+
+			for (int y = 0; y < 19; ++y)
+				for (int x = 0; x < 19; ++x)
+					if (_mapNear[y][x][0] != _map[y][x])
+					{
+						_mapNear[y][x][0] = _map[y][x];
+						int cas = (_map[y][x] ? (_map[y][x] == _color ? 1 : 2) : (_mapNear[y][x][0] == _color ? 1 : 2));
+						int val = (_map[y][x] ? 1 : -1);
+						if (y > 0)
+						{
+							_mapNear[y - 1][x][cas] += val;
+							if (x > 0)
+								_mapNear[y - 1][x - 1][cas] += val;
+							if (x < 18)
+								_mapNear[y - 1][x + 1][cas] += val;
+						}
+						if (y < 18)
+						{
+							_mapNear[y + 1][x][cas] += val;
+							if (x > 0)
+								_mapNear[y + 1][x - 1][cas] += val;
+							if (x < 18)
+								_mapNear[y + 1][x + 1][cas] += val;
+						}
+						if (x > 0)
+							_mapNear[y][x - 1][cas] += val;
+						if (x < 18)
+							_mapNear[y][x + 1][cas] += val;
+					}
 
 			int adv = (_color == WHITE ? BLACK : WHITE);
 			std::list<std::pair<Vector<int>, int>>	pos;
@@ -118,10 +156,7 @@ void	AxelAI::changeTurn(void)
 					Arbitre	ar;
 					for (p.y = 0; p.y < 19; ++p.y)
 						for (p.x = 0; p.x < 19; ++p.x)
-							if (!_map[p.y][p.x] && ((p.x + 1 < 19 && _map[p.y][p.x + 1] == _color) || (p.x - 1 >= 0 && _map[p.y][p.x - 1] == _color)
-								|| (p.y + 1 < 19 && _map[p.y + 1][p.x] == _color) || (p.y - 1 >= 0 && _map[p.y - 1][p.x] == _color)
-								|| (p.x + 1 < 19 && p.y + 1 < 19 && _map[p.y + 1][p.x + 1] == _color) || (p.x - 1 >= 0 && p.y - 1 >= 0 && _map[p.y - 1][p.x - 1] == _color)
-								|| (p.x - 1 >= 0 && p.y + 1 < 19 && _map[p.y + 1][p.x - 1] == _color) || (p.x + 1 < 19 && p.y - 1 >= 0 && _map[p.y - 1][p.x + 1] == _color)))
+							if (!_map[p.y][p.x] && _mapNear[p.y][p.x][1])
 							{
 								for (int y = 0; y < 19; ++y)
 									for (int x = 0; x < 19; ++x)
@@ -138,10 +173,7 @@ void	AxelAI::changeTurn(void)
 					Arbitre	ar;
 					for (p.y = 0; p.y < 19; ++p.y)
 						for (p.x = 0; p.x < 19; ++p.x)
-							if (!_map[p.y][p.x] && ((p.x + 1 < 19 && _map[p.y][p.x + 1]) || (p.x - 1 >= 0 && _map[p.y][p.x - 1])
-								|| (p.y + 1 < 19 && _map[p.y + 1][p.x]) || (p.y - 1 >= 0 && _map[p.y - 1][p.x])
-								|| (p.x + 1 < 19 && p.y + 1 < 19 && _map[p.y + 1][p.x + 1]) || (p.x - 1 >= 0 && p.y - 1 >= 0 && _map[p.y - 1][p.x - 1])
-								|| (p.x - 1 >= 0 && p.y + 1 < 19 && _map[p.y + 1][p.x - 1]) || (p.x + 1 < 19 && p.y - 1 >= 0 && _map[p.y - 1][p.x + 1])))
+							if (!_map[p.y][p.x] && _mapNear[p.y][p.x][2])
 							{
 								for (int y = 0; y < 19; ++y)
 									for (int x = 0; x < 19; ++x)
@@ -152,6 +184,8 @@ void	AxelAI::changeTurn(void)
 				}
 			}
 
+			int nbSimu = (100 / pos.size()) + 1;
+
 			for (auto it = pos.begin(); it != pos.end(); ++it)
 			{
 					Vector<int> cell = it->first;
@@ -160,7 +194,7 @@ void	AxelAI::changeTurn(void)
 					int			myColor = color;
 					Vector<int> myPos = cell;
 					
-					for (int simu = 0; simu < (pos.size() > 5 ? 10 : 50); ++simu)
+					for (int simu = 0; simu < nbSimu; ++simu)
 					{
 						for (int y = 0; y < 19; ++y)
 							for (int x = 0; x < 19; ++x)
