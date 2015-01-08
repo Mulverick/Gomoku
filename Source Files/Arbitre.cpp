@@ -53,6 +53,12 @@ bool Arbitre::checkMove(Vector<int> const &pos, char * const *map, int color)
 		toCheck.push_back(pos + Vector<int>(-3, 3));
 		toCheck.push_back(pos + Vector<int>(-3, -3));
 	}
+	auto it = toCheck.begin();
+	while (it != toCheck.end())
+		if (it->x < 0 || it->y < 0 || it->x >= 19 || it->y >= 19)
+			it = toCheck.erase(it);
+		else
+			++it;
 	toCheck.push_back(pos);
 	while (toCheck.size())
 	{
