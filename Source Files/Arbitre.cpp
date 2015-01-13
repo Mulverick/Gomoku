@@ -91,34 +91,34 @@ int		Arbitre::checkDoubleThree(Vector<int> const &pos, char const * const *map, 
 #define NL(p)	((pos.x - p) < 0 || map[pos.y][pos.x - p] != color)
 #define PL(p)	Vector<int>(pos.x - p, pos.y), map, color, false
 
-	if (NL(1))
+	if (L(1, 0))
 		if (R(1, color))
 		{
-			if (R(2, color) && NR(3))
+			if (R(2, color) && R(3, 0))
 				nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(2)) - 2 : 0);
-			else if (R(2, 0) && R(3, color) && NR(4))
+			else if (R(2, 0) && R(3, color) && R(4, 0))
 				nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(3)) - 2 : 0);
 		}
-		else if (R(1, 0) && R(2, color) && R(3, color) && NR(4))
+		else if (R(1, 0) && R(2, color) && R(3, color) && R(4, 0))
 			nb3 += 1 + (recursive ? checkDoubleThree(PR(2)) + checkDoubleThree(PR(3)) - 2 : 0);
-	if (NR(1))
+	if (R(1, 0))
 		if (L(1, color))
 		{
-			if (L(2, color) && NL(3))
+			if (L(2, color) && L(3, 0))
 				nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(2)) - 2 : 0);
-			else if (L(2, 0) && L(3, color) && NL(4))
+			else if (L(2, 0) && L(3, color) && L(4, 0))
 				nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(3)) - 2 : 0);
 		}
-		else if (L(1, 0) && L(2, color) && L(3, color) && NL(4))
+		else if (L(1, 0) && L(2, color) && L(3, color) && L(4, 0))
 			nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PL(3)) - 2 : 0);
-	if (NL(2))
+	if (L(2, 0))
 	{
-		if (NR(2) && L(1, color) && R(1, color))
+		if (R(2, 0) && L(1, color) && R(1, color))
 			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PR(1)) - 2 : 0);
-		else if (NR(3) && L(1, color) && R(1, 0) && R(2, color))
+		else if (R(3, 0) && L(1, color) && R(1, 0) && R(2, color))
 			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PR(2)) - 2 : 0);
 	}
-	else if (NL(3) && NR(2) && L(2, color) && L(1, 0) && R(1, color))
+	else if (L(3, 0) && R(2, 0) && L(2, color) && L(1, 0) && R(1, color))
 		nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PR(1)) - 2 : 0);
 
 #undef R
@@ -137,34 +137,34 @@ int		Arbitre::checkDoubleThree(Vector<int> const &pos, char const * const *map, 
 #define NL(p)	((pos.y - p) < 0 || map[pos.y - p][pos.x] != color)
 #define PL(p)	Vector<int>(pos.x, pos.y - p),  map, color, false
 
-	if (NL(1))
-		if (R(1, color))
-		{
-			if (R(2, color) && NR(3))
-				nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(2)) - 2 : 0);
-			else if (R(2, 0) && R(3, color) && NR(4))
-				nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(3)) - 2 : 0);
-		}
-		else if (R(1, 0) && R(2, color) && R(3, color) && NR(4))
-			nb3 += 1 + (recursive ? checkDoubleThree(PR(2)) + checkDoubleThree(PR(3)) - 2 : 0);
-	if (NR(1))
-		if (L(1, color))
-		{
-			if (L(2, color) && NL(3))
-				nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(2)) - 2 : 0);
-			else if (L(2, 0) && L(3, color) && NL(4))
-				nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(3)) - 2 : 0);
-		}
-		else if (L(1, 0) && L(2, color) && L(3, color) && NL(4))
-			nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PL(3)) - 2 : 0);
-	if (NL(2))
+	if (L(1, 0))
+	if (R(1, color))
 	{
-		if (NR(2) && L(1, color) && R(1, color))
+		if (R(2, color) && R(3, 0))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(2)) - 2 : 0);
+		else if (R(2, 0) && R(3, color) && R(4, 0))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(3)) - 2 : 0);
+	}
+	else if (R(1, 0) && R(2, color) && R(3, color) && R(4, 0))
+		nb3 += 1 + (recursive ? checkDoubleThree(PR(2)) + checkDoubleThree(PR(3)) - 2 : 0);
+	if (R(1, 0))
+	if (L(1, color))
+	{
+		if (L(2, color) && L(3, 0))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(2)) - 2 : 0);
+		else if (L(2, 0) && L(3, color) && L(4, 0))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(3)) - 2 : 0);
+	}
+	else if (L(1, 0) && L(2, color) && L(3, color) && L(4, 0))
+		nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PL(3)) - 2 : 0);
+	if (L(2, 0))
+	{
+		if (R(2, 0) && L(1, color) && R(1, color))
 			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PR(1)) - 2 : 0);
-		else if (NR(3) && L(1, color) && R(1, 0) && R(2, color))
+		else if (R(3, 0) && L(1, color) && R(1, 0) && R(2, color))
 			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PR(2)) - 2 : 0);
 	}
-	else if (NL(3) && NR(2) && L(2, color) && L(1, 0) && R(1, color))
+	else if (L(3, 0) && R(2, 0) && L(2, color) && L(1, 0) && R(1, color))
 		nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PR(1)) - 2 : 0);
 
 #undef R
@@ -184,34 +184,34 @@ int		Arbitre::checkDoubleThree(Vector<int> const &pos, char const * const *map, 
 #define NL(p)	((pos.x - p) < 0 || (pos.y - p) < 0 || map[pos.y - p][pos.x - p] != color)
 #define PL(p)	Vector<int>(pos.x - p, pos.y - p),  map, color, false
 
-	if (NL(1))
-		if (R(1, color))
-		{
-			if (R(2, color) && NR(3))
-				nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(2)) - 2 : 0);
-			else if (R(2, 0) && R(3, color) && NR(4))
-				nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(3)) - 2 : 0);
-		}
-		else if (R(1, 0) && R(2, color) && R(3, color) && NR(4))
-			nb3 += 1 + (recursive ? checkDoubleThree(PR(2)) + checkDoubleThree(PR(3)) - 2 : 0);
-	if (NR(1))
-		if (L(1, color))
-		{
-			if (L(2, color) && NL(3))
-				nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(2)) - 2 : 0);
-			else if (L(2, 0) && L(3, color) && NL(4))
-				nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(3)) - 2 : 0);
-		}
-		else if (L(1, 0) && L(2, color) && L(3, color) && NL(4))
-			nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PL(3)) - 2 : 0);
-	if (NL(2))
+	if (L(1, 0))
+	if (R(1, color))
 	{
-		if (NR(2) && L(1, color) && R(1, color))
+		if (R(2, color) && R(3, 0))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(2)) - 2 : 0);
+		else if (R(2, 0) && R(3, color) && R(4, 0))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(3)) - 2 : 0);
+	}
+	else if (R(1, 0) && R(2, color) && R(3, color) && R(4, 0))
+		nb3 += 1 + (recursive ? checkDoubleThree(PR(2)) + checkDoubleThree(PR(3)) - 2 : 0);
+	if (R(1, 0))
+	if (L(1, color))
+	{
+		if (L(2, color) && L(3, 0))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(2)) - 2 : 0);
+		else if (L(2, 0) && L(3, color) && L(4, 0))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(3)) - 2 : 0);
+	}
+	else if (L(1, 0) && L(2, color) && L(3, color) && L(4, 0))
+		nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PL(3)) - 2 : 0);
+	if (L(2, 0))
+	{
+		if (R(2, 0) && L(1, color) && R(1, color))
 			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PR(1)) - 2 : 0);
-		else if (NR(3) && L(1, color) && R(1, 0) && R(2, color))
+		else if (R(3, 0) && L(1, color) && R(1, 0) && R(2, color))
 			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PR(2)) - 2 : 0);
 	}
-	else if (NL(3) && NR(2) && L(2, color) && L(1, 0) && R(1, color))
+	else if (L(3, 0) && R(2, 0) && L(2, color) && L(1, 0) && R(1, color))
 		nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PR(1)) - 2 : 0);
 
 #undef R
@@ -231,34 +231,34 @@ int		Arbitre::checkDoubleThree(Vector<int> const &pos, char const * const *map, 
 #define NL(p)	((pos.x + p) >= 19 || (pos.y - p) < 0 || map[pos.y - p][pos.x + p] != color)
 #define PL(p)	Vector<int>(pos.x + p, pos.y - p),  map, color, false
 
-	if (NL(1))
-		if (R(1, color))
-		{
-			if (R(2, color) && NR(3))
-				nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(2)) - 2 : 0);
-			else if (R(2, 0) && R(3, color) && NR(4))
-				nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(3)) - 2 : 0);
-		}
-		else if (R(1, 0) && R(2, color) && R(3, color) && NR(4))
-			nb3 += 1 + (recursive ? checkDoubleThree(PR(2)) + checkDoubleThree(PR(3)) - 2 : 0);
-	if (NR(1))
-		if (L(1, color))
-		{
-			if (L(2, color) && NL(3))
-				nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(2)) - 2 : 0);
-			else if (L(2, 0) && L(3, color) && NL(4))
-				nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(3)) - 2 : 0);
-		}
-		else if (L(1, 0) && L(2, color) && L(3, color) && NL(4))
-			nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PL(3)) - 2 : 0);
-	if (NL(2))
+	if (L(1, 0))
+	if (R(1, color))
 	{
-		if (NR(2) && L(1, color) && R(1, color))
+		if (R(2, color) && R(3, 0))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(2)) - 2 : 0);
+		else if (R(2, 0) && R(3, color) && R(4, 0))
+			nb3 += 1 + (recursive ? checkDoubleThree(PR(1)) + checkDoubleThree(PR(3)) - 2 : 0);
+	}
+	else if (R(1, 0) && R(2, color) && R(3, color) && R(4, 0))
+		nb3 += 1 + (recursive ? checkDoubleThree(PR(2)) + checkDoubleThree(PR(3)) - 2 : 0);
+	if (R(1, 0))
+	if (L(1, color))
+	{
+		if (L(2, color) && L(3, 0))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(2)) - 2 : 0);
+		else if (L(2, 0) && L(3, color) && L(4, 0))
+			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PL(3)) - 2 : 0);
+	}
+	else if (L(1, 0) && L(2, color) && L(3, color) && L(4, 0))
+		nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PL(3)) - 2 : 0);
+	if (L(2, 0))
+	{
+		if (R(2, 0) && L(1, color) && R(1, color))
 			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PR(1)) - 2 : 0);
-		else if (NR(3) && L(1, color) && R(1, 0) && R(2, color))
+		else if (R(3, 0) && L(1, color) && R(1, 0) && R(2, color))
 			nb3 += 1 + (recursive ? checkDoubleThree(PL(1)) + checkDoubleThree(PR(2)) - 2 : 0);
 	}
-	else if (NL(3) && NR(2) && L(2, color) && L(1, 0) && R(1, color))
+	else if (L(3, 0) && R(2, 0) && L(2, color) && L(1, 0) && R(1, color))
 		nb3 += 1 + (recursive ? checkDoubleThree(PL(2)) + checkDoubleThree(PR(1)) - 2 : 0);
 
 #undef R
