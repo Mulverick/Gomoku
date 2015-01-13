@@ -12,11 +12,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Source Files\AI.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Source Files\Algorithm.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Source Files\AMenu.cpp" />
@@ -28,8 +28,9 @@
     <ClCompile Include="..\Source Files\Human.cpp" />
     <ClCompile Include="..\Source Files\Main.cpp" />
     <ClCompile Include="..\Source Files\MainMenu.cpp" />
+    <ClCompile Include="..\Source Files\Mapping.cpp" />
     <ClCompile Include="..\Source Files\Node.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\Source Files\Sprite.cpp" />
@@ -49,6 +50,7 @@
     <ClInclude Include="..\Header Files\Human.hh" />
     <ClInclude Include="..\Header Files\IPlayer.hh" />
     <ClInclude Include="..\Header Files\MainMenu.hh" />
+    <ClInclude Include="..\Header Files\Mapping.hh" />
     <ClInclude Include="..\Header Files\Node.hh" />
     <ClInclude Include="..\Header Files\Sprite.hh" />
     <ClInclude Include="..\Header Files\Text.hh" />
