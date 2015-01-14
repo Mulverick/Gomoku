@@ -4,6 +4,7 @@
 # include "IPlayer.hh"
 # include "Algorithm.hh"
 # include "Node.hh"
+# include "Mapping.hh"
 
 
 class AI : public IPlayer
@@ -26,10 +27,12 @@ private:
 	Vector<int>			_played;
 	Type				_type;
 	std::list<Node *>	_nodes;
-	char				**_board;
+	Mapping				*_board;
+//	char				**_board;
 	Algorithm			*_algorithm;
 
-	void				easyPlay();
+	void				updateMap(char * const *map);
+	void				checkPatern(Vector<int> const &pos, char * const *map, int color);
 };
 
 #endif

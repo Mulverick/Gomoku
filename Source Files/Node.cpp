@@ -16,7 +16,7 @@ Node::Node(int color, Vector<int> const &pos, int deth, char **board)
 	this->_parent = NULL;
 	this->_depth = deth;
 	this->_color = color;
-	this->_nbsimulation = 250;
+	this->_nbsimulation = 20;
 	this->_wins = 0;
 	this->_loss = 0;
 }
@@ -32,11 +32,10 @@ Node::Node(Node *parent, int color, Vector<int> const &pos, int deth, char **boa
 			this->_board[y][x] = board[y][x];
 	}
 	this->_board[pos.y][pos.x] = color;
-
 	this->_parent = parent;
 	this->_depth = deth;
 	this->_color = color;
-	this->_nbsimulation = 250;
+	this->_nbsimulation = 20;
 	this->_wins = 0;
 	this->_loss = 0;
 }
@@ -45,19 +44,15 @@ Node::~Node() {}
 
 void				Node::Expand(Algorithm algorithm)
 {
-	//std::cout << "Node::Expand in depht : " << this->_depth << std::endl;
 	if (!this->_depth)
 		this->Simulate(algorithm);
 	else
 		this->_child = algorithm.CreateNodesList(this->_board, (this->_color == WHITE ? BLACK : WHITE), (this->_depth - 1), this);
-	//std::cout << "Node::Expand out" << std::endl;
 }
 
 void				Node::Simulate(Algorithm algorithm)
 {
-	//	std::cout << "Node::Simulate in" << std::endl;
 	algorithm.MonteCarlo(this, this->_parent, this->_board);
-	//	std::cout << "Node::Simulate out" << std::endl;
 }
 
 void				Node::SetWins(int wins)
@@ -93,6 +88,5 @@ int					Node::GetNbsimulation()
 int					Node::WinsRate()
 {
 	int	wr = ((float)this->_wins / ((float)this->_loss + (float)this->_wins)) * 100;
-	//std::cout << "Node::WinsRate ret : " << wr << " wins : " << this->_wins << " loss : " << this->_loss << std::endl;
 	return (wr);
 }

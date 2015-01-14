@@ -18,9 +18,7 @@ class Algorithm
 public:
 	Algorithm();
 	~Algorithm();
-	Vector<int>	const	&EasyPlay(char * const *map);
 	bool				NearPiece(Vector<int> const &pos, char **map);
-	bool				CheckPatern(Vector<int> const &pos, char * const *map, int color, int nbp);
 	std::list<Node *>	CreateNodesList(char **map, int color, int depth, Node *parent);
 	void				MonteCarlo(Node *node, Node *parent, char **map);
 
