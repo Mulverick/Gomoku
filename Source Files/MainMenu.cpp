@@ -22,7 +22,7 @@ MainMenu::MainMenu(AWidget *parent) :
 	  if (_pvp->isActive())
 		  getGameInstance()->reset<Human>();
 	  else
-		  getGameInstance()->reset<AxelAI>();
+		  getGameInstance()->reset<AI>();
 	  setActive(false);
   });
   _pvp->setSize(sf::Vector2f(200, 50));
